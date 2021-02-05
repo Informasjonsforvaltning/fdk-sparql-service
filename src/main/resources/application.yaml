@@ -1,0 +1,9 @@
+application:
+  fuseki:
+    realm: fdk
+    port: 8080
+    context-path: fuseki
+    store-path: store
+    dataset-names:
+      - harvested
+    enable-verbose-logging: false
