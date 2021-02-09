@@ -11,7 +11,7 @@ WORKDIR /app
 RUN addgroup --gid 1001 --system app && \
   adduser --uid 1001 --system app --gid 1001 && \
   chown -R app:app /app && \
-  chmod 770 /app
+  chmod 775 /app
 USER app:app
 COPY --chown=app:app --from=build /app/target/app.jar ./
 CMD java -jar app.jar
