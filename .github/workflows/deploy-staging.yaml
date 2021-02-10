@@ -26,7 +26,7 @@ jobs:
         run: docker build . -t eu.gcr.io/digdir-fdk-infra/fdk-sparql-service:$GITHUB_SHA -t eu.gcr.io/digdir-fdk-infra/fdk-sparql-service:staging_latest
 
       - name: Publish docker image to Google Cloud
-        run: docker -- push eu.gcr.io/digdir-fdk-infra/fdk-sparql-service
+        run: docker -- push eu.gcr.io/digdir-fdk-infra/fdk-sparql-service -a
 
       - name: Apply Helm template
         run: |
