@@ -34,3 +34,12 @@ A service that manages Fuseki server instance.
     - `INFO`
     - `WARN`
     - `ERROR`
+- `RABBIT_HOST` - RabbitMQ hostname
+  - `rabbitmq` (default)
+  - `localhost` (develop profile)
+- `RABBIT_PORT` - RabbitMQ port
+  - `5672` (default)
+- `RABBIT_USERNAME` - RabbitMQ username
+  - `guest` (develop profile)
+- `RABBIT_PASSWORD` - RabbitMQ password
+  - `guest` (develop profile)

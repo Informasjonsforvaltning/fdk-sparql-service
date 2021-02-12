@@ -1,11 +1,15 @@
 package no.fdk.model.fuseki.action;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.dboe.base.file.Location;
 import org.apache.jena.fuseki.servlets.BaseActionREST;
 import org.apache.jena.fuseki.servlets.HttpAction;
 import org.apache.jena.sparql.core.DatasetGraph;
+import org.apache.jena.sparql.util.Symbol;
 import org.apache.jena.tdb2.DatabaseMgr;
+import org.apache.jena.tdb2.store.DatasetGraphSwitchable;
 import org.apache.jena.tdb2.sys.TDBInternal;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
@@ -16,18 +20,27 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 @Slf4j
+@Component
 public class CompactAction extends BaseActionREST {
     @Override
     protected void doGet(HttpAction action) {
-        log.info("Started compaction process");
+        compact(action.getDataset());
+    }
 
-        DatasetGraph datasetGraph = action.getDataset();
+    private void compact(DatasetGraph datasetGraph) {
+        String datasetName = datasetGraph.getContext().getAsString(Symbol.create("name"));
+        log.info("Started compaction process for dataset '{}'", datasetName);
 
         DatabaseMgr.compact(datasetGraph);
 
         removeUnusedFiles(datasetGraph);
 
-        log.info("Finished compaction process");
+        log.info("Finished compaction process for dataset '{}'", datasetName);
+    }
+
+    public void compact(String datasetPath) {
+        DatasetGraphSwitchable datasetGraph = (DatasetGraphSwitchable) DatabaseMgr.connectDatasetGraph(Location.create(datasetPath));
+        compact(datasetGraph);
     }
 
     private void removeUnusedFiles(DatasetGraph datasetGraph) {
