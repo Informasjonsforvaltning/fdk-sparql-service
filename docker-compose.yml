@@ -7,6 +7,10 @@ services:
       - 8080:8080
     environment:
       - LOG_LEVEL=DEBUG
+      - RABBIT_HOST=rabbitmq
+      - RABBIT_PORT=5672
+      - RABBIT_USERNAME=guest
+      - RABBIT_PASSWORD=guest
     networks:
       fdk:
         aliases:
