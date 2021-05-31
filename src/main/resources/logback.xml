@@ -40,7 +40,7 @@
         <appender-ref ref="json"/>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="${LOG_FORMAT:-json-async}" />
     </root>
 
