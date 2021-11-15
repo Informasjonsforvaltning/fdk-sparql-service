@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.fdk.configuration.FusekiConfiguration;
 import no.fdk.model.fuseki.action.CompactAction;
-import org.apache.jena.fuseki.build.FusekiConfig;
 import org.apache.jena.fuseki.main.FusekiServer;
 import org.apache.jena.fuseki.server.DataService;
 import org.apache.jena.fuseki.server.Endpoint;
@@ -67,11 +66,12 @@ public class FusekiService {
                 datasetGraph.getContext().set(nameSymbol, name);
                 datasetGraph.getContext().setTrue(TDB.symUnionDefaultGraph);
 
-                DataService dataService = FusekiConfig.buildDataServiceStd(datasetGraph, true);
+                DataService.Builder dataServiceBuilder = DataService.newBuilder();
+                dataServiceBuilder.dataset(datasetGraph);
+                dataServiceBuilder.addEndpoint(createCompactEndpoint());
+                dataServiceBuilder.withStdServices(true);
 
-                dataService.addEndpoint(createCompactEndpoint());
-
-                return dataService;
+                return dataServiceBuilder.build();
             })
             .collect(Collectors.toSet());
     }
