@@ -13,6 +13,21 @@ application:
     dataset-names:
       - harvested
     enable-verbose-logging: false
+  uri:
+    datasets: ${REASONING_HOST:http://fdk-reasoning-service:8080}/datasets
+    dataservices: ${REASONING_HOST:http://fdk-reasoning-service:8080}/data-services
+    concepts: ${REASONING_HOST:http://fdk-reasoning-service:8080}/concepts
+    informationmodels: ${REASONING_HOST:http://fdk-reasoning-service:8080}/information-models
+    events: ${REASONING_HOST:http://fdk-reasoning-service:8080}/events
+    publicservices: ${REASONING_HOST:http://fdk-reasoning-service:8080}/public-services
+    fusekiHarvested: http://localhost:8080/fuseki/harvested
+  graph:
+    datasets: https://datasets.fellesdatakatalog.digdir.no
+    dataservices: https://dataservices.fellesdatakatalog.digdir.no
+    concepts: https://concepts.fellesdatakatalog.digdir.no
+    informationmodels: https://informationmodels.fellesdatakatalog.digdir.no
+    events: https://data.norge.no/api/events
+    publicservices: https://data.norge.no/api/public-services
 
 ---
 spring:
@@ -22,3 +37,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+application:
+  uri:
+    datasets: https://datasets.staging.fellesdatakatalog.digdir.no/catalogs
+    dataservices: https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs
+    concepts: https://concepts.staging.fellesdatakatalog.digdir.no/collections
+    informationmodels: https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs
+    events: https://staging.fellesdatakatalog.digdir.no/api/events
+    publicservices: https://staging.fellesdatakatalog.digdir.no/api/public-services

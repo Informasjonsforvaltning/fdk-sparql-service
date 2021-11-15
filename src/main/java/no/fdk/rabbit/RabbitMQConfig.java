@@ -10,20 +10,38 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
-    public Queue queue() {
+    public Queue compactQueue() {
         return new AnonymousQueue();
     }
 
     @Bean
-    public TopicExchange updatesTopicExchange() {
+    public Queue harvestsQueue() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public TopicExchange compactExchange() {
         return new TopicExchange("fdk-sparql-service-compact", false, false);
     }
 
     @Bean
-    Binding updatesBinding(Queue queue, TopicExchange topicExchange) {
+    public TopicExchange harvestsExchange() {
+        return new TopicExchange("harvests", false, false);
+    }
+
+    @Bean
+    Binding updatesBinding(Queue compactQueue, TopicExchange compactExchange) {
         return BindingBuilder
-                .bind(queue)
-                .to(topicExchange)
+                .bind(compactQueue)
+                .to(compactExchange)
                 .with("fuseki.compact");
+    }
+
+    @Bean
+    Binding harvestsBinding(Queue harvestsQueue, TopicExchange harvestsExchange) {
+        return BindingBuilder
+                .bind(harvestsQueue)
+                .to(harvestsExchange)
+                .with("*.reasoned");
     }
 }
