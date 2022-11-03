@@ -4,7 +4,7 @@ COPY pom.xml ./
 COPY src ./src
 RUN mvn clean package --no-transfer-progress -DskipTests
 
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
