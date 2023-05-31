@@ -24,7 +24,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <jena.version>4.5.0</jena.version>
+        <jena.version>4.8.0</jena.version>
         <maven.plugin.versions.version>2.10.1</maven.plugin.versions.version>
     </properties>
 
