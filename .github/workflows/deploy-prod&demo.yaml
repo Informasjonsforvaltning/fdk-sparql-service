@@ -12,9 +12,6 @@ jobs:
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-deploy.yaml@main
     with:
       app_name: fdk-sparql-service
-      caller_sha: ${{ github.sha }}
-      repo: ${{ github.repository }}
-      actor: ${{ github.actor }}
       environment: prod
       cluster: digdir-fdk-prod
       snapshot_disk: fdk-prod-fdk-sparql-service
@@ -32,9 +29,6 @@ jobs:
     uses: Informasjonsforvaltning/workflows/.github/workflows/deploy.yaml@main
     with:
       app_name: fdk-sparql-service
-      caller_sha: ${{ github.sha }}
-      repo: ${{ github.repository }}
-      actor: ${{ github.actor }}
       environment: demo
       cluster: digdir-fdk-dev
     secrets:
