@@ -1,3 +1,10 @@
+logging.level:
+  root: WARN
+  no: ${LOG_LEVEL:DEBUG}
+  org.springframework: WARN
+  org.springframework.web: WARN
+  org.apache.jena.riot: ERROR
+  org.apache.jena.fuseki: ERROR
 spring:
   rabbitmq:
     host: ${RABBIT_HOST:rabbitmq}
