@@ -17,23 +17,17 @@ public class RabbitMQListener {
     private final FusekiConfiguration fusekiConfiguration;
     private final UpdateService updateService;
 
-    @RabbitListener(queues = "#{compactQueue.name}")
-    public void receiveConceptPublisher(Message message) {
-        String routingKey = message.getMessageProperties().getReceivedRoutingKey();
-
-        log.info("Received message from compact exchange with key: {}'", routingKey);
-
-        fusekiConfiguration.getDatasetNames()
-                .stream()
-                .map(dataset -> "%s/%s".formatted(fusekiConfiguration.getStorePath(), dataset))
-                .forEach(compactAction::compact);
-    }
-
     @RabbitListener(queues = "#{harvestsQueue.name}")
     public void harvestsListener(Message message) {
         String routingKey = message.getMessageProperties().getReceivedRoutingKey();
 
-        log.debug("Received message from harvests exchange with key: {}'", routingKey);
+        log.info("Received message from harvests exchange with key: {}'", routingKey);
         updateService.updateForCatalogType(routingKey);
+
+        log.info("Starting compact action");
+        fusekiConfiguration.getDatasetNames()
+                .stream()
+                .map(dataset -> "%s/%s".formatted(fusekiConfiguration.getStorePath(), dataset))
+                .forEach(compactAction::compact);
     }
 }
