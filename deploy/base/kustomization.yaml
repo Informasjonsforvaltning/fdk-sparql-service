@@ -1,0 +1,10 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment-fdk-sparql-service.yaml
+  - service-fdk-sparql-service.yaml
+images:
+  - name: fdk-sparql-kafka-service
+    newName: eu.gcr.io/digdir-fdk-infra/fdk-sparql-kafka-service
+    newTag: $(GIT_COMMIT_SHA)

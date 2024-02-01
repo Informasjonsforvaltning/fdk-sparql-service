@@ -1,0 +1,51 @@
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix iso:    <http://iso.org/25012/2008/dataquality/> .
+@prefix oa:     <http://www.w3.org/ns/prov#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosno: <https://data.norge.no/vocabulary/skosno#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix spdx:   <http://spdx.org/rdf/terms#> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos:   <http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/b8f0c636-b849-3938-b27a-da67b14a7726>
+        rdf:type            skosxl:Label;
+        skosxl:literalForm  "Blomst"@nb .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/f3441600-f938-3482-9670-244c784287ef>
+        rdf:type          dct:PeriodOfTime;
+        schema:endDate    "2028-11-01"^^xsd:date;
+        schema:startDate  "2018-11-01"^^xsd:date .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/5ebfb542-5f98-337b-8ddf-2bf8e1edc286>
+        rdf:type    skosno:Definisjon;
+        rdfs:label  "Blomst er det yngre stadiet av formeringsorganet hos blomsterplantene."@nb .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f>
+        rdf:type           skos:Concept;
+        <http://publications.europa.eu/ontology/euvoc#status>
+                <http://publications.europa.eu/resource/authority/concept-status/CURRENT>;
+        dct:identifier     "https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f";
+        dct:modified       "2023-11-09"^^xsd:date;
+        dct:publisher      <https://data.brreg.no/enhetsregisteret/api/enheter/910244132>;
+        dct:subject        <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects#8>;
+        dct:temporal       <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/f3441600-f938-3482-9670-244c784287ef>;
+        skosxl:prefLabel   <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/b8f0c636-b849-3938-b27a-da67b14a7726>;
+        skosno:definisjon  <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/5ebfb542-5f98-337b-8ddf-2bf8e1edc286> .
+
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/2167b48d-0906-36f7-afe5-1598d6060c69>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "2167b48d-0906-36f7-afe5-1598d6060c69";
+        dct:isPartOf       <https://concepts.staging.fellesdatakatalog.digdir.no/collections/7b82acf0-fa3d-3a37-88b7-0d17294691f4>;
+        dct:issued         "2021-12-14T11:54:13.389Z"^^xsd:dateTime;
+        dct:modified       "2023-11-09T05:24:42.888Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f> .

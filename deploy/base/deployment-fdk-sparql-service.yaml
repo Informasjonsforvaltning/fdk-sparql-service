@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdk-sparql-kafka-service
+  labels:
+    app: fdk-sparql-kafka-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdk-sparql-kafka-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: fdk-sparql-kafka-service
+      annotations:
+        prometheus.io/scrape: "false"
+    spec:
+      containers:
+        - name: fdk-sparql-kafka-service
+          image: fdk-sparql-kafka-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /fuseki/$/ping
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /fuseki/$/stats/fdk
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 5
+          resources:
+            requests:
+              memory: 600Mi
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      restartPolicy: Always

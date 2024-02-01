@@ -1,0 +1,37 @@
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760/.well-known/skolem/1b70ee7b-95ca-372c-b2f3-0fbf1705257c>
+        rdf:type                   vcard:Organization;
+        vcard:fn                   "Contact information | (910258028)";
+        vcard:hasEmail             <mailto:datatjenestegruppa@digdir.no>;
+        vcard:hasOrganizationName  "Datatjenestegruppa"@nb;
+        vcard:hasTelephone         <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760/.well-known/skolem/33a615f9-308a-36db-be2e-89b7f5bb40de>;
+        vcard:hasURL               <https://datatjenestegruppa.com> .
+
+<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/827a7ffa-c171-3432-85dd-17dd7c56f831>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "827a7ffa-c171-3432-85dd-17dd7c56f831";
+        dct:isPartOf       <https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs/d07885d9-0925-339f-bb22-58c28dc30409>;
+        dct:issued         "2021-03-17T10:00:04.609Z"^^xsd:dateTime;
+        dct:modified       "2023-02-02T14:09:30.492Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760/.well-known/skolem/33a615f9-308a-36db-be2e-89b7f5bb40de>
+        rdf:type        vcard:TelephoneType;
+        vcard:hasValue  <tel:1111111111> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760>
+        rdf:type                  dcat:DataService;
+        dct:conformsTo            <https://data.norge.no/def/serviceType#CUSTOMER_RELATIONS>;
+        dct:description           "Dette er et løp fra registrering til portal. Første forsøk med bare obligatoriske felt. Andre forsøk med alle felt dcat støtter. Tredje oppdatering, en sjekk på hvor raskt endringer publiseres. Svar: fortløpende."@nb;
+        dct:title                 "Datatjenesteløpet"@nb;
+        dcat:contactPoint         <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760/.well-known/skolem/1b70ee7b-95ca-372c-b2f3-0fbf1705257c>;
+        dcat:endpointDescription  <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-testdata/master/testdata/API>;
+        dcat:endpointURL          <https://fellesdatakatalog.brreg.no/api-cat/apis> , <https://fellesdatakatalog.brreg.no/api-dog/apis>;
+        dcat:mediaType            <https://www.iana.org/assignments/media-types/text/turtle> , <https://www.iana.org/assignments/media-types/Dan%20B%C3%B8rge%20Aker%C3%B8> , <https://www.iana.org/assignments/media-types/application/ld+json>;
+        dcat:servesDataset        <http://brreg.no/catalogs/974761076/datasets/ea29742f-d7ab-4de0-93f2-f1be891325cb> .

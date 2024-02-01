@@ -1,0 +1,290 @@
+@prefix adms:         <http://www.w3.org/ns/adms#> .
+@prefix dcat:         <http://www.w3.org/ns/dcat#> .
+@prefix dct:          <http://purl.org/dc/terms/> .
+@prefix digdir:       <https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#> .
+@prefix foaf:         <http://xmlns.com/foaf/0.1/> .
+@prefix locn:         <http://www.w3.org/ns/locn#> .
+@prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
+@prefix owl:          <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:         <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:         <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard:        <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos:         <https://rdf-vocabulary.ddialliance.org/xkos/> .
+@prefix xsd:          <http://www.w3.org/2001/XMLSchema#> .
+
+digdir:Vegadresse  a                  modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/6c87006e-2bae-4424-9523-48d4cf4cc9bf>;
+        dct:title                     "Vegadresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:kommunenummer , digdir:adressenavn , digdir:adressetilleggsnavn , digdir:poststedVegadresse , digdir:adressenummer , digdir:adressekode , digdir:vegadresseSpesialiserer , digdir:bruksenhetsnummer .
+
+digdir:matrikkelnummer
+        a                         modelldcatno:Attribute;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/ae049afc-dd7e-436b-8bff-b3ab5f0ec986>;
+        dct:title                 "matrikkelnummer"@nb;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType  digdir:Matrikkelnummer .
+
+digdir:Postboksadresse
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/fdcb929f-cb81-46d6-b419-b6ac520ed065>;
+        dct:title                     "Postboksadresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:postboksadresseSpesialiserer , digdir:poststedPostboksadresse , digdir:postboksanleggsNavn , digdir:postboksnummer .
+
+digdir:postboksnummer
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/d08863bd-5b92-4697-bc9a-75c7479124bf>;
+        dct:title                   "postboksnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:poststedsnavn  a             modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/0cef6962-f4d9-4508-b6c7-90c9041a73c1>;
+        dct:title                   "poststedsnavn"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:postnummer  a                modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/2074ce7b-e943-4b63-93ae-99a7a518e97f>;
+        dct:title                   "postnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:Heltall  a  modelldcatno:SimpleType;
+        dct:title  "Heltall"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"^^xsd:anyURI .
+
+digdir:Adressenummer  a           modelldcatno:DataType;
+        dct:title                 "Adressenummer"@nb;
+        modelldcatno:hasProperty  digdir:bokstav , digdir:nummer .
+
+digdir:seksjonsnummer
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/0289aa6a-9dc6-4a31-b283-5871ab0ed02c>;
+        dct:title                   "seksjonsnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Heltall .
+
+digdir:nummer  a                    modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/1e5eb1e7-46c2-45c3-a144-32baca22e7f3>;
+        dct:title                   "nummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:festenummer  a               modelldcatno:Attribute;
+        dct:title                   "festenummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Heltall .
+
+digdir:matrikkeladresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:GeografiskAdresse .
+
+digdir:postboksadresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:GeografiskAdresse .
+
+digdir:bokstav  a                   modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/17982e51-b601-46c3-b396-9a3daa564a19>;
+        dct:title                   "bokstav"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:Poststed  a                modelldcatno:DataType;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/4141472d-e770-4e4a-a85e-d12d9eb05a43>;
+        dct:title                 "Poststed"@nb;
+        modelldcatno:hasProperty  digdir:postnummer , digdir:poststedsnavn .
+
+digdir:adressenummer  a           modelldcatno:Attribute;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/5bc2a8b8-4dca-471c-9b42-b987f8a8cad1>;
+        dct:title                 "adressenummer"@nb;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType  digdir:Adressenummer .
+
+digdir:OffisiellAdresse
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/0be32f31-fed4-4b07-ac1d-1892c86e8aa9>;
+        dct:title                     "OffisiellAdresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:offisiellAdresseSpesialiserer , digdir:representasjonspunkt , digdir:adresseId .
+
+digdir:adressekode  a               modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/e58fc49e-2261-4ef7-9f84-315086dfb10e>;
+        dct:title                   "adressekode"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/a40bc112-f3bc-4c80-95d5-82986ab009b3>
+        a                  dcat:CatalogRecord;
+        dct:identifier     "a40bc112-f3bc-4c80-95d5-82986ab009b3";
+        dct:isPartOf       <https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs/03953a9d-5b6b-34ec-b41c-dcdcb21874d9>;
+        dct:issued         "2020-08-14T14:18:27Z"^^xsd:dateTime;
+        dct:modified       "2023-11-27T12:51:28.097Z"^^xsd:dateTime;
+        foaf:primaryTopic  digdir:AdresseModell .
+
+digdir:KontaktOss  a               vcard:Kind;
+        vcard:hasEmail             <mailto:informasjonsforvaltning@digdir.no>;
+        vcard:hasOrganizationName  "Avdeling for digitalisering"@nb , "Avdeling for digitalisering"@nn , "Digitalisation department"@en .
+
+digdir:poststedPostboksadresse
+        a                         modelldcatno:Attribute;
+        dct:title                 "poststed"@nb;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType  digdir:Poststed .
+
+digdir:Matrikkeladresse
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/f6d85b38-f7e3-4764-8e51-9627ccd72569>;
+        dct:title                     "Matrikkeladresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:matrikkeladresseSpesialiserer , digdir:undernummer , digdir:matrikkelnummer , digdir:adressetilleggsnavn , digdir:bruksenhetsnummer .
+
+digdir:poststedVegadresse
+        a                         modelldcatno:Attribute;
+        dct:title                 "poststed"@nb;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs             "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType  digdir:Poststed .
+
+digdir:Kommunenummer  a                 modelldcatno:CodeList;
+        dct:title                       "Kommunenummer"@nb;
+        modelldcatno:codeListReference  "https://www.ssb.no/klass/klassifikasjoner/131"^^xsd:anyURI .
+
+digdir:GeografiskAdresse
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c117b9f-086d-4f13-8ad9-88fa965ac538>;
+        dct:title                     "GeografiskAdresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:geografiskAdresseSpesialiserer .
+
+digdir:Tekst  a    modelldcatno:SimpleType;
+        dct:title  "Tekst"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+digdir:undernummer  a               modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/c9b91045-5180-461c-8882-1badab9f60f9>;
+        dct:title                   "undernummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Heltall .
+
+digdir:Adresse  a                     modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/fea0e9f2-3b62-4c6b-9df3-27dd2f7cd530>;
+        dct:title                     "Adresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb .
+
+digdir:bruksnummer  a               modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/b35111d1-cad4-4b66-acf8-c32c72f8033c>;
+        dct:title                   "bruksnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Heltall .
+
+digdir:Punkt  a                   modelldcatno:DataType;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/0bb21922-0379-4324-b91b-d2389a777dc6>;
+        dct:title                 "Punkt"@nb;
+        modelldcatno:hasProperty  digdir:referansesystem , digdir:koordinat .
+
+digdir:AdresseModell  a    modelldcatno:InformationModel;
+        dct:description    "Overordnet informasjonsmodell for Adresse. Formål: Felles forståelse av adressebegrep og standardiserte informasjonsstrukturer for konsistent bruk og representasjon av adresser."@nb;
+        dct:identifier     "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#AdresseModell"^^xsd:anyURI;
+        dct:issued         "2016-09-28T00:00:00+01:00"^^xsd:dateTime;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOB>;
+        dct:license        <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0>;
+        dct:publisher      <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827>;
+        dct:spatial        <http://publications.europa.eu/resource/authority/country/NOR>;
+        dct:subject        <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c117b9f-086d-4f13-8ad9-88fa965ac538> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/9acc8b93-ae2f-4464-9a45-7e691d7dd19a> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/fea0e9f2-3b62-4c6b-9df3-27dd2f7cd530> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/6c87006e-2bae-4424-9523-48d4cf4cc9bf> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/0be32f31-fed4-4b07-ac1d-1892c86e8aa9> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/fdcb929f-cb81-46d6-b419-b6ac520ed065> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/f6d85b38-f7e3-4764-8e51-9627ccd72569>;
+        dct:title          "Felles informasjonsmodell for Adresse"@nb;
+        dct:type           modelldcatno:logicalModel , modelldcatno:commonSharedModel;
+        owl:versionInfo    "1.0";
+        adms:status        <http://purl.org/adms/status/Completed>;
+        dcat:contactPoint  digdir:KontaktOss;
+        dcat:keyword       "Adresse"@nb;
+        dcat:theme         <https://psi.norge.no/los/tema/eiendom>;
+        foaf:homepage      <https://www.digdir.no/informasjonsforvaltning/adresse-felles-informasjonsmodell/2019>;
+        modelldcatno:containsModelElement
+                digdir:Postboksadresse , digdir:Adressenummer , digdir:Matrikkeladresse , digdir:Poststed , digdir:Punkt , digdir:Vegadresse , digdir:OffisiellAdresse , digdir:Matrikkelnummer , digdir:Adresse , digdir:Kommunenummer , digdir:GeografiskAdresse .
+
+digdir:adresseId  a                 modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/d1574346-8712-431b-b811-38ce2204adf5>;
+        dct:title                   "adresseId"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:kommunenummer  a            modelldcatno:Attribute;
+        dct:subject                <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971526920/399c275c-764c-402b-b49c-ae95392bd6fc>;
+        dct:title                  "kommunenummer"@nb;
+        xsd:maxOccurs              "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom  digdir:Kommunenummer .
+
+digdir:bruksenhetsnummer
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/b19e31e0-3b1a-4cf1-9f56-25ce1afac64a>;
+        dct:title                   "bruksenhetsnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:postboksanleggsNavn
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/1e9d4ebe-89c8-46fb-af23-af7b13a20b40>;
+        dct:title                   "postboksanleggsNavn"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:representasjonspunkt
+        a                         modelldcatno:Attribute;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/da56081e-d08e-4c2c-859a-aa1ebb31d738>;
+        dct:title                 "representasjonspunkt"@nb;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType  digdir:Punkt .
+
+digdir:gårdsnummer  a               modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/e5bdc592-be9a-4342-aa8a-bf39aaef19b2>;
+        dct:title                   "gårdsnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Heltall .
+
+digdir:koordinat  a                 modelldcatno:Attribute;
+        dct:title                   "koordinat"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:Matrikkelnummer
+        a                         modelldcatno:DataType;
+        dct:title                 "Matrikkelnummer"@nb;
+        modelldcatno:hasProperty  digdir:seksjonsnummer , digdir:festenummer , digdir:bruksnummer , digdir:gårdsnummer , digdir:kommunenummer .
+
+digdir:adressenavn  a               modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/52c28953-af85-477f-b612-a10e76f977c4>;
+        dct:title                   "adressenavn"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:offisiellAdresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:GeografiskAdresse .
+
+digdir:adressetilleggsnavn
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971040238/5732b7dd-086f-4210-a122-f4f0a80b0381>;
+        dct:title                   "adressetilleggsnavn"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:referansesystem
+        a                           modelldcatno:Attribute;
+        dct:title                   "referansesystem"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:vegadresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:GeografiskAdresse .
+
+digdir:geografiskAdresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:Adresse .

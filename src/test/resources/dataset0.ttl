@@ -1,0 +1,115 @@
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix cpsv:   <http://purl.org/vocab/cpsv#> .
+@prefix cpsvno: <https://data.norge.no/vocabulary/cpsvno#> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+@prefix eli:    <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix iso:    <http://iso.org/25012/2008/dataquality/> .
+@prefix oa:     <http://www.w3.org/ns/oa#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/7e5195a2-b364-35cf-9a7c-45cf57be2161>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Accuracy;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/f99ed67f-c0ee-398d-9141-0ac2dfba0f02> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/f99ed67f-c0ee-398d-9141-0ac2dfba0f02>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig nøyaktig";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/fe8f6ea9-95bd-35a6-b239-175f758d7127>
+        rdf:type                 vcard:Organization;
+        vcard:hasEmail           <mailto:biff@steak.no>;
+        vcard:hasTelephone       <tel:1337>;
+        vcard:hasURL             <http://steak.com>;
+        vcard:organization-unit  "biff.no" .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/3da6703b-47ff-31b9-a637-464b594e0254>
+        rdf:type         dcat:Distribution;
+        dct:description  "biff"@nb;
+        dcat:accessURL   <http://www.eksempelbiffen.no> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/c43822af-d264-301d-838e-f4055b5486aa>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Completeness;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/b70694d0-4d6c-3af5-ba78-b7d42d90438b> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/b70694d0-4d6c-3af5-ba78-b7d42d90438b>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig komplett";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/39395938-dfb2-3edc-94b0-608ee1d6b7c1>
+        rdf:type          dcat:Distribution;
+        dct:description   "Test ny distribusjon"@nb;
+        dct:license       <http://publications.europa.eu/resource/authority/licence/NLOD_2_0>;
+        dct:title         "Biff er digg"@nb;
+        dcat:accessURL    <https://tilgangslenke.no>;
+        dcat:downloadURL  <https://scam.nedlastingslenke.no> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/5bda34c9-9754-31da-b86b-d34f77ba6427>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Relevance;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/98d5c592-498c-316e-bcdd-483d67c5666d> .
+
+<https://datasets.staging.fellesdatakatalog.digdir.no/datasets/ebdbbb9d-d981-3f7d-ac0a-7b9a6852e685>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "ebdbbb9d-d981-3f7d-ac0a-7b9a6852e685";
+        dct:isPartOf       <https://datasets.staging.fellesdatakatalog.digdir.no/catalogs/821c273e-c4b0-3807-8d54-f54998747507>;
+        dct:issued         "2021-03-17T10:00:44.182Z"^^xsd:dateTime;
+        dct:modified       "2022-11-25T08:31:16.487Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/e8e1ffb7-62a1-3027-820f-8fb9904cadf2>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Currentness .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/98d5c592-498c-316e-bcdd-483d67c5666d>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig relevant";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858>
+        rdf:type                  dcat:Dataset;
+        dct:accessRights          <http://publications.europa.eu/resource/authority/access-right/PUBLIC>;
+        dct:accrualPeriodicity    <http://publications.europa.eu/resource/authority/frequency>;
+        dct:description           "oversikt over verdens beste biff\n\n---\nFormål: Finne ut hvilken biff som er verdens beste"@nb;
+        dct:identifier            "https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858";
+        dct:isPartOf              <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/17ed5a7d-1a22-49f4-a1d6-25f7d90dfa6d>;
+        dct:provenance            <http://data.brreg.no/datakatalog/provinens/nasjonal>;
+        dct:publisher             <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132>;
+        dct:title                 "Biff er beef ny biff"@nb;
+        dct:type                  "Testdata";
+        adms:sample               <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/3da6703b-47ff-31b9-a637-464b594e0254>;
+        dcat:contactPoint         <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/fe8f6ea9-95bd-35a6-b239-175f758d7127>;
+        dcat:distribution         <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/39395938-dfb2-3edc-94b0-608ee1d6b7c1> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/fe47678d-d615-3103-a781-393e322cd3b2>;
+        dcat:landingPage          <https://en.wikipedia.org/wiki/Steak>;
+        dcat:theme                <https://psi.norge.no/los/tema/helse-og-omsorg> , <https://psi.norge.no/los/tema/demokrati-og-innbyggerrettigheter> , <https://psi.norge.no/los/ord/ernaring> , <https://psi.norge.no/los/ord/matlevering>;
+        dqv:hasQualityAnnotation  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/c43822af-d264-301d-838e-f4055b5486aa> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/5bda34c9-9754-31da-b86b-d34f77ba6427> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/e8e1ffb7-62a1-3027-820f-8fb9904cadf2> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/7e5195a2-b364-35cf-9a7c-45cf57be2161> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/df83767b-74b7-33e9-9b99-b1c5d4ccd479> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/df83767b-74b7-33e9-9b99-b1c5d4ccd479>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Availability;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/79c356ed-1ace-36e7-a0a4-a1aa401449fa> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/79c356ed-1ace-36e7-a0a4-a1aa401449fa>
+        rdf:type      oa:TextualBody;
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858/.well-known/skolem/fe47678d-d615-3103-a781-393e322cd3b2>
+        rdf:type         dcat:Distribution;
+        dct:description  "Test ny distribusjon"@nb;
+        dct:title        "Test ny distribusjon"@nb .
