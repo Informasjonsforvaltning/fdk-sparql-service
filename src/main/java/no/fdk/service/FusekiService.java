@@ -8,17 +8,18 @@ import org.apache.jena.fuseki.main.FusekiServer;
 import org.apache.jena.fuseki.server.DataService;
 import org.apache.jena.fuseki.server.Endpoint;
 import org.apache.jena.fuseki.server.Operation;
+import org.apache.jena.query.Dataset;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.util.Symbol;
 import org.apache.jena.tdb.TDB;
-import org.apache.jena.tdb2.DatabaseMgr;
+import org.apache.jena.tdb2.TDB2Factory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,24 +57,22 @@ public class FusekiService {
     }
 
     private Set<DataService> createDataServices() {
-        return fusekiConfiguration
-            .getDatasetNames()
-            .stream()
-            .map(name -> {
-                Path path = Path.of(fusekiConfiguration.getStorePath(), name);
+        Path path = Path.of(fusekiConfiguration.getStorePath(), fusekiConfiguration.getDatasetName());
 
-                DatasetGraph datasetGraph = DatabaseMgr.connectDatasetGraph(path.toString());
-                datasetGraph.getContext().set(nameSymbol, name);
-                datasetGraph.getContext().setTrue(TDB.symUnionDefaultGraph);
+        Dataset dataset = TDB2Factory.connectDataset(path.toString());
+        DatasetGraph datasetGraph = dataset.asDatasetGraph();
+        datasetGraph.getContext().set(nameSymbol, fusekiConfiguration.getDatasetName());
+        datasetGraph.getContext().setTrue(TDB.symUnionDefaultGraph);
 
-                DataService.Builder dataServiceBuilder = DataService.newBuilder();
-                dataServiceBuilder.dataset(datasetGraph);
-                dataServiceBuilder.addEndpoint(createCompactEndpoint());
-                dataServiceBuilder.withStdServices(true);
+        DataService.Builder dataServiceBuilder = DataService.newBuilder();
+        dataServiceBuilder.dataset(datasetGraph);
+        dataServiceBuilder.addEndpoint(createCompactEndpoint());
+        dataServiceBuilder.withStdServices(true);
 
-                return dataServiceBuilder.build();
-            })
-            .collect(Collectors.toSet());
+        Set<DataService> dataServices = new HashSet<>();
+        dataServices.add(dataServiceBuilder.build());
+
+        return dataServices;
     }
 
     private Endpoint createCompactEndpoint() {
