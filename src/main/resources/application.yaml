@@ -1,12 +1,6 @@
 logging.level:
   root: ERROR
   no.fdk: DEBUG
-spring:
-  rabbitmq:
-    host: ${RABBIT_HOST:rabbitmq}
-    port: ${RABBIT_PORT:5672}
-    username: ${RABBIT_USERNAME}
-    password: ${RABBIT_PASSWORD}
 application:
   fuseki:
     realm: fdk
@@ -14,37 +8,25 @@ application:
     context-path: fuseki
     store-path: store
     dataset-names:
-      - harvested
+      - fdk
     enable-verbose-logging: false
-  uri:
-    datasets: ${REASONING_HOST:http://fdk-reasoning-service:8080}/datasets
-    dataservices: ${REASONING_HOST:http://fdk-reasoning-service:8080}/data-services
-    concepts: ${REASONING_HOST:http://fdk-reasoning-service:8080}/concepts
-    informationmodels: ${REASONING_HOST:http://fdk-reasoning-service:8080}/information-models
-    events: ${REASONING_HOST:http://fdk-reasoning-service:8080}/events
-    publicservices: ${REASONING_HOST:http://fdk-reasoning-service:8080}/public-services
-    fusekiHarvested: http://localhost:8080/fuseki/harvested
   graph:
-    datasets: https://datasets.fellesdatakatalog.digdir.no
-    dataservices: https://dataservices.fellesdatakatalog.digdir.no
-    concepts: https://concepts.fellesdatakatalog.digdir.no
-    informationmodels: https://informationmodels.fellesdatakatalog.digdir.no
-    events: https://data.norge.no/api/events
-    publicservices: https://data.norge.no/api/public-services
+    datasets: ${GRAPH_BASE}/datasets/
+    dataservices: ${GRAPH_BASE}/dataservices/
+    concepts: ${GRAPH_BASE}/concepts/
+    informationmodels: ${GRAPH_BASE}/informationmodels/
+    events: ${GRAPH_BASE}/events/
+    services: ${GRAPH_BASE}/services/
+    uri: http://localhost:8080/fuseki/fdk
 
 ---
 spring:
-  config.activate.on-profile: develop
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+  config.activate.on-profile: test
 application:
-  uri:
-    datasets: https://datasets.staging.fellesdatakatalog.digdir.no/catalogs
-    dataservices: https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs
-    concepts: https://concepts.staging.fellesdatakatalog.digdir.no/collections
-    informationmodels: https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs
-    events: https://staging.fellesdatakatalog.digdir.no/api/events
-    publicservices: https://staging.fellesdatakatalog.digdir.no/api/public-services
+  graph:
+    datasets: https://staging.fellesdatakatalog.digdir.no/datasets/
+    dataservices: https://staging.fellesdatakatalog.digdir.no/dataservices/
+    concepts: https://staging.fellesdatakatalog.digdir.no/concepts/
+    informationmodels: https://staging.fellesdatakatalog.digdir.no/informationmodels/
+    events: https://staging.fellesdatakatalog.digdir.no/events/
+    services: https://staging.fellesdatakatalog.digdir.no/services/
