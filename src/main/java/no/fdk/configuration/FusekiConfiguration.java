@@ -12,6 +12,6 @@ public class FusekiConfiguration {
     private Short port;
     private String contextPath;
     private String storePath;
-    private Set<String> datasetNames;
+    private String datasetName;
     private Boolean enableVerboseLogging;
 }

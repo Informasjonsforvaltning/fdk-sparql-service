@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.fdk.configuration.HarvestGraphProperties;
 import no.fdk.model.fuseki.action.CatalogType;
+import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -53,6 +54,12 @@ public class UpdateService {
 
             conn.begin(ReadWrite.WRITE);
             conn.delete(graphName);
+        } catch (HttpException httpException) {
+            if (httpException.getStatusCode() != 404) {
+                log.error("delete for id {} with catalog type {} failed", id, type, httpException);
+            } else {
+                log.debug("Unable to delete {} of type {}, not found in fuseki", id, type);
+            }
         } catch (Exception exception) {
             log.error("delete for id {} with catalog type {} failed", id, type, exception);
         }

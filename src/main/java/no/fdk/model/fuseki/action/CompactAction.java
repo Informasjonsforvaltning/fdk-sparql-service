@@ -5,7 +5,6 @@ import org.apache.jena.dboe.base.file.Location;
 import org.apache.jena.fuseki.servlets.BaseActionREST;
 import org.apache.jena.fuseki.servlets.HttpAction;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.util.Symbol;
 import org.apache.jena.tdb2.DatabaseMgr;
 import org.apache.jena.tdb2.store.DatasetGraphSwitchable;
 import org.apache.jena.tdb2.sys.TDBInternal;
@@ -28,14 +27,11 @@ public class CompactAction extends BaseActionREST {
     }
 
     private void compact(DatasetGraph datasetGraph) {
-        String datasetName = datasetGraph.getContext().getAsString(Symbol.create("name"));
-        log.info("Started compaction process for dataset '{}'", datasetName);
-
         DatabaseMgr.compact(datasetGraph);
 
         removeUnusedFiles(datasetGraph);
 
-        log.info("Finished compaction process for dataset '{}'", datasetName);
+        log.info("Finished compaction process");
     }
 
     public void compact(String datasetPath) {
