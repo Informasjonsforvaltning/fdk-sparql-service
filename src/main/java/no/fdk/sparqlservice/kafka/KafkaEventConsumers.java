@@ -1,17 +1,17 @@
-package no.fdk.kafka;
+package no.fdk.sparqlservice.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.fdk.concept.ConceptEvent;
 import no.fdk.concept.ConceptEventType;
-import no.fdk.configuration.FusekiConfiguration;
+import no.fdk.sparqlservice.configuration.FusekiConfiguration;
 import no.fdk.dataservice.DataServiceEvent;
 import no.fdk.dataservice.DataServiceEventType;
 import no.fdk.dataset.DatasetEvent;
 import no.fdk.dataset.DatasetEventType;
-import no.fdk.model.fuseki.action.CatalogType;
-import no.fdk.model.fuseki.action.CompactAction;
-import no.fdk.service.UpdateService;
+import no.fdk.sparqlservice.model.CatalogType;
+import no.fdk.sparqlservice.fuseki.action.CompactAction;
+import no.fdk.sparqlservice.service.UpdateService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;

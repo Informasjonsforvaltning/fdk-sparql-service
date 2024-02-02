@@ -1,4 +1,4 @@
-package no.fdk.configuration;
+package no.fdk.sparqlservice.configuration;
 
 
 import no.fdk.concept.ConceptEvent;

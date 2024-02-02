@@ -1,4 +1,4 @@
-package no.fdk;
+package no.fdk.sparqlservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

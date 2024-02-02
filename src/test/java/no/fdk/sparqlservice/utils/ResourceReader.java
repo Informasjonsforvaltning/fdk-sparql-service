@@ -1,4 +1,4 @@
-package no.fdk.utils;
+package no.fdk.sparqlservice.utils;
 
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;

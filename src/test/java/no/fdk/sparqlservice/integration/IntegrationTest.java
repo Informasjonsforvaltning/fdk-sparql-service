@@ -1,12 +1,12 @@
-package no.fdk.integration;
+package no.fdk.sparqlservice.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.fdk.model.fuseki.action.CatalogType;
-import no.fdk.service.UpdateService;
-import no.fdk.utils.TestQuery;
-import no.fdk.utils.ResourceReader;
+import no.fdk.sparqlservice.model.CatalogType;
+import no.fdk.sparqlservice.service.UpdateService;
+import no.fdk.sparqlservice.utils.ResourceReader;
+import no.fdk.sparqlservice.utils.TestQuery;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

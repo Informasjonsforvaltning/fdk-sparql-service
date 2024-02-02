@@ -1,4 +1,4 @@
-package no.fdk.utils;
+package no.fdk.sparqlservice.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

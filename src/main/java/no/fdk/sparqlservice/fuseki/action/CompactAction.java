@@ -1,4 +1,4 @@
-package no.fdk.model.fuseki.action;
+package no.fdk.sparqlservice.fuseki.action;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.dboe.base.file.Location;

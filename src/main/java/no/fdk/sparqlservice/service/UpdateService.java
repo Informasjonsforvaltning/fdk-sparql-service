@@ -1,9 +1,9 @@
-package no.fdk.service;
+package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.fdk.configuration.HarvestGraphProperties;
-import no.fdk.model.fuseki.action.CatalogType;
+import no.fdk.sparqlservice.configuration.HarvestGraphProperties;
+import no.fdk.sparqlservice.model.CatalogType;
 import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
