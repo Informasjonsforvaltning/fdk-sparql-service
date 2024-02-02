@@ -23,6 +23,9 @@ spec:
         - name: fdk-sparql-kafka-service
           image: fdk-sparql-kafka-service
           imagePullPolicy: Always
+          volumeMounts:
+            - name: fuseki
+              mountPath: /app/store
           ports:
             - containerPort: 8080
           livenessProbe:
@@ -49,3 +52,7 @@ spec:
         runAsGroup: 1001
         fsGroup: 1001
       restartPolicy: Always
+      volumes:
+        - name: fuseki
+          persistentVolumeClaim:
+            claimName: fdk-sparql-service
