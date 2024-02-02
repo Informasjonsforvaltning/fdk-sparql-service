@@ -4,6 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.fdk.concept.ConceptEvent;
 import no.fdk.concept.ConceptEventType;
+import no.fdk.event.EventEvent;
+import no.fdk.event.EventEventType;
+import no.fdk.informationmodels.InformationModelEvent;
+import no.fdk.informationmodels.InformationModelEventType;
+import no.fdk.service.ServiceEvent;
+import no.fdk.service.ServiceEventType;
 import no.fdk.sparqlservice.configuration.FusekiConfiguration;
 import no.fdk.dataservice.DataServiceEvent;
 import no.fdk.dataservice.DataServiceEventType;
@@ -33,6 +39,72 @@ public class KafkaEventConsumers {
             graphsUpdated = 0;
             String datasetPath = "%s/%s".formatted(fusekiConfiguration.getStorePath(), fusekiConfiguration.getDatasetName());
             compactAction.compact(datasetPath);
+        }
+    }
+
+    @KafkaListener(
+            topics = "service-events",
+            groupId = "fdk-sparql-service",
+            containerFactory = "serviceListenerContainerFactory"
+    )
+    public void serviceListener(ConsumerRecord<String, ServiceEvent> record, Acknowledgment ack) {
+        ServiceEvent event = record.value();
+        try {
+            if(event.getType() == ServiceEventType.SERVICE_REASONED) {
+                updateService.updateGraph(CatalogType.SERVICES, event.getFdkId().toString(), event.getGraph().toString());
+                graphsUpdated++;
+            } else if(event.getType() == ServiceEventType.SERVICE_REMOVED) {
+                updateService.deleteGraph(CatalogType.SERVICES, event.getFdkId().toString());
+            }
+
+            ack.acknowledge();
+            runCompact();
+        } catch (Exception exception) {
+            log.error("Error processing service message",  exception);
+        }
+    }
+
+    @KafkaListener(
+            topics = "information-model-events",
+            groupId = "fdk-sparql-service",
+            containerFactory = "infoModelListenerContainerFactory"
+    )
+    public void infoModelListener(ConsumerRecord<String, InformationModelEvent> record, Acknowledgment ack) {
+        InformationModelEvent event = record.value();
+        try {
+            if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REASONED) {
+                updateService.updateGraph(CatalogType.INFORMATION_MODELS, event.getFdkId().toString(), event.getGraph().toString());
+                graphsUpdated++;
+            } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED) {
+                updateService.deleteGraph(CatalogType.INFORMATION_MODELS, event.getFdkId().toString());
+            }
+
+            ack.acknowledge();
+            runCompact();
+        } catch (Exception exception) {
+            log.error("Error processing information model message",  exception);
+        }
+    }
+
+    @KafkaListener(
+            topics = "event-events",
+            groupId = "fdk-sparql-service",
+            containerFactory = "eventListenerContainerFactory"
+    )
+    public void eventListener(ConsumerRecord<String, EventEvent> record, Acknowledgment ack) {
+        EventEvent event = record.value();
+        try {
+            if(event.getType() == EventEventType.EVENT_REASONED) {
+                updateService.updateGraph(CatalogType.EVENTS, event.getFdkId().toString(), event.getGraph().toString());
+                graphsUpdated++;
+            } else if(event.getType() == EventEventType.EVENT_REMOVED) {
+                updateService.deleteGraph(CatalogType.EVENTS, event.getFdkId().toString());
+            }
+
+            ack.acknowledge();
+            runCompact();
+        } catch (Exception exception) {
+            log.error("Error processing event message",  exception);
         }
     }
 
