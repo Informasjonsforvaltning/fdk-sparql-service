@@ -46,7 +46,7 @@ spec:
             failureThreshold: 5
           resources:
             requests:
-              memory: 6000Mi
+              memory: 9000Mi
       securityContext:
         runAsUser: 1001
         runAsGroup: 1001
