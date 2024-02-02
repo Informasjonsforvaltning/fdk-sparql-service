@@ -1,4 +1,4 @@
-package no.fdk.model.fuseki.action;
+package no.fdk.sparqlservice.model;
 
 public enum CatalogType {
     CONCEPTS, DATA_SERVICES, DATASETS, EVENTS,

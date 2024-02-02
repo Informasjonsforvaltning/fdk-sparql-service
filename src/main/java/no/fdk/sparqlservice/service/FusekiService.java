@@ -1,9 +1,9 @@
-package no.fdk.service;
+package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.fdk.configuration.FusekiConfiguration;
-import no.fdk.model.fuseki.action.CompactAction;
+import no.fdk.sparqlservice.configuration.FusekiConfiguration;
+import no.fdk.sparqlservice.fuseki.action.CompactAction;
 import org.apache.jena.fuseki.main.FusekiServer;
 import org.apache.jena.fuseki.server.DataService;
 import org.apache.jena.fuseki.server.Endpoint;

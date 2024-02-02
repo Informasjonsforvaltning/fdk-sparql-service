@@ -1,4 +1,4 @@
-package no.fdk.configuration;
+package no.fdk.sparqlservice.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
