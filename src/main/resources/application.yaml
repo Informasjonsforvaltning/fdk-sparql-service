@@ -10,14 +10,23 @@ application:
     dataset-name: fdk
     enable-verbose-logging: false
   graph:
-    datasets: ${GRAPH_BASE}/datasets/
-    dataservices: ${GRAPH_BASE}/dataservices/
-    concepts: ${GRAPH_BASE}/concepts/
-    informationmodels: ${GRAPH_BASE}/informationmodels/
-    events: ${GRAPH_BASE}/events/
-    services: ${GRAPH_BASE}/services/
+    datasets: ${GRAPH_BASE}/datasets
+    dataservices: ${GRAPH_BASE}/dataservices
+    concepts: ${GRAPH_BASE}/concepts
+    informationmodels: ${GRAPH_BASE}/informationmodels
+    events: ${GRAPH_BASE}/events
+    services: ${GRAPH_BASE}/services
     uri: http://localhost:8080/fuseki/fdk
 spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate.ddl-auto: none
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
   kafka:
     bootstrap-servers:
       - ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
@@ -32,7 +41,7 @@ spring:
       auto-offset-reset: earliest
       enable-auto-commit: false
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      max-poll-records: 5
+      max-poll-records: 500
     producer:
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     listener:
@@ -41,11 +50,19 @@ spring:
 ---
 spring:
   config.activate.on-profile: test
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate.ddl-auto: create
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
 application:
   graph:
-    datasets: https://staging.fellesdatakatalog.digdir.no/datasets/
-    dataservices: https://staging.fellesdatakatalog.digdir.no/dataservices/
-    concepts: https://staging.fellesdatakatalog.digdir.no/concepts/
-    informationmodels: https://staging.fellesdatakatalog.digdir.no/informationmodels/
-    events: https://staging.fellesdatakatalog.digdir.no/events/
-    services: https://staging.fellesdatakatalog.digdir.no/services/
+    datasets: https://staging.fellesdatakatalog.digdir.no/datasets
+    dataservices: https://staging.fellesdatakatalog.digdir.no/dataservices
+    concepts: https://staging.fellesdatakatalog.digdir.no/concepts
+    informationmodels: https://staging.fellesdatakatalog.digdir.no/informationmodels
+    events: https://staging.fellesdatakatalog.digdir.no/events
+    services: https://staging.fellesdatakatalog.digdir.no/services
