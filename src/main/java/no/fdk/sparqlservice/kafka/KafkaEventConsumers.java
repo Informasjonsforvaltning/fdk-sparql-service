@@ -10,14 +10,11 @@ import no.fdk.informationmodels.InformationModelEvent;
 import no.fdk.informationmodels.InformationModelEventType;
 import no.fdk.service.ServiceEvent;
 import no.fdk.service.ServiceEventType;
-import no.fdk.sparqlservice.configuration.FusekiConfiguration;
 import no.fdk.dataservice.DataServiceEvent;
 import no.fdk.dataservice.DataServiceEventType;
 import no.fdk.dataset.DatasetEvent;
 import no.fdk.dataset.DatasetEventType;
-import no.fdk.sparqlservice.model.CatalogType;
-import no.fdk.sparqlservice.fuseki.action.CompactAction;
-import no.fdk.sparqlservice.service.UpdateService;
+import no.fdk.sparqlservice.service.ResourceService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -27,20 +24,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class KafkaEventConsumers {
-    private final UpdateService updateService;
-    private final FusekiConfiguration fusekiConfiguration;
-    private final CompactAction compactAction;
-
-    private int graphsUpdated = 0;
-
-    private void runCompact() {
-        int MAX_UPDATES_BEFORE_COMPACT = 1000;
-        if (graphsUpdated > MAX_UPDATES_BEFORE_COMPACT) {
-            graphsUpdated = 0;
-            String datasetPath = "%s/%s".formatted(fusekiConfiguration.getStorePath(), fusekiConfiguration.getDatasetName());
-            compactAction.compact(datasetPath);
-        }
-    }
+    private final ResourceService resourceService;
 
     @KafkaListener(
             topics = "service-events",
@@ -51,14 +35,16 @@ public class KafkaEventConsumers {
         ServiceEvent event = record.value();
         try {
             if(event.getType() == ServiceEventType.SERVICE_REASONED) {
-                updateService.updateGraph(CatalogType.SERVICES, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
+                resourceService.saveService(
+                        event.getFdkId().toString(),
+                        event.getGraph().toString(),
+                        event.getTimestamp()
+                );
             } else if(event.getType() == ServiceEventType.SERVICE_REMOVED) {
-                updateService.deleteGraph(CatalogType.SERVICES, event.getFdkId().toString());
+                resourceService.deleteService(event.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing service message",  exception);
         }
@@ -73,14 +59,16 @@ public class KafkaEventConsumers {
         InformationModelEvent event = record.value();
         try {
             if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REASONED) {
-                updateService.updateGraph(CatalogType.INFORMATION_MODELS, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
+                resourceService.saveInformationModel(
+                        event.getFdkId().toString(),
+                        event.getGraph().toString(),
+                        event.getTimestamp()
+                );
             } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED) {
-                updateService.deleteGraph(CatalogType.INFORMATION_MODELS, event.getFdkId().toString());
+                resourceService.deleteInformationModel(event.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing information model message",  exception);
         }
@@ -92,17 +80,19 @@ public class KafkaEventConsumers {
             containerFactory = "eventListenerContainerFactory"
     )
     public void eventListener(ConsumerRecord<String, EventEvent> record, Acknowledgment ack) {
-        EventEvent event = record.value();
+        EventEvent kafkaEvent = record.value();
         try {
-            if(event.getType() == EventEventType.EVENT_REASONED) {
-                updateService.updateGraph(CatalogType.EVENTS, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
-            } else if(event.getType() == EventEventType.EVENT_REMOVED) {
-                updateService.deleteGraph(CatalogType.EVENTS, event.getFdkId().toString());
+            if(kafkaEvent.getType() == EventEventType.EVENT_REASONED) {
+                resourceService.saveEvent(
+                        kafkaEvent.getFdkId().toString(),
+                        kafkaEvent.getGraph().toString(),
+                        kafkaEvent.getTimestamp()
+                );
+            } else if(kafkaEvent.getType() == EventEventType.EVENT_REMOVED) {
+                resourceService.deleteEvent(kafkaEvent.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing event message",  exception);
         }
@@ -117,14 +107,16 @@ public class KafkaEventConsumers {
         DatasetEvent event = record.value();
         try {
             if(event.getType() == DatasetEventType.DATASET_REASONED) {
-                updateService.updateGraph(CatalogType.DATASETS, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
+                resourceService.saveDataset(
+                        event.getFdkId().toString(),
+                        event.getGraph().toString(),
+                        event.getTimestamp()
+                );
             } else if(event.getType() == DatasetEventType.DATASET_REMOVED) {
-                updateService.deleteGraph(CatalogType.DATASETS, event.getFdkId().toString());
+                resourceService.deleteDataset(event.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing dataset message",  exception);
         }
@@ -139,14 +131,16 @@ public class KafkaEventConsumers {
         DataServiceEvent event = record.value();
         try {
             if(event.getType() == DataServiceEventType.DATA_SERVICE_REASONED) {
-                updateService.updateGraph(CatalogType.DATA_SERVICES, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
+                resourceService.saveDataService(
+                        event.getFdkId().toString(),
+                        event.getGraph().toString(),
+                        event.getTimestamp()
+                );
             } else if(event.getType() == DataServiceEventType.DATA_SERVICE_REMOVED) {
-                updateService.deleteGraph(CatalogType.DATA_SERVICES, event.getFdkId().toString());
+                resourceService.deleteDataService(event.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing data service message",  exception);
         }
@@ -161,14 +155,16 @@ public class KafkaEventConsumers {
         ConceptEvent event = record.value();
         try {
             if(event.getType() == ConceptEventType.CONCEPT_REASONED) {
-                updateService.updateGraph(CatalogType.CONCEPTS, event.getFdkId().toString(), event.getGraph().toString());
-                graphsUpdated++;
+                resourceService.saveConcept(
+                        event.getFdkId().toString(),
+                        event.getGraph().toString(),
+                        event.getTimestamp()
+                );
             } else if(event.getType() == ConceptEventType.CONCEPT_REMOVED) {
-                updateService.deleteGraph(CatalogType.CONCEPTS, event.getFdkId().toString());
+                resourceService.deleteConcept(event.getFdkId().toString());
             }
 
             ack.acknowledge();
-            runCompact();
         } catch (Exception exception) {
             log.error("Error processing concept message",  exception);
         }

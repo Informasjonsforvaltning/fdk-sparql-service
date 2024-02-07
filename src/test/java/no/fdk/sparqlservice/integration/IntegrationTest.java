@@ -4,7 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.fdk.sparqlservice.model.CatalogType;
+import no.fdk.sparqlservice.model.Concept;
+import no.fdk.sparqlservice.model.DataService;
+import no.fdk.sparqlservice.model.Dataset;
+import no.fdk.sparqlservice.model.Event;
+import no.fdk.sparqlservice.model.InformationModel;
+import no.fdk.sparqlservice.model.Service;
+import no.fdk.sparqlservice.repository.ConceptRepository;
+import no.fdk.sparqlservice.repository.DataServiceRepository;
+import no.fdk.sparqlservice.repository.DatasetRepository;
+import no.fdk.sparqlservice.repository.EventRepository;
+import no.fdk.sparqlservice.repository.InformationModelRepository;
+import no.fdk.sparqlservice.repository.ServiceRepository;
+import no.fdk.sparqlservice.service.ResourceService;
 import no.fdk.sparqlservice.service.UpdateService;
+import no.fdk.sparqlservice.utils.AbstractContainerTest;
 import no.fdk.sparqlservice.utils.ResourceReader;
 import no.fdk.sparqlservice.utils.TestQuery;
 import org.junit.jupiter.api.*;
@@ -14,26 +28,36 @@ import org.springframework.boot.test.context.SpringBootTest;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(properties = "spring.profiles.active=test")
 @Tag("integration")
-public class IntegrationTest {
+public class IntegrationTest extends AbstractContainerTest {
     ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     UpdateService updateService;
 
+    @Autowired
+    ResourceService resourceService;
+
     @BeforeEach
     void setup() {
-        updateService.updateGraph(CatalogType.CONCEPTS, "0", ResourceReader.readFile("concept0.ttl"));
-        updateService.updateGraph(CatalogType.CONCEPTS, "1", ResourceReader.readFile("concept1.ttl"));
-        updateService.updateGraph(CatalogType.DATA_SERVICES, "0", ResourceReader.readFile("dataservice0.ttl"));
-        updateService.updateGraph(CatalogType.DATA_SERVICES, "1", ResourceReader.readFile("dataservice1.ttl"));
-        updateService.updateGraph(CatalogType.DATASETS, "0", ResourceReader.readFile("dataset0.ttl"));
-        updateService.updateGraph(CatalogType.DATASETS, "1", ResourceReader.readFile("dataset1.ttl"));
-        updateService.updateGraph(CatalogType.EVENTS, "0", ResourceReader.readFile("event0.ttl"));
-        updateService.updateGraph(CatalogType.EVENTS, "1", ResourceReader.readFile("event1.ttl"));
-        updateService.updateGraph(CatalogType.INFORMATION_MODELS, "0", ResourceReader.readFile("infomodel0.ttl"));
-        updateService.updateGraph(CatalogType.INFORMATION_MODELS, "1", ResourceReader.readFile("infomodel1.ttl"));
-        updateService.updateGraph(CatalogType.SERVICES, "0", ResourceReader.readFile("service0.ttl"));
-        updateService.updateGraph(CatalogType.SERVICES, "1", ResourceReader.readFile("service1.ttl"));
+        resourceService.saveConcept("0", ResourceReader.readFile("concept0.ttl"), 123);
+        resourceService.saveConcept("1", ResourceReader.readFile("concept1.ttl"), 123);
+        resourceService.saveDataService("0", ResourceReader.readFile("dataservice0.ttl"), 123);
+        resourceService.saveDataService("1", ResourceReader.readFile("dataservice1.ttl"), 123);
+        resourceService.saveDataset("0", ResourceReader.readFile("dataset0.ttl"), 123);
+        resourceService.saveDataset("1", ResourceReader.readFile("dataset1.ttl"), 123);
+        resourceService.saveEvent("0", ResourceReader.readFile("event0.ttl"), 123);
+        resourceService.saveEvent("1", ResourceReader.readFile("event1.ttl"), 123);
+        resourceService.saveInformationModel("0", ResourceReader.readFile("infomodel0.ttl"), 123);
+        resourceService.saveInformationModel("1", ResourceReader.readFile("infomodel1.ttl"), 123);
+        resourceService.saveService("0", ResourceReader.readFile("service0.ttl"), 123);
+        resourceService.saveService("1", ResourceReader.readFile("service1.ttl"), 123);
+
+        updateService.updateConcepts();
+        updateService.updateDataServices();
+        updateService.updateDatasets();
+        updateService.updateEvents();
+        updateService.updateInformationModels();
+        updateService.updateServices();
     }
 
     private String countQuery(String rdfType) {
@@ -65,7 +89,8 @@ public class IntegrationTest {
 
     @Test
     void deleteConcept() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.CONCEPTS, "1");
+        resourceService.deleteConcept("1");
+        updateService.updateConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
         Integer result = getCountFromSelectResponse(response);
@@ -81,7 +106,8 @@ public class IntegrationTest {
 
     @Test
     void deleteDataService() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.DATA_SERVICES, "1");
+        resourceService.deleteDataService("1");
+        updateService.updateDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
         Integer result = getCountFromSelectResponse(response);
@@ -97,7 +123,8 @@ public class IntegrationTest {
 
     @Test
     void deleteDataset() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.DATASETS, "1");
+        resourceService.deleteDataset("1");
+        updateService.updateDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
         Integer result = getCountFromSelectResponse(response);
@@ -117,7 +144,8 @@ public class IntegrationTest {
 
     @Test
     void deleteEvent() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.EVENTS, "0");
+        resourceService.deleteEvent("0");
+        updateService.updateEvents();
 
         String businessResponse = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
         Integer businessResult = getCountFromSelectResponse(businessResponse);
@@ -133,7 +161,8 @@ public class IntegrationTest {
 
     @Test
     void deleteInformationModel() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.INFORMATION_MODELS, "1");
+        resourceService.deleteInformationModel("1");
+        updateService.updateInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
         Integer result = getCountFromSelectResponse(response);
@@ -149,7 +178,8 @@ public class IntegrationTest {
 
     @Test
     void deleteService() throws JsonProcessingException {
-        updateService.deleteGraph(CatalogType.SERVICES, "1");
+        resourceService.deleteService("1");
+        updateService.updateServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);

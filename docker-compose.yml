@@ -10,8 +10,24 @@ services:
       - GRAPH_BASE=https://staging.fellesdatakatalog.digdir.no
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - KAFKA_SCHEMA_REGISTRY=http://schema-registry:8081
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=sparql_test
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
     depends_on:
+      - db
       - schema-registry
+
+  db:
+    image: 'postgres:14-alpine'
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=sparql_test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
   zookeeper:
     image: confluentinc/cp-zookeeper
