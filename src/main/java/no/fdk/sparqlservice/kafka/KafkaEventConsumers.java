@@ -29,6 +29,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "service-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "serviceListenerContainerFactory"
     )
     public void serviceListener(ConsumerRecord<String, ServiceEvent> record, Acknowledgment ack) {
@@ -53,6 +54,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "information-model-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "infoModelListenerContainerFactory"
     )
     public void infoModelListener(ConsumerRecord<String, InformationModelEvent> record, Acknowledgment ack) {
@@ -77,6 +79,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "event-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "eventListenerContainerFactory"
     )
     public void eventListener(ConsumerRecord<String, EventEvent> record, Acknowledgment ack) {
@@ -101,6 +104,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "dataset-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "datasetListenerContainerFactory"
     )
     public void datasetListener(ConsumerRecord<String, DatasetEvent> record, Acknowledgment ack) {
@@ -125,6 +129,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "data-service-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "dataServiceListenerContainerFactory"
     )
     public void dataServiceListener(ConsumerRecord<String, DataServiceEvent> record, Acknowledgment ack) {
@@ -149,6 +154,7 @@ public class KafkaEventConsumers {
     @KafkaListener(
             topics = "concept-events",
             groupId = "fdk-sparql-service",
+            concurrency = "4",
             containerFactory = "conceptListenerContainerFactory"
     )
     public void conceptListener(ConsumerRecord<String, ConceptEvent> record, Acknowledgment ack) {
