@@ -5,7 +5,7 @@ import no.fdk.concept.ConceptEvent;
 import no.fdk.dataservice.DataServiceEvent;
 import no.fdk.dataset.DatasetEvent;
 import no.fdk.event.EventEvent;
-import no.fdk.informationmodels.InformationModelEvent;
+import no.fdk.informationmodel.InformationModelEvent;
 import no.fdk.service.ServiceEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

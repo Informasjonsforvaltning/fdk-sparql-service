@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package no.fdk.informationmodels;
+package no.fdk.informationmodel;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class InformationModelEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -1295828451520139210L;
+  private static final long serialVersionUID = 2972092679633082473L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"InformationModelEvent\",\"namespace\":\"no.fdk.informationmodels\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"InformationModelEventType\",\"symbols\":[\"INFORMATION_MODEL_REASONED\",\"INFORMATION_MODEL_REMOVED\",\"INFORMATION_MODEL_HARVESTED\"]}},{\"name\":\"fdkId\",\"type\":\"string\"},{\"name\":\"graph\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"InformationModelEvent\",\"namespace\":\"no.fdk.informationmodel\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"InformationModelEventType\",\"symbols\":[\"INFORMATION_MODEL_REASONED\",\"INFORMATION_MODEL_REMOVED\",\"INFORMATION_MODEL_HARVESTED\"]}},{\"name\":\"fdkId\",\"type\":\"string\"},{\"name\":\"graph\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -73,7 +73,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
     return DECODER.decode(b);
   }
 
-  private no.fdk.informationmodels.InformationModelEventType type;
+  private no.fdk.informationmodel.InformationModelEventType type;
   private java.lang.CharSequence fdkId;
   private java.lang.CharSequence graph;
   private long timestamp;
@@ -92,7 +92,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * @param graph The new value for graph
    * @param timestamp The new value for timestamp
    */
-  public InformationModelEvent(no.fdk.informationmodels.InformationModelEventType type, java.lang.CharSequence fdkId, java.lang.CharSequence graph, java.lang.Long timestamp) {
+  public InformationModelEvent(no.fdk.informationmodel.InformationModelEventType type, java.lang.CharSequence fdkId, java.lang.CharSequence graph, java.lang.Long timestamp) {
     this.type = type;
     this.fdkId = fdkId;
     this.graph = graph;
@@ -122,7 +122,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: type = (no.fdk.informationmodels.InformationModelEventType)value$; break;
+    case 0: type = (no.fdk.informationmodel.InformationModelEventType)value$; break;
     case 1: fdkId = (java.lang.CharSequence)value$; break;
     case 2: graph = (java.lang.CharSequence)value$; break;
     case 3: timestamp = (java.lang.Long)value$; break;
@@ -134,7 +134,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * Gets the value of the 'type' field.
    * @return The value of the 'type' field.
    */
-  public no.fdk.informationmodels.InformationModelEventType getType() {
+  public no.fdk.informationmodel.InformationModelEventType getType() {
     return type;
   }
 
@@ -143,7 +143,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * Sets the value of the 'type' field.
    * @param value the value to set.
    */
-  public void setType(no.fdk.informationmodels.InformationModelEventType value) {
+  public void setType(no.fdk.informationmodel.InformationModelEventType value) {
     this.type = value;
   }
 
@@ -202,8 +202,8 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * Creates a new InformationModelEvent RecordBuilder.
    * @return A new InformationModelEvent RecordBuilder
    */
-  public static no.fdk.informationmodels.InformationModelEvent.Builder newBuilder() {
-    return new no.fdk.informationmodels.InformationModelEvent.Builder();
+  public static no.fdk.informationmodel.InformationModelEvent.Builder newBuilder() {
+    return new no.fdk.informationmodel.InformationModelEvent.Builder();
   }
 
   /**
@@ -211,11 +211,11 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * @param other The existing builder to copy.
    * @return A new InformationModelEvent RecordBuilder
    */
-  public static no.fdk.informationmodels.InformationModelEvent.Builder newBuilder(no.fdk.informationmodels.InformationModelEvent.Builder other) {
+  public static no.fdk.informationmodel.InformationModelEvent.Builder newBuilder(no.fdk.informationmodel.InformationModelEvent.Builder other) {
     if (other == null) {
-      return new no.fdk.informationmodels.InformationModelEvent.Builder();
+      return new no.fdk.informationmodel.InformationModelEvent.Builder();
     } else {
-      return new no.fdk.informationmodels.InformationModelEvent.Builder(other);
+      return new no.fdk.informationmodel.InformationModelEvent.Builder(other);
     }
   }
 
@@ -224,11 +224,11 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
    * @param other The existing instance to copy.
    * @return A new InformationModelEvent RecordBuilder
    */
-  public static no.fdk.informationmodels.InformationModelEvent.Builder newBuilder(no.fdk.informationmodels.InformationModelEvent other) {
+  public static no.fdk.informationmodel.InformationModelEvent.Builder newBuilder(no.fdk.informationmodel.InformationModelEvent other) {
     if (other == null) {
-      return new no.fdk.informationmodels.InformationModelEvent.Builder();
+      return new no.fdk.informationmodel.InformationModelEvent.Builder();
     } else {
-      return new no.fdk.informationmodels.InformationModelEvent.Builder(other);
+      return new no.fdk.informationmodel.InformationModelEvent.Builder(other);
     }
   }
 
@@ -239,7 +239,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<InformationModelEvent>
     implements org.apache.avro.data.RecordBuilder<InformationModelEvent> {
 
-    private no.fdk.informationmodels.InformationModelEventType type;
+    private no.fdk.informationmodel.InformationModelEventType type;
     private java.lang.CharSequence fdkId;
     private java.lang.CharSequence graph;
     private long timestamp;
@@ -253,7 +253,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(no.fdk.informationmodels.InformationModelEvent.Builder other) {
+    private Builder(no.fdk.informationmodel.InformationModelEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
@@ -277,7 +277,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
      * Creates a Builder by copying an existing InformationModelEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(no.fdk.informationmodels.InformationModelEvent other) {
+    private Builder(no.fdk.informationmodel.InformationModelEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
@@ -301,7 +301,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * Gets the value of the 'type' field.
       * @return The value.
       */
-    public no.fdk.informationmodels.InformationModelEventType getType() {
+    public no.fdk.informationmodel.InformationModelEventType getType() {
       return type;
     }
 
@@ -311,7 +311,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder setType(no.fdk.informationmodels.InformationModelEventType value) {
+    public no.fdk.informationmodel.InformationModelEvent.Builder setType(no.fdk.informationmodel.InformationModelEventType value) {
       validate(fields()[0], value);
       this.type = value;
       fieldSetFlags()[0] = true;
@@ -331,7 +331,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'type' field.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder clearType() {
+    public no.fdk.informationmodel.InformationModelEvent.Builder clearType() {
       type = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -351,7 +351,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'fdkId'.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder setFdkId(java.lang.CharSequence value) {
+    public no.fdk.informationmodel.InformationModelEvent.Builder setFdkId(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.fdkId = value;
       fieldSetFlags()[1] = true;
@@ -371,7 +371,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'fdkId' field.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder clearFdkId() {
+    public no.fdk.informationmodel.InformationModelEvent.Builder clearFdkId() {
       fdkId = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -391,7 +391,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'graph'.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder setGraph(java.lang.CharSequence value) {
+    public no.fdk.informationmodel.InformationModelEvent.Builder setGraph(java.lang.CharSequence value) {
       validate(fields()[2], value);
       this.graph = value;
       fieldSetFlags()[2] = true;
@@ -411,7 +411,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'graph' field.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder clearGraph() {
+    public no.fdk.informationmodel.InformationModelEvent.Builder clearGraph() {
       graph = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -431,7 +431,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder setTimestamp(long value) {
+    public no.fdk.informationmodel.InformationModelEvent.Builder setTimestamp(long value) {
       validate(fields()[3], value);
       this.timestamp = value;
       fieldSetFlags()[3] = true;
@@ -451,7 +451,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       * Clears the value of the 'timestamp' field.
       * @return This builder.
       */
-    public no.fdk.informationmodels.InformationModelEvent.Builder clearTimestamp() {
+    public no.fdk.informationmodel.InformationModelEvent.Builder clearTimestamp() {
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -461,7 +461,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
     public InformationModelEvent build() {
       try {
         InformationModelEvent record = new InformationModelEvent();
-        record.type = fieldSetFlags()[0] ? this.type : (no.fdk.informationmodels.InformationModelEventType) defaultValue(fields()[0]);
+        record.type = fieldSetFlags()[0] ? this.type : (no.fdk.informationmodel.InformationModelEventType) defaultValue(fields()[0]);
         record.fdkId = fieldSetFlags()[1] ? this.fdkId : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.graph = fieldSetFlags()[2] ? this.graph : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.timestamp = fieldSetFlags()[3] ? this.timestamp : (java.lang.Long) defaultValue(fields()[3]);
@@ -512,7 +512,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
   {
     org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
-      this.type = no.fdk.informationmodels.InformationModelEventType.values()[in.readEnum()];
+      this.type = no.fdk.informationmodel.InformationModelEventType.values()[in.readEnum()];
 
       this.fdkId = in.readString(this.fdkId instanceof Utf8 ? (Utf8)this.fdkId : null);
 
@@ -524,7 +524,7 @@ public class InformationModelEvent extends org.apache.avro.specific.SpecificReco
       for (int i = 0; i < 4; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
-          this.type = no.fdk.informationmodels.InformationModelEventType.values()[in.readEnum()];
+          this.type = no.fdk.informationmodel.InformationModelEventType.values()[in.readEnum()];
           break;
 
         case 1:
