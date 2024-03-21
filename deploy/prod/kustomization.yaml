@@ -4,15 +4,7 @@ kind: Kustomization
 namespace: prod
 resources:
   - ../base
+  - pvc-fdk-sparql-service.yaml
 
 patchesStrategicMerge:
   - env.yaml
-
-patches:
-- patch: |-
-    - op: replace
-      path: /spec/storageClassName
-      value: premium-rwo
-  target:
-    kind: PersistentVolumeClaim
-    name: fdk-sparql-service
