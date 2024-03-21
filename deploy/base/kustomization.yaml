@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - deployment-fdk-sparql-service.yaml
   - service-fdk-sparql-service.yaml
-  - pvc-fdk-sparql-service.yaml
 images:
   - name: fdk-sparql-kafka-service
     newName: eu.gcr.io/digdir-fdk-infra/fdk-sparql-kafka-service
