@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine3.18
+FROM amazoncorretto:21-alpine3.18
 
 ARG USER=default
 ENV HOME /home/$USER
@@ -11,6 +11,8 @@ RUN apk update && apk add --no-cache sudo java-snappy
 RUN adduser -D $USER && \
       echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER && \
       chmod 0440 /etc/sudoers.d/$USER
+RUN chown -R $USER:$USER $HOME && \
+      chmod 770 -R $HOME
 
 USER $USER
 WORKDIR $HOME
