@@ -14,7 +14,7 @@ jobs:
     with:
       app_name: fdk-sparql-kafka-service
       environment: staging
-      java_version: '21'
+      java_version: '17'
       coverage_file_path: ./target/site/jacoco/jacoco.xml
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
