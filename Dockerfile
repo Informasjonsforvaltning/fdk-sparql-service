@@ -1,11 +1,22 @@
-FROM eclipse-temurin:17-jre
+FROM amazoncorretto:21-alpine3.18
+
+ARG USER=default
+ENV HOME /home/$USER
+
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-WORKDIR /app
-RUN addgroup --gid 1001 --system app && \
-  adduser --uid 1001 --system app --gid 1001 && \
-  chown -R app:app /app && \
-  chmod 770 -R /app
-USER app:app
-COPY --chown=app:app /target/app.jar app.jar
-CMD java -XX:+UseZGC -Xmx8g -jar app.jar
+
+# install sudo as root
+RUN apk update && apk add --no-cache sudo java-snappy
+RUN adduser -D $USER && \
+      echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER && \
+      chmod 0440 /etc/sudoers.d/$USER
+
+USER $USER
+WORKDIR $HOME
+
+COPY --chown=$USER:$USER /target/app.jar app.jar
+CMD java -jar -XX:+UseZGC \
+        -Dorg.xerial.snappy.use.systemlib=true \
+        -Dorg.xerial.snappy.lib.path=/usr/lib/libsnappy.so.1 \
+        $JAVA_OPTS app.jar
