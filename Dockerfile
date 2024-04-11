@@ -1,4 +1,4 @@
-FROM amazoncorretto:21-alpine3.18
+FROM amazoncorretto:17-alpine3.18
 
 ARG USER=default
 ENV HOME /home/$USER
