@@ -1,0 +1,27 @@
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f60a780cbf97c1bd3bdd8fb/.well-known/skolem/1ca9ba97-111f-396f-924f-d208ab786e68>
+        rdf:type  vcard:Organization;
+        vcard:fn  "Contact information | (910258028)" .
+
+<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/9340f59d-0af4-3583-8ddb-738315c1ea73>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "9340f59d-0af4-3583-8ddb-738315c1ea73";
+        dct:isPartOf       <https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs/d07885d9-0925-339f-bb22-58c28dc30409>;
+        dct:issued         "2021-03-17T10:00:04.609Z"^^xsd:dateTime;
+        dct:modified       "2023-02-02T14:09:30.492Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f60a780cbf97c1bd3bdd8fb> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f60a780cbf97c1bd3bdd8fb>
+        rdf:type            dcat:DataService;
+        dct:conformsTo      <https://data.norge.no/def/serviceType#CUSTOMER_RELATIONS>;
+        dct:description     "Creme de la creme"@nb;
+        dct:title           "Datatjeneste for iskrem"@nb;
+        dcat:contactPoint   <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f60a780cbf97c1bd3bdd8fb/.well-known/skolem/1ca9ba97-111f-396f-924f-d208ab786e68>;
+        dcat:endpointURL    <http://db.no>;
+        dcat:servesDataset  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910258028/datasets/4a157352-803b-46eb-b695-3250b1a69fa0> .
