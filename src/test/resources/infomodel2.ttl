@@ -1,0 +1,464 @@
+@prefix adms:         <http://www.w3.org/ns/adms#> .
+@prefix dcat:         <http://www.w3.org/ns/dcat#> .
+@prefix dct:          <http://purl.org/dc/terms/> .
+@prefix digdir:       <https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#> .
+@prefix foaf:         <http://xmlns.com/foaf/0.1/> .
+@prefix locn:         <http://www.w3.org/ns/locn#> .
+@prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
+@prefix owl:          <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:         <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:         <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard:        <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos:         <https://rdf-vocabulary.ddialliance.org/xkos/> .
+@prefix xsd:          <http://www.w3.org/2001/XMLSchema#> .
+
+digdir:Ugift  a            modelldcatno:CodeElement;
+        dct:identifier     "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Ugift"^^xsd:anyURI;
+        dct:subject        <http://begrepskatalogen/begrep/92f82e89-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme      digdir:Sivilstand;
+        skos:notation      "ugift";
+        skos:prefLabel     "sivilstand ugift"@nb;
+        skos:topConceptOf  digdir:Sivilstand;
+        xkos:next          digdir:Gift .
+
+digdir:enhetSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:Aktør .
+
+digdir:Enhet  a                   modelldcatno:ObjectType;
+        dct:title                 "Enhet"@nb;
+        modelldcatno:hasProperty  digdir:enhetsadresse , digdir:enhetSpesialiserer , digdir:næringskode , digdir:organisasjonsform , digdir:enhetsnavn , digdir:organisasjonsnummer .
+
+digdir:Skilt  a         modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Skilt"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8c-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "skilt";
+        skos:prefLabel  "sivilstand skilt"@nb;
+        xkos:next       digdir:RegistrertPartner .
+
+digdir:Person  a                  modelldcatno:ObjectType;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c1197a7-5c17-48f6-b399-a031d66cd8da>;
+        dct:title                 "Person"@nb;
+        modelldcatno:hasProperty  digdir:fødselsdato , digdir:dødsdato , digdir:dødsland , digdir:fulltNavn , digdir:kjønn , digdir:statsborgerskap , digdir:opprinneligNavn , digdir:personSpesialiserer , digdir:dødssted , digdir:sivilstand , digdir:fødested , digdir:fødeland , digdir:personadresse , digdir:navn .
+
+digdir:navn  a                       modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/88804c45-ff43-11e6-9d97-005056825ca0>;
+        dct:title                    "navn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType     digdir:Personnavn;
+        modelldcatno:sequenceNumber  "2"^^xsd:positiveInteger .
+
+digdir:Tidsintervall  a  dct:PeriodOfTime;
+        dcat:startDate  "2016-11-02T00:00:00+01:00"^^xsd:dateTime .
+
+digdir:Uoppgitt  a      modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Uoppgitt"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e88-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "uoppgitt";
+        skos:prefLabel  "sivilstand uoppgitt"@nb .
+
+digdir:statsborgerskap
+        a                            modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/88804c5a-ff43-11e6-9d97-005056825ca0>;
+        dct:title                    "statsborgerskap"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom    digdir:Landkode;
+        modelldcatno:sequenceNumber  "4"^^xsd:positiveInteger .
+
+digdir:SeparertPartner
+        a               modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#SeparertPartner"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8f-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "separertPartner";
+        skos:prefLabel  "sivilstand separert partner"@nb;
+        xkos:next       digdir:SkiltPartner .
+
+digdir:Personnavn  a              modelldcatno:DataType;
+        dct:subject               <http://begrepskatalogen/begrep/88804c45-ff43-11e6-9d97-005056825ca0>;
+        dct:title                 "Personnavn"@nb;
+        modelldcatno:hasProperty  digdir:fornavn , digdir:mellomnavn , digdir:etternavn .
+
+digdir:fulltNavn  a                  modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/88804c45-ff43-11e6-9d97-005056825ca0>;
+        dct:title                    "fulltNavn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "1"^^xsd:positiveInteger .
+
+digdir:enhetsadresse  a             modelldcatno:Role;
+        dct:title                   "adresse"@nb;
+        xsd:minOccurs               "0"^^xsd:nonNegativeInteger;
+        modelldcatno:hasObjectType  digdir:GeografiskAdresse .
+
+digdir:dødsdato  a                   modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/be5d8b85-c3fb-11e9-8d53-005056825ca0>;
+        dct:title                    "dødsdato"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:DatoKlokkeslett;
+        modelldcatno:sequenceNumber  "8"^^xsd:positiveInteger .
+
+digdir:GjenlevendePartner
+        a               modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#GjenlevendePartner"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e91-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "gjenlevendePartner";
+        skos:prefLabel  "sivilstand gjenlevende partner"@nb;
+        xkos:next       digdir:Uoppgitt .
+
+digdir:fødested  a                   modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/5138da0e-be20-11e6-8004-005056825ca0>;
+        dct:title                    "fødested"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "6"^^xsd:positiveInteger .
+
+digdir:fødselsdato  a                modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/5138da10-be20-11e6-8004-005056825ca0>;
+        dct:title                    "fødselsdato"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:DatoKlokkeslett;
+        modelldcatno:sequenceNumber  "5"^^xsd:positiveInteger .
+
+digdir:Dato  a     modelldcatno:SimpleType;
+        dct:title  "Dato"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#dateTime"^^xsd:anyURI .
+
+digdir:epostadresse  a              modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/991825827/59855368-a391-4640-a78b-a71d4065185e>;
+        dct:title                   "epostadresse"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:identifikatorverdi
+        a                            modelldcatno:Attribute;
+        dct:title                    "identifikatorverdi"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "1"^^xsd:positiveInteger .
+
+digdir:EnkeEllerEnkemann
+        a               modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#EnkeEllerEnkemann"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8b-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "enkeEllerEnkemann";
+        skos:prefLabel  "sivilstand enke eller enkemann"@nb;
+        xkos:next       digdir:Separert .
+
+digdir:Kvinne  a           modelldcatno:CodeElement;
+        dct:identifier     "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Kvinne"^^xsd:anyURI;
+        skos:inScheme      digdir:Kjønn;
+        skos:notation      "kvinne";
+        skos:prefLabel     "kvinne"@nb;
+        skos:topConceptOf  digdir:Kjønn;
+        xkos:next          digdir:Mann .
+
+digdir:Landkode  a                      modelldcatno:CodeList;
+        dct:title                       "Landkode"@nb;
+        modelldcatno:codeListReference  "https://www.iso.org/iso-3166-country-codes.html"^^xsd:anyURI .
+
+digdir:Mann  a          modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Mann"^^xsd:anyURI;
+        skos:inScheme   digdir:Kjønn;
+        skos:notation   "mann";
+        skos:prefLabel  "mann"@nb;
+        xkos:next       digdir:Ubestemt .
+
+digdir:opprinneligNavn
+        a                            modelldcatno:Attribute;
+        dct:title                    "opprinneligNavn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType     digdir:Personnavn;
+        modelldcatno:sequenceNumber  "12"^^xsd:positiveInteger .
+
+digdir:Separert  a      modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Separert"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8d-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "separert";
+        skos:prefLabel  "sivilstand separert"@nb;
+        xkos:next       digdir:Skilt .
+
+digdir:Aktør  a                       modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/20febfaa-9467-48ea-9219-8ea611321f22>;
+        dct:title                     "Aktør"@nb;
+        modelldcatno:belongsToModule  "Aktør"@nb;
+        modelldcatno:hasProperty      digdir:kontaktinformasjon , digdir:identifikator .
+
+digdir:organisasjonsform
+        a                            modelldcatno:Attribute;
+        dct:title                    "organisasjonsform"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "3"^^xsd:positiveInteger .
+
+digdir:Gift  a          modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Gift"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8a-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "gift";
+        skos:prefLabel  "sivilstand gift"@nb;
+        xkos:next       digdir:EnkeEllerEnkemann .
+
+digdir:KontaktOss  a               vcard:Kind;
+        vcard:hasEmail             <mailto:informasjonsforvaltning@digdir.no>;
+        vcard:hasOrganizationName  "Avdeling for digitalisering"@nb , "Avdeling for digitalisering"@nn , "Digitalisation department"@en .
+
+digdir:dødsland  a                   modelldcatno:Attribute;
+        dct:title                    "dødsland"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom    digdir:Landkode;
+        modelldcatno:sequenceNumber  "10"^^xsd:positiveInteger .
+
+digdir:utstedtAvAutoritet
+        a                            modelldcatno:Attribute;
+        dct:title                    "utstedtAvAutoritet"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "4"^^xsd:positiveInteger .
+
+digdir:Periode  a  modelldcatno:DataType;
+        dct:title  "Periode"@nb .
+
+digdir:enhetsnavn  a                 modelldcatno:Attribute;
+        dct:title                    "navn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "2"^^xsd:positiveInteger .
+
+digdir:identifikatortype
+        a                            modelldcatno:Attribute;
+        dct:title                    "identifikatortype"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "2"^^xsd:positiveInteger .
+
+digdir:personadresse  a             modelldcatno:Role;
+        dct:title                   "adresse"@nb;
+        xsd:minOccurs               "0"^^xsd:nonNegativeInteger;
+        modelldcatno:hasObjectType  digdir:GeografiskAdresse .
+
+digdir:Identifikator  a           modelldcatno:ObjectType;
+        dct:subject               <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/f34cf23b-abfc-4413-8d46-afd175e1c872>;
+        dct:title                 "Identifikator"@nb;
+        modelldcatno:hasProperty  digdir:identifikatorverdi , digdir:identifikatortype , digdir:utstedtDato , digdir:utstedtAvAutoritet , digdir:gyldighetsperiode .
+
+digdir:GeografiskAdresse
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c117b9f-086d-4f13-8ad9-88fa965ac538>;
+        dct:title                     "GeografiskAdresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb;
+        modelldcatno:hasProperty      digdir:geografiskAdresseSpesialiserer .
+
+digdir:Tekst  a    modelldcatno:SimpleType;
+        dct:title  "Tekst"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+digdir:kontaktinformasjon
+        a                            modelldcatno:Role;
+        dct:title                    "kontaktinformasjon"@nb;
+        xsd:minOccurs                "0"^^xsd:nonNegativeInteger;
+        modelldcatno:hasObjectType   digdir:Kontaktinformasjon;
+        modelldcatno:sequenceNumber  "2"^^xsd:positiveInteger .
+
+digdir:dødssted  a                   modelldcatno:Attribute;
+        dct:subject                  "http://begrepskatalogen/begrep/5138d9f2-be20-11e6-8004-005056825ca0"^^xsd:anyURI;
+        dct:title                    "dødssted"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "9"^^xsd:positiveInteger .
+
+digdir:mellomnavn  a                 modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/88804c2f-ff43-11e6-9d97-005056825ca0>;
+        dct:title                    "mellomnavn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "2"^^xsd:positiveInteger .
+
+digdir:fornavn  a                    modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/5138da05-be20-11e6-8004-005056825ca0>;
+        dct:title                    "fornavn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "1"^^xsd:positiveInteger .
+
+digdir:Adresse  a                     modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/fea0e9f2-3b62-4c6b-9df3-27dd2f7cd530>;
+        dct:title                     "Adresse"@nb;
+        modelldcatno:belongsToModule  "Adresse"@nb .
+
+digdir:utstedtDato  a                modelldcatno:Attribute;
+        dct:title                    "utstedtDato"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Dato;
+        modelldcatno:sequenceNumber  "3"^^xsd:positiveInteger .
+
+digdir:identifikator  a              modelldcatno:Role;
+        dct:title                    "identifikator"@nb;
+        modelldcatno:hasObjectType   digdir:Identifikator;
+        modelldcatno:sequenceNumber  "1"^^xsd:positiveInteger .
+
+digdir:telefonnummer  a             modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/991825827/15ff04ea-2690-4fa1-b364-5a1e8895faf5>;
+        dct:title                   "telefonnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:DatoKlokkeslett
+        a          modelldcatno:SimpleType;
+        dct:title  "DatoKlokkeslett"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#dateTime"^^xsd:anyURI .
+
+digdir:PersonOgEnhet2  a    modelldcatno:InformationModel;
+        dct:description    "Overordnet informasjonsmodell for Person og Enhet med knytning til Identifikasjon og Adresse. Adressedelen av modellen er beskrevet nærmere i Felles informasjonsmodell for Adresse."@nb;
+        dct:identifier     "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#PersonOgEnhet"^^xsd:anyURI;
+        dct:issued         "2016-11-02T00:00:00+01:00"^^xsd:dateTime;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOB>;
+        dct:license        <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0>;
+        dct:publisher      <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827>;
+        dct:spatial        <http://publications.europa.eu/resource/authority/country/NOR>;
+        dct:subject        <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/20febfaa-9467-48ea-9219-8ea611321f22> , <http://begrepskatalogen/begrep/88804c45-ff43-11e6-9d97-005056825ca0> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/991825827/94328aca-770b-4502-95e5-94e44cb6d62f> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c1197a7-5c17-48f6-b399-a031d66cd8da> , <http://begrepskatalogen/begrep/88804c58-ff43-11e6-9d97-005056825ca0> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/6c117b9f-086d-4f13-8ad9-88fa965ac538> , <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971527404/f34cf23b-abfc-4413-8d46-afd175e1c872>;
+        dct:temporal       digdir:Tidsintervall;
+        dct:title          "Felles informasjonsmodell for Person og Enhet"@nb;
+        dct:type           modelldcatno:commonSharedModel , modelldcatno:logicalModel;
+        owl:versionInfo    "1.0";
+        adms:status        <http://purl.org/adms/status/Completed>;
+        dcat:contactPoint  digdir:KontaktOss;
+        dcat:keyword       "Person"@nn , "Person"@en , "Person"@nb , "Address"@en , "Legal entity"@en , "Eining"@nn , "Enhet"@nb , "Adresse"@nb , "Adresse"@nn;
+        dcat:theme         <https://psi.norge.no/los/tema/personopplysninger> , <https://psi.norge.no/los/tema/naringsliv>;
+        foaf:homepage      <https://www.digdir.no/informasjonsforvaltning/felles-informasjonsmodell-person-og-enhet/2018>;
+        modelldcatno:containsModelElement
+                digdir:Kontaktinformasjon , digdir:Landkode , digdir:DatoKlokkeslett , digdir:Enhet , digdir:Tekst , digdir:Aktør , digdir:Identifikator , digdir:Person , digdir:Personnavn , digdir:Dato , digdir:Sivilstand , digdir:Kjønn , digdir:Periode , digdir:Organisasjonsnummer .
+
+digdir:RegistrertPartner
+        a               modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#RegistrertPartner"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e8e-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "registrertPartner";
+        skos:prefLabel  "sivilstand registrert partner"@nb;
+        xkos:next       digdir:SeparertPartner .
+
+digdir:næringskode  a                modelldcatno:Attribute;
+        dct:subject                  <https://concept-catalog.fellesdatakatalog.digdir.no/collections/971526920/f4e7cdd1-dcb0-400e-9a7b-e863010bb8ab>;
+        dct:title                    "næringskode"@nb;
+        xsd:minOccurs                "0"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "4"^^xsd:positiveInteger .
+
+digdir:SkiltPartner  a  modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#SkiltPartner"^^xsd:anyURI;
+        dct:subject     <http://begrepskatalogen/begrep/92f82e90-fb04-11e9-92b0-005056828ed3>;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "skiltPartner";
+        skos:prefLabel  "sivilstand skilt partner"@nb;
+        xkos:next       digdir:GjenlevendePartner .
+
+digdir:personSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:Aktør .
+
+digdir:Kontaktinformasjon
+        a                             modelldcatno:ObjectType;
+        dct:subject                   <https://concept-catalog.fellesdatakatalog.digdir.no/collections/991825827/94328aca-770b-4502-95e5-94e44cb6d62f>;
+        dct:title                     "Kontaktinformasjon"@nb;
+        modelldcatno:belongsToModule  "Aktør"@nb;
+        modelldcatno:hasProperty      digdir:epostadresse , digdir:telefonnummer , digdir:mobiltelefonnummer .
+
+digdir:kjønn  a                      modelldcatno:Attribute;
+        dct:title                    "kjønn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom    digdir:Kjønn;
+        modelldcatno:sequenceNumber  "3"^^xsd:positiveInteger .
+
+digdir:Ubestemt  a      modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Ubestemt"^^xsd:anyURI;
+        skos:inScheme   digdir:Kjønn;
+        skos:notation   "ubestemt";
+        skos:prefLabel  "ubestemt"@nb;
+        xkos:next       digdir:Ukjent .
+
+digdir:Kjønn  a    modelldcatno:CodeList;
+        dct:title  "Kjønn"@nb .
+
+digdir:etternavn  a                  modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/46f4d714-4c6c-11e8-bb3e-005056821322>;
+        dct:title                    "etternavn"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        xsd:minOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:Tekst;
+        modelldcatno:sequenceNumber  "3"^^xsd:positiveInteger .
+
+digdir:Ukjent  a        modelldcatno:CodeElement;
+        dct:identifier  "https://raw.githubusercontent.com/Informasjonsforvaltning/model-publisher/master/src/model/model-catalog.ttl#Ukjent"^^xsd:anyURI;
+        skos:inScheme   digdir:Sivilstand;
+        skos:notation   "ukjent";
+        skos:prefLabel  "sivilstand ukjent"@nb .
+
+digdir:mobiltelefonnummer
+        a                           modelldcatno:Attribute;
+        dct:subject                 <https://concept-catalog.fellesdatakatalog.digdir.no/collections/991825827/8f72464c-f40f-4cee-8da9-72d407901838>;
+        dct:title                   "mobiltelefonnummer"@nb;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType  digdir:Tekst .
+
+digdir:Sivilstand  a  modelldcatno:CodeList;
+        dct:subject  <http://begrepskatalogen/begrep/88804c58-ff43-11e6-9d97-005056825ca0>;
+        dct:title    "Sivilstand"@nb .
+
+digdir:fødeland  a                   modelldcatno:Attribute;
+        dct:title                    "fødeland"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom    digdir:Landkode;
+        modelldcatno:sequenceNumber  "7"^^xsd:positiveInteger .
+
+digdir:geografiskAdresseSpesialiserer
+        a                               modelldcatno:Specialization;
+        modelldcatno:hasGeneralConcept  digdir:Adresse .
+
+digdir:OrganisasjonsnummerType
+        a            modelldcatno:SimpleType;
+        dct:subject  <http://data.brreg.no/begrep/28155>;
+        dct:title    "Organisasjonsnummer"@nb;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/60ecfff8-9ea3-41ee-92cc-7e791d73dac0>
+        a                  dcat:CatalogRecord;
+        dct:identifier     "60ecfff8-9ea3-41ee-92cc-7e791d73dac0";
+        dct:isPartOf       <https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs/03953a9d-5b6b-34ec-b41c-dcdcb21874d9>;
+        dct:issued         "2020-08-14T14:18:27Z"^^xsd:dateTime;
+        dct:modified       "2023-11-27T12:51:28.097Z"^^xsd:dateTime;
+        foaf:primaryTopic  digdir:PersonOgEnhet2 .
+
+digdir:gyldighetsperiode
+        a                            modelldcatno:Role;
+        dct:title                    "gyldighetsperiode"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasDataType     digdir:Periode;
+        modelldcatno:sequenceNumber  "5"^^xsd:positiveInteger .
+
+digdir:organisasjonsnummer
+        a                            modelldcatno:Attribute;
+        dct:subject                  <http://data.brreg.no/begrep/28155>;
+        dct:title                    "organisasjonsnummer"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasSimpleType   digdir:OrganisasjonsnummerType;
+        modelldcatno:sequenceNumber  "1"^^xsd:positiveInteger .
+
+digdir:sivilstand  a                 modelldcatno:Attribute;
+        dct:subject                  <http://begrepskatalogen/begrep/88804c58-ff43-11e6-9d97-005056825ca0>;
+        dct:title                    "sivilstand"@nb;
+        xsd:maxOccurs                "1"^^xsd:nonNegativeInteger;
+        modelldcatno:hasValueFrom    digdir:Sivilstand;
+        modelldcatno:sequenceNumber  "11"^^xsd:positiveInteger .

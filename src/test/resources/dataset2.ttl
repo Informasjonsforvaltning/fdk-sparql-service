@@ -1,0 +1,216 @@
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix cpsv:   <http://purl.org/vocab/cpsv#> .
+@prefix cpsvno: <https://data.norge.no/vocabulary/cpsvno#> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+@prefix eli:    <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix iso:    <http://iso.org/25012/2008/dataquality/> .
+@prefix oa:     <http://www.w3.org/ns/oa#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/982af03c-3531-351b-bf55-df346880ced9>
+        rdf:type        dcat:Distribution;
+        dcat:accessURL  <https://tull.tull> .
+
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/b10cdab3-e679-46f3-9d1d-8caaef24f098>
+        rdf:type         skos:Concept;
+        dct:identifier   "https://registrering-begrep-api.staging.fellesdatakatalog.digdir.no/910244132/8eb7678a-ebe4-421d-8875-cd22e0c4da74";
+        skos:definition  "surdeig er ikke en gjærbakst\n\n# H1\n## H2\n### H3\n\n**bold text**\n\n*italicized text*\n\n> blockquote\n\n1. First item\n2. Second item\n3. Third item\n\n- First item\n- Second item\n- Third item\n\n`code`\n\n---\n\n[Link](https://www.example.com)\n\n![alt text](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/274/grinning-face-with-big-eyes_1f603.png)\n\n| Syntax | Description |\n| ----------- | ----------- |\n| Header | Title |\n| Paragraph | Text |\n\n```\n{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"age\": 25\n}\n```\n\n- [x] Write the press release\n- [ ] Update the website\n- [ ] Contact the media\n\n~~The world is flat.~~"@nb;
+        skos:prefLabel   "sourdough"@en , "surdeig"@nn , "surdeig"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/dd7569b0-2cfb-31ea-a097-60863c04e647>
+        rdf:type        skos:Concept;
+        skos:prefLabel  "Behandlingsgrunnlag"@nb .
+
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/94d27383-777b-495f-b1d5-b76164627ef2>
+        rdf:type         skos:Concept;
+        dct:identifier   "http://begrepskatalogen/begrep/5cd23f6a-dc82-11e5-9b2b-d6d6eb145c82";
+        skos:definition  "En enkel test som er laget for å bekrefte at et miljø er oppe og går og at det er mulig å få en transaksjon gjennom.\n\nDette bør være den første testen man kjører på ethvert testnivå. Hensikten er å forhindre at mange bruker tid på å teste i et testmiljø som ikke er i orden."@nb;
+        skos:prefLabel   "smoke-test"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/31f69e0a-22f8-3fbd-bc2a-f869bb60c4c3>
+        rdf:type          dct:PeriodOfTime;
+        schema:endDate    "2023-08-17"^^xsd:date;
+        schema:startDate  "2021-05-11"^^xsd:date .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/a46f90a5-1623-3493-8056-e9777e0facd4>
+        rdf:type         cpsv:Rule;
+        dct:type         cpsvno:ruleForDataProcessing;
+        cpsv:implements  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/585bdb29-e7c0-3c24-9ad6-51f30977cf6c> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/8db3fe29-3daa-3a03-a468-45031b635b44>
+        rdf:type         cpsv:Rule;
+        dct:type         cpsvno:ruleForDisclosure;
+        cpsv:implements  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/7852d397-df3e-356c-8131-b2dd396f3454> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/50c187f4-60bc-3138-be2d-19383ddd44c1>
+        rdf:type        skos:Concept;
+        skos:prefLabel  "Skjermingshjemmel"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/45267f61-abd2-3b65-8dbb-af032ff6211b>
+        rdf:type      eli:LegalResource;
+        rdfs:seeAlso  <https://lovdata.skjermingshjemmel>;
+        dct:type      <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/50c187f4-60bc-3138-be2d-19383ddd44c1> .
+
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/c8c509dc-cd4f-4005-949d-4064eac09a5c>
+        rdf:type         skos:Concept;
+        dct:identifier   "http://data.brreg.no/begrep/52100";
+        skos:definition  "adresse for en bygning, bruksenhet, eiendom eller annet objekt som er registrert med adresse i matrikkelen i form av et gårds- og bruksnummer og et eventuelt festenummer, eventuelt også et undernummer"@nb;
+        skos:prefLabel   "matrikkeladresse"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/b6c7a023-37ae-3ef1-a241-c7625a0d9efc>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig tilgjengelig";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/ebceccb0-6171-3537-9737-8e5797d33e57>
+        rdf:type        skos:Concept;
+        skos:prefLabel  "Utleveringshjemmel"@nb .
+
+<https://datasets.staging.fellesdatakatalog.digdir.no/datasets/04edc67b-046c-37a8-9822-29f03d2f1e80>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "04edc67b-046c-37a8-9822-29f03d2f1e80";
+        dct:isPartOf       <https://datasets.staging.fellesdatakatalog.digdir.no/catalogs/821c273e-c4b0-3807-8d54-f54998747507>;
+        dct:issued         "2021-05-12T09:11:52.174Z"^^xsd:dateTime;
+        dct:modified       "2023-02-17T08:00:05.15Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/b70694d0-4d6c-3af5-ba78-b7d42d90438b>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig komplett";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/c9f8c7fc-df9d-34c9-b5b8-4ed8a63bcb87>
+        rdf:type    dct:Standard;
+        dct:source  "https://testinfomodell.testcom";
+        dct:title   "Test infomodell"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/a842badf-7fa6-3634-8d4f-ed4104244c30>
+        rdf:type    dct:Standard;
+        dct:source  "https://standard.standard";
+        dct:title   "standard"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/98d5c592-498c-316e-bcdd-483d67c5666d>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig relevant";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/c251ecaa-e2e4-3895-84e3-58a2d5c57432>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Currentness;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/3d1871e4-fb35-3dfa-a173-fae55fbf1a83> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326>
+        rdf:type                   dcat:Dataset;
+        dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC>;
+        dct:accrualPeriodicity     <http://publications.europa.eu/resource/authority/frequency/TRIENNIAL>;
+        dct:conformsTo             <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/c9f8c7fc-df9d-34c9-b5b8-4ed8a63bcb87> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/a842badf-7fa6-3634-8d4f-ed4104244c30> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/161df2d9-d9da-3cca-96d0-a4309855ce41>;
+        dct:description            "Datasett med oppskrifter på surdeigsbrød"@nb;
+        dct:identifier             "https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326";
+        dct:isPartOf               <https://kartkatalog.geonorge.no/Metadata/uuid/17149f79-1289-4e3c-b964-94113eeb14c8>;
+        dct:issued                 "2021-05-11"^^xsd:date;
+        dct:language               <http://publications.europa.eu/resource/authority/language/SMI> , <http://publications.europa.eu/resource/authority/language/NOR>;
+        dct:modified               "2021-05-11"^^xsd:date;
+        dct:provenance             <http://data.brreg.no/datakatalog/provinens/bruker>;
+        dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132>;
+        dct:relation               <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/75f223ce-7214-4baf-84cf-4db01ce1f10e>;
+        dct:spatial                <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163>;
+        dct:subject                <https://concepts.staging.fellesdatakatalog.digdir.no/concepts/b10cdab3-e679-46f3-9d1d-8caaef24f098> , <https://concepts.staging.fellesdatakatalog.digdir.no/concepts/94d27383-777b-495f-b1d5-b76164627ef2> , <https://concepts.staging.fellesdatakatalog.digdir.no/concepts/c8c509dc-cd4f-4005-949d-4064eac09a5c>;
+        dct:temporal               <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/31f69e0a-22f8-3fbd-bc2a-f869bb60c4c3>;
+        dct:title                  "Surdeigsbrød#2"@nb;
+        dct:type                   "Tesauri";
+        cpsv:follows               <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/22d292e0-b911-3820-afb9-bc671811444a> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/a46f90a5-1623-3493-8056-e9777e0facd4> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/8db3fe29-3daa-3a03-a468-45031b635b44>;
+        adms:sample                <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/982af03c-3531-351b-bf55-df346880ced9>;
+        dcat:contactPoint          <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/8c16bcd4-b6c3-3c6b-a2a2-538231e81aa6>;
+        dcat:keyword               "bakteriekultur"@nb , "sur"@nb , "deig"@nb , "surdeig"@nb;
+        dcat:landingPage           <https://bdsjkda.sdb>;
+        dcat:theme                 <http://publications.europa.eu/resource/authority/data-theme/ENVI> , <http://publications.europa.eu/resource/authority/data-theme/GOVE> , <https://psi.norge.no/los/tema/priser-og-gebyr-for-bygg-og-eiendom> , <https://psi.norge.no/los/ord/gebyr-for-byggesak>;
+        dqv:hasQualityAnnotation   <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/fd44d18d-be86-398a-a770-9ecfe8b56094> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/e7343788-59c8-3880-9ba1-d92ea7e07231> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/c251ecaa-e2e4-3895-84e3-58a2d5c57432> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/d094b601-f843-3f00-8a3d-4cec7b908b11> , <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/6695602e-b9f1-3e80-8571-225669b8fe17>;
+        prov:qualifiedAttribution  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/ceaa0921-6cb9-3409-8002-117eb13e064c> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/f99ed67f-c0ee-398d-9141-0ac2dfba0f02>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig nøyaktig";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/7852d397-df3e-356c-8131-b2dd396f3454>
+        rdf:type      eli:LegalResource;
+        rdfs:seeAlso  <https://lovdata.skjermingshjemmel>;
+        dct:type      <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/ebceccb0-6171-3537-9737-8e5797d33e57> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/fd44d18d-be86-398a-a770-9ecfe8b56094>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Availability;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/b6c7a023-37ae-3ef1-a241-c7625a0d9efc> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/585bdb29-e7c0-3c24-9ad6-51f30977cf6c>
+        rdf:type      eli:LegalResource;
+        rdfs:seeAlso  <https://lovdata.skjermingshjemmel>;
+        dct:type      <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/dd7569b0-2cfb-31ea-a097-60863c04e647> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/6695602e-b9f1-3e80-8571-225669b8fe17>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Relevance;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/98d5c592-498c-316e-bcdd-483d67c5666d> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/d094b601-f843-3f00-8a3d-4cec7b908b11>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Accuracy;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/f99ed67f-c0ee-398d-9141-0ac2dfba0f02> .
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        rdf:type        dct:LinguisticSystem;
+        <http://publications.europa.eu/ontology/authority/authority-code>
+                "NOR";
+        skos:prefLabel  "Norsk"@nb .
+
+<http://publications.europa.eu/resource/authority/language/SMI>
+        rdf:type        dct:LinguisticSystem;
+        <http://publications.europa.eu/ontology/authority/authority-code>
+                "SMI";
+        skos:prefLabel  "Samisk"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/e7343788-59c8-3880-9ba1-d92ea7e07231>
+        rdf:type         dqv:QualityAnnotation;
+        dqv:inDimension  iso:Completeness;
+        oa:hasBody       <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/b70694d0-4d6c-3af5-ba78-b7d42d90438b> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/161df2d9-d9da-3cca-96d0-a4309855ce41>
+        rdf:type    dct:Standard;
+        dct:source  "https://www.staging.fellesdatakatalog.digdir.no/informationmodels/6feff2b7-c7e5-3bde-99bf-9e5ae5cd6be8";
+        dct:title   "Vedens beste informasjonsmodell"@nb .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/22d292e0-b911-3820-afb9-bc671811444a>
+        rdf:type         cpsv:Rule;
+        dct:type         cpsvno:ruleForNonDisclosure;
+        cpsv:implements  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/45267f61-abd2-3b65-8dbb-af032ff6211b> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/ceaa0921-6cb9-3409-8002-117eb13e064c>
+        rdf:type      prov:Attribution;
+        dcat:hadRole  <http://registry.it.csiro.au/def/isotc211/CI_RoleCode/contributor>;
+        prov:agent    <https://data.brreg.no/enhetsregisteret/api/enheter/985345198> .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/8c16bcd4-b6c3-3c6b-a2a2-538231e81aa6>
+        rdf:type                 vcard:Organization;
+        vcard:hasEmail           <mailto:kontaktpunkt@kontaktpunkt.test>;
+        vcard:hasTelephone       <tel:729387290837>;
+        vcard:hasURL             <https://kontaktskjema.test>;
+        vcard:organization-unit  "Kontaktpunkt" .
+
+<https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/1544fd88-4770-4946-8822-4b65855ad326/.well-known/skolem/3d1871e4-fb35-3dfa-a173-fae55fbf1a83>
+        rdf:type      oa:TextualBody;
+        rdf:value     "Veldig aktuelt";
+        dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT>;
+        dct:language  <http://publications.europa.eu/resource/authority/language/NOB> .

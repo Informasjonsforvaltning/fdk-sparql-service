@@ -46,6 +46,23 @@ spring:
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     listener:
       ack-mode: manual_immediate
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 60000
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      service-event-cb:.baseConfig: default
+      event-event-db.baseConfig: default
+      information-model-event-cb.baseConfig: default
+      dataset-event-cb.baseConfig: default
+      data-service-event-cb.baseConfig: default
+      concept-event-cb.baseConfig: default
 
 ---
 spring:

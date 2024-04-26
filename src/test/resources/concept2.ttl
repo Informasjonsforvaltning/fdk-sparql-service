@@ -1,0 +1,49 @@
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dqv:    <http://www.w3.org/ns/dqv#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix iso:    <http://iso.org/25012/2008/dataquality/> .
+@prefix oa:     <http://www.w3.org/ns/prov#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosno: <https://data.norge.no/vocabulary/skosno#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix spdx:   <http://spdx.org/rdf/terms#> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos:   <http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6>
+        rdf:type           skos:Concept;
+        <http://publications.europa.eu/ontology/euvoc#status>
+                <http://publications.europa.eu/resource/authority/concept-status/CURRENT>;
+        dct:identifier     "https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6";
+        dct:modified       "2021-05-25"^^xsd:date;
+        dct:publisher      <https://data.brreg.no/enhetsregisteret/api/enheter/910244132>;
+        skosxl:prefLabel   <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/c99e7427-f5ac-3759-9c3c-34d5ef1959c5>;
+        skosno:definisjon  <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/b681c1d5-3ab0-32dd-a00b-7db4bdd2bfc1> .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/b681c1d5-3ab0-32dd-a00b-7db4bdd2bfc1>
+        rdf:type                skosno:Definisjon;
+        rdfs:label              "Vestlandet sin egen måte å si at man er støl i muskelen på."@nb;
+        dct:source              <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/486de28f-aedc-346a-8914-67b59834cabf>;
+        skosno:forholdTilKilde  skosno:basertPåKilde .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/c99e7427-f5ac-3759-9c3c-34d5ef1959c5>
+        rdf:type            skosxl:Label;
+        skosxl:literalForm  "Gangsperr"@nb .
+
+<https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6/.well-known/skolem/486de28f-aedc-346a-8914-67b59834cabf>
+        rdfs:label  "Gangsperre vs stølhet"@nb .
+
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/7e2774f0-d9ae-4861-ae77-7f69d42082a2>
+        rdf:type           dcat:CatalogRecord;
+        dct:identifier     "7e2774f0-d9ae-4861-ae77-7f69d42082a2";
+        dct:isPartOf       <https://concepts.staging.fellesdatakatalog.digdir.no/collections/7b82acf0-fa3d-3a37-88b7-0d17294691f4>;
+        dct:issued         "2020-07-03T09:57:40.283Z"^^xsd:dateTime;
+        dct:modified       "2023-08-29T12:00:02.617Z"^^xsd:dateTime;
+        foaf:primaryTopic  <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f6> .

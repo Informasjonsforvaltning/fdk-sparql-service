@@ -3,6 +3,20 @@ package no.fdk.sparqlservice.integration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.fdk.concept.ConceptEvent;
+import no.fdk.concept.ConceptEventType;
+import no.fdk.dataservice.DataServiceEvent;
+import no.fdk.dataservice.DataServiceEventType;
+import no.fdk.dataset.DatasetEvent;
+import no.fdk.dataset.DatasetEventType;
+import no.fdk.event.EventEvent;
+import no.fdk.event.EventEventType;
+import no.fdk.informationmodel.InformationModelEvent;
+import no.fdk.informationmodel.InformationModelEventType;
+import no.fdk.service.ServiceEvent;
+import no.fdk.service.ServiceEventType;
+import no.fdk.sparqlservice.kafka.KafkaEventCircuitBreakers;
+import no.fdk.sparqlservice.kafka.KafkaEventConsumers;
 import no.fdk.sparqlservice.model.CatalogType;
 import no.fdk.sparqlservice.model.Concept;
 import no.fdk.sparqlservice.model.DataService;
@@ -21,9 +35,13 @@ import no.fdk.sparqlservice.service.UpdateService;
 import no.fdk.sparqlservice.utils.AbstractContainerTest;
 import no.fdk.sparqlservice.utils.ResourceReader;
 import no.fdk.sparqlservice.utils.TestQuery;
+import org.apache.avro.specific.SpecificRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.support.Acknowledgment;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(properties = "spring.profiles.active=test")
@@ -37,8 +55,18 @@ public class IntegrationTest extends AbstractContainerTest {
     @Autowired
     ResourceService resourceService;
 
+    @Autowired
+    KafkaEventConsumers kafkaEventConsumers;
+
     @BeforeEach
     void setup() {
+        resourceService.findAllDatasets().forEach(dataset -> resourceService.deleteDataset(dataset.getId()));
+        resourceService.findAllDataServices().forEach(dataService -> resourceService.deleteDataService(dataService.getId()));
+        resourceService.findAllConcepts().forEach(concept -> resourceService.deleteConcept(concept.getId()));
+        resourceService.findAllEvents().forEach(event -> resourceService.deleteEvent(event.getId()));
+        resourceService.findAllInformationModels().forEach(informationModel -> resourceService.deleteInformationModel(informationModel.getId()));
+        resourceService.findAllServices().forEach(service -> resourceService.deleteService(service.getId()));
+
         resourceService.saveConcept("0", ResourceReader.readFile("concept0.ttl"), 123);
         resourceService.saveConcept("1", ResourceReader.readFile("concept1.ttl"), 123);
         resourceService.saveDataService("0", ResourceReader.readFile("dataservice0.ttl"), 123);
@@ -186,4 +214,207 @@ public class IntegrationTest extends AbstractContainerTest {
         Assertions.assertEquals(1, result);
     }
 
+    @Test
+    void consumeKafkaDatasetEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        DatasetEvent event = new DatasetEvent();
+        event.setFdkId("2");
+        event.setType(DatasetEventType.DATASET_REASONED);
+        event.setGraph(ResourceReader.readFile("dataset2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.datasetListener(new ConsumerRecord<String, DatasetEvent>("dataset-events", 0, 0L, "key", event), ack);
+        updateService.updateDatasets();
+
+        String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    void consumeKafkaDatasetEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        DatasetEvent event = new DatasetEvent();
+        event.setFdkId("1");
+        event.setType(DatasetEventType.DATASET_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.datasetListener(new ConsumerRecord<>("dataset-events", 0, 0L, "key", event), ack);
+        updateService.updateDatasets();
+
+        String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void consumeKafkaDataServiceEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        DataServiceEvent event = new DataServiceEvent();
+        event.setFdkId("2");
+        event.setType(DataServiceEventType.DATA_SERVICE_REASONED);
+        event.setGraph(ResourceReader.readFile("dataservice2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
+        updateService.updateDataServices();
+
+        String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    void consumeKafkaDataServiceEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        DataServiceEvent event = new DataServiceEvent();
+        event.setFdkId("1");
+        event.setType(DataServiceEventType.DATA_SERVICE_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
+        updateService.updateDataServices();
+
+        String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void consumeKafkaConceptEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        ConceptEvent event = new ConceptEvent();
+        event.setFdkId("2");
+        event.setType(ConceptEventType.CONCEPT_REASONED);
+        event.setGraph(ResourceReader.readFile("concept2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
+        updateService.updateConcepts();
+
+        String response = TestQuery.sendQuery(countQuery("skos:Concept"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    void consumeKafkaConceptEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        ConceptEvent event = new ConceptEvent();
+        event.setFdkId("1");
+        event.setType(ConceptEventType.CONCEPT_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
+        updateService.updateConcepts();
+
+        String response = TestQuery.sendQuery(countQuery("skos:Concept"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void consumeKafkaInformationModelEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        InformationModelEvent event = new InformationModelEvent();
+        event.setFdkId("2");
+        event.setType(InformationModelEventType.INFORMATION_MODEL_REASONED);
+        event.setGraph(ResourceReader.readFile("infomodel2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
+        updateService.updateInformationModels();
+
+        String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    void consumeKafkaInformationModelEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        InformationModelEvent event = new InformationModelEvent();
+        event.setFdkId("1");
+        event.setType(InformationModelEventType.INFORMATION_MODEL_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
+        updateService.updateInformationModels();
+
+        String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void consumeKafkaEventEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        EventEvent event = new EventEvent();
+        event.setFdkId("2");
+        event.setType(EventEventType.EVENT_REASONED);
+        event.setGraph(ResourceReader.readFile("event2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
+        updateService.updateEvents();
+
+        String response = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(2, result);
+    }
+
+    @Test
+    void consumeKafkaEventEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        EventEvent event = new EventEvent();
+        event.setFdkId("0");
+        event.setType(EventEventType.EVENT_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
+        updateService.updateEvents();
+
+        String response = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(0, result);
+    }
+
+    @Test
+    void consumeKafkaServiceEventOfTypeReasoned() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        ServiceEvent event = new ServiceEvent();
+        event.setFdkId("2");
+        event.setType(ServiceEventType.SERVICE_REASONED);
+        event.setGraph(ResourceReader.readFile("service2.ttl"));
+        event.setTimestamp(123);
+        kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
+        updateService.updateServices();
+
+        String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(3, result);
+    }
+
+    @Test
+    void consumeKafkaServiceEventOfTypeRemoved() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        ServiceEvent event = new ServiceEvent();
+        event.setFdkId("1");
+        event.setType(ServiceEventType.SERVICE_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(123);
+        kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
+        updateService.updateServices();
+
+        String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(1, result);
+    }
 }
