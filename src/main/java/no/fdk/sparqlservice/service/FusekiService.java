@@ -42,7 +42,7 @@ public class FusekiService {
             .realm(fusekiConfiguration.getRealm())
             .port(fusekiConfiguration.getPort())
             .verbose(fusekiConfiguration.getEnableVerboseLogging())
-            .enableCors(true)
+            .enableCors(true, null)
             .enablePing(true)
             .enableStats(true)
             .enableMetrics(true)
