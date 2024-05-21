@@ -11,7 +11,7 @@ import org.apache.jena.fuseki.server.Operation;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.util.Symbol;
-import org.apache.jena.tdb.TDB;
+import org.apache.jena.tdb2.TDB2;
 import org.apache.jena.tdb2.TDB2Factory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -62,7 +62,7 @@ public class FusekiService {
         Dataset dataset = TDB2Factory.connectDataset(path.toString());
         DatasetGraph datasetGraph = dataset.asDatasetGraph();
         datasetGraph.getContext().set(nameSymbol, fusekiConfiguration.getDatasetName());
-        datasetGraph.getContext().setTrue(TDB.symUnionDefaultGraph);
+        datasetGraph.getContext().setTrue(TDB2.symUnionDefaultGraph);
 
         DataService.Builder dataServiceBuilder = DataService.newBuilder();
         dataServiceBuilder.dataset(datasetGraph);
