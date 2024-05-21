@@ -1,45 +1,25 @@
 # FDK SPARQL Service
-A service that manages Fuseki server instance.
+A service that manages an embedded [Fuseki](https://jena.apache.org/documentation/fuseki2/fuseki-embedded.html#fuseki-basic) server instance, with a persistent [TDB2](https://jena.apache.org/documentation/tdb2) database.
 
-## Installation and Usage
+A schedule checks for any updated resources every 15 minutes, the schedule updates the associated fuseki-graph when it finds that resources have been updated.
 
-- Required tools to run this project:
-    - IntelliJ, Maven and Java SDK 15 to run locally on a host machine
-    - Docker and Docker Compose to run locally in a container
+The service listens for kafka events, relevant events are `*_REASONED` and `*_REMOVED` where `*` is the associated resource-type. Any of these events will update a postgres database and tag the relevant resource-type as updated. The fuseki graph for the type tagged as updated will be generated from the data in postgres when the 15-minute schedule next checks what has been updated.
 
-#### Running application locally on a host machine
+### Compact
+The update will create a new graph and drop the old, but the old graph will still use disk space. A [compact](https://jena.apache.org/documentation/tdb2/tdb2_admin.html) process will therefore run after each update, to free the now unused disk space.
 
-- Install dependencies by running `mvn clean install`
-- Do the following to run the application:
-    - Set optional `develop` profile
-    - Run or debug `Application` class using IntelliJ
+## Requirements
+- maven
+- java 17
+- docker
+- docker-compose
 
-#### Running application in a Docker container
-
-- Build a Docker container using the following command:
-    - `docker build -t fdk-sparql-service .`
-- Run the container using the following comand:
-    - `docker run -d -p 8080:8080 -e LOG_LEVEL fdk-sparql-service`
+## Run tests
+```
+mvn verify
+```
 
 #### Running application using Docker Compose
 
 - Run the application using the following command:
-    - `docker-compose up -d`
-
-## Environment Variables
-
-- `LOG_LEVEL` - log level
-    - `TRACE`
-    - `DEBUG`
-    - `INFO`
-    - `WARN`
-    - `ERROR`
-- `RABBIT_HOST` - RabbitMQ hostname
-  - `rabbitmq` (default)
-  - `localhost` (develop profile)
-- `RABBIT_PORT` - RabbitMQ port
-  - `5672` (default)
-- `RABBIT_USERNAME` - RabbitMQ username
-  - `guest` (develop profile)
-- `RABBIT_PASSWORD` - RabbitMQ password
-  - `guest` (develop profile)
+    - `docker-compose up -d --build`
