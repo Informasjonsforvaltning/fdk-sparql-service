@@ -15,6 +15,7 @@ import no.fdk.sparqlservice.repository.EventRepository;
 import no.fdk.sparqlservice.repository.InformationModelRepository;
 import no.fdk.sparqlservice.repository.ServiceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -49,6 +50,7 @@ public class ResourceService {
         return  updatedCatalogs;
     }
 
+    @Transactional
     public void saveConcept(String fdkId, String graph, long timestamp) {
         Concept concept = new Concept(fdkId, graph, timestamp);
         conceptRepository.save(concept);
@@ -58,12 +60,14 @@ public class ResourceService {
         return conceptRepository.findAll();
     }
 
+    @Transactional
     public void deleteConcept(String fdkId) {
         if (conceptRepository.existsById(fdkId)) {
             conceptRepository.deleteById(fdkId);
         }
     }
 
+    @Transactional
     public void saveDataService(String fdkId, String graph, long timestamp) {
         DataService dataService = new DataService(fdkId, graph, timestamp);
         dataServiceRepository.save(dataService);
@@ -74,12 +78,14 @@ public class ResourceService {
         return dataServiceRepository.findAll();
     }
 
+    @Transactional
     public void deleteDataService(String fdkId) {
         if (dataServiceRepository.existsById(fdkId)) {
             dataServiceRepository.deleteById(fdkId);
         }
     }
 
+    @Transactional
     public void saveDataset(String fdkId, String graph, long timestamp) {
         Dataset dataset = new Dataset(fdkId, graph, timestamp);
         datasetRepository.save(dataset);
@@ -90,12 +96,14 @@ public class ResourceService {
         return datasetRepository.findAll();
     }
 
+    @Transactional
     public void deleteDataset(String fdkId) {
         if (datasetRepository.existsById(fdkId)) {
             datasetRepository.deleteById(fdkId);
         }
     }
 
+    @Transactional
     public void saveEvent(String fdkId, String graph, long timestamp) {
         Event fdkEvent = new Event(fdkId, graph, timestamp);
         eventRepository.save(fdkEvent);
@@ -106,12 +114,14 @@ public class ResourceService {
         return eventRepository.findAll();
     }
 
+    @Transactional
     public void deleteEvent(String fdkId) {
         if (eventRepository.existsById(fdkId)) {
             eventRepository.deleteById(fdkId);
         }
     }
 
+    @Transactional
     public void saveInformationModel(String fdkId, String graph, long timestamp) {
         InformationModel infoModel = new InformationModel(fdkId, graph, timestamp);
         informationModelRepository.save(infoModel);
@@ -122,12 +132,14 @@ public class ResourceService {
         return informationModelRepository.findAll();
     }
 
+    @Transactional
     public void deleteInformationModel(String fdkId) {
         if (informationModelRepository.existsById(fdkId)) {
             informationModelRepository.deleteById(fdkId);
         }
     }
 
+    @Transactional
     public void saveService(String fdkId, String graph, long timestamp) {
         no.fdk.sparqlservice.model.Service service = new no.fdk.sparqlservice.model.Service(fdkId, graph, timestamp);
         serviceRepository.save(service);
@@ -138,6 +150,7 @@ public class ResourceService {
         return serviceRepository.findAll();
     }
 
+    @Transactional
     public void deleteService(String fdkId) {
         if (serviceRepository.existsById(fdkId)) {
             serviceRepository.deleteById(fdkId);
