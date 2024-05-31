@@ -17,10 +17,7 @@ import no.fdk.sparqlservice.repository.ServiceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -154,6 +151,54 @@ public class ResourceService {
     public void deleteService(String fdkId) {
         if (serviceRepository.existsById(fdkId)) {
             serviceRepository.deleteById(fdkId);
+        }
+    }
+
+    public boolean timestampIsHigherThanSaved(String fdkId, long timestamp, CatalogType type) {
+        Long dbTimestamp = null;
+        switch (type) {
+            case CONCEPTS:
+                Optional<Concept> concept = conceptRepository.findById(fdkId);
+                if (concept.isPresent()) {
+                    dbTimestamp = concept.get().getTimestamp();
+                }
+                break;
+            case DATA_SERVICES:
+                Optional<DataService> dataService = dataServiceRepository.findById(fdkId);
+                if (dataService.isPresent()) {
+                    dbTimestamp = dataService.get().getTimestamp();
+                }
+                break;
+            case DATASETS:
+                Optional<Dataset> dataset = datasetRepository.findById(fdkId);
+                if (dataset.isPresent()) {
+                    dbTimestamp = dataset.get().getTimestamp();
+                }
+                break;
+            case EVENTS:
+                Optional<Event> event = eventRepository.findById(fdkId);
+                if (event.isPresent()) {
+                    dbTimestamp = event.get().getTimestamp();
+                }
+                break;
+            case INFORMATION_MODELS:
+                Optional<InformationModel> informationModel = informationModelRepository.findById(fdkId);
+                if (informationModel.isPresent()) {
+                    dbTimestamp = informationModel.get().getTimestamp();
+                }
+                break;
+            case SERVICES:
+                Optional<no.fdk.sparqlservice.model.Service> service = serviceRepository.findById(fdkId);
+                if (service.isPresent()) {
+                    dbTimestamp = service.get().getTimestamp();
+                }
+                break;
+        }
+
+        if (dbTimestamp == null) {
+            return true;
+        } else {
+            return timestamp > dbTimestamp;
         }
     }
 
