@@ -15,6 +15,7 @@ import no.fdk.informationmodel.InformationModelEvent;
 import no.fdk.informationmodel.InformationModelEventType;
 import no.fdk.service.ServiceEvent;
 import no.fdk.service.ServiceEventType;
+import no.fdk.sparqlservice.model.CatalogType;
 import no.fdk.sparqlservice.service.ResourceService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Component;
@@ -29,13 +30,14 @@ public class KafkaEventCircuitBreakers {
     public void processServiceEvent(ConsumerRecord<String, ServiceEvent> record) {
         ServiceEvent event = record.value();
         try {
-            if(event.getType() == ServiceEventType.SERVICE_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.SERVICES);
+            if(event.getType() == ServiceEventType.SERVICE_REASONED && hasHigherTimestamp) {
                 resourceService.saveService(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
                         event.getTimestamp()
                 );
-            } else if(event.getType() == ServiceEventType.SERVICE_REMOVED) {
+            } else if(event.getType() == ServiceEventType.SERVICE_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteService(event.getFdkId().toString());
             }
         } catch (Exception exception) {
@@ -48,13 +50,14 @@ public class KafkaEventCircuitBreakers {
     public void processInformationModelEvent(ConsumerRecord<String, InformationModelEvent> record) {
         InformationModelEvent event = record.value();
         try {
-            if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.INFORMATION_MODELS);
+            if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REASONED && hasHigherTimestamp) {
                 resourceService.saveInformationModel(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
                         event.getTimestamp()
                 );
-            } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED) {
+            } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteInformationModel(event.getFdkId().toString());
             }
         } catch (Exception exception) {
@@ -67,13 +70,14 @@ public class KafkaEventCircuitBreakers {
     public void processEventEvent(ConsumerRecord<String, EventEvent> record) {
         EventEvent kafkaEvent = record.value();
         try {
-            if(kafkaEvent.getType() == EventEventType.EVENT_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(kafkaEvent.getFdkId().toString(), kafkaEvent.getTimestamp(), CatalogType.EVENTS);
+            if(kafkaEvent.getType() == EventEventType.EVENT_REASONED && hasHigherTimestamp) {
                 resourceService.saveEvent(
                         kafkaEvent.getFdkId().toString(),
                         kafkaEvent.getGraph().toString(),
                         kafkaEvent.getTimestamp()
                 );
-            } else if(kafkaEvent.getType() == EventEventType.EVENT_REMOVED) {
+            } else if(kafkaEvent.getType() == EventEventType.EVENT_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteEvent(kafkaEvent.getFdkId().toString());
             }
         } catch (Exception exception) {
@@ -86,13 +90,14 @@ public class KafkaEventCircuitBreakers {
     public void processDatasetEvent(ConsumerRecord<String, DatasetEvent> record) {
         DatasetEvent event = record.value();
         try {
-            if(event.getType() == DatasetEventType.DATASET_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.DATASETS);
+            if(event.getType() == DatasetEventType.DATASET_REASONED && hasHigherTimestamp) {
                 resourceService.saveDataset(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
                         event.getTimestamp()
                 );
-            } else if(event.getType() == DatasetEventType.DATASET_REMOVED) {
+            } else if(event.getType() == DatasetEventType.DATASET_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteDataset(event.getFdkId().toString());
             }
         } catch (Exception exception) {
@@ -105,13 +110,14 @@ public class KafkaEventCircuitBreakers {
     public void processDataServiceEvent(ConsumerRecord<String, DataServiceEvent> record) {
         DataServiceEvent event = record.value();
         try {
-            if(event.getType() == DataServiceEventType.DATA_SERVICE_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.DATA_SERVICES);
+            if(event.getType() == DataServiceEventType.DATA_SERVICE_REASONED && hasHigherTimestamp) {
                 resourceService.saveDataService(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
                         event.getTimestamp()
                 );
-            } else if(event.getType() == DataServiceEventType.DATA_SERVICE_REMOVED) {
+            } else if(event.getType() == DataServiceEventType.DATA_SERVICE_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteDataService(event.getFdkId().toString());
             }
         } catch (Exception exception) {
@@ -124,13 +130,14 @@ public class KafkaEventCircuitBreakers {
     public void processConceptEvent(ConsumerRecord<String, ConceptEvent> record) {
         ConceptEvent event = record.value();
         try {
-            if(event.getType() == ConceptEventType.CONCEPT_REASONED) {
+            boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.CONCEPTS);
+            if(event.getType() == ConceptEventType.CONCEPT_REASONED && hasHigherTimestamp) {
                 resourceService.saveConcept(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
                         event.getTimestamp()
                 );
-            } else if(event.getType() == ConceptEventType.CONCEPT_REMOVED) {
+            } else if(event.getType() == ConceptEventType.CONCEPT_REMOVED && hasHigherTimestamp) {
                 resourceService.deleteConcept(event.getFdkId().toString());
             }
         } catch (Exception exception) {

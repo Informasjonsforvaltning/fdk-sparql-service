@@ -222,7 +222,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(DatasetEventType.DATASET_REASONED);
         event.setGraph(ResourceReader.readFile("dataset2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.datasetListener(new ConsumerRecord<String, DatasetEvent>("dataset-events", 0, 0L, "key", event), ack);
         updateService.updateDatasets();
 
@@ -239,7 +239,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("1");
         event.setType(DatasetEventType.DATASET_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.datasetListener(new ConsumerRecord<>("dataset-events", 0, 0L, "key", event), ack);
         updateService.updateDatasets();
 
@@ -256,7 +256,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(DataServiceEventType.DATA_SERVICE_REASONED);
         event.setGraph(ResourceReader.readFile("dataservice2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
         updateService.updateDataServices();
 
@@ -273,7 +273,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("1");
         event.setType(DataServiceEventType.DATA_SERVICE_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
         updateService.updateDataServices();
 
@@ -290,7 +290,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(ConceptEventType.CONCEPT_REASONED);
         event.setGraph(ResourceReader.readFile("concept2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
         updateService.updateConcepts();
 
@@ -307,7 +307,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("1");
         event.setType(ConceptEventType.CONCEPT_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
         updateService.updateConcepts();
 
@@ -324,7 +324,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(InformationModelEventType.INFORMATION_MODEL_REASONED);
         event.setGraph(ResourceReader.readFile("infomodel2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
         updateService.updateInformationModels();
 
@@ -341,7 +341,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("1");
         event.setType(InformationModelEventType.INFORMATION_MODEL_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
         updateService.updateInformationModels();
 
@@ -358,7 +358,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(EventEventType.EVENT_REASONED);
         event.setGraph(ResourceReader.readFile("event2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
         updateService.updateEvents();
 
@@ -375,7 +375,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("0");
         event.setType(EventEventType.EVENT_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
         updateService.updateEvents();
 
@@ -392,7 +392,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("2");
         event.setType(ServiceEventType.SERVICE_REASONED);
         event.setGraph(ResourceReader.readFile("service2.ttl"));
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
         updateService.updateServices();
 
@@ -409,7 +409,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setFdkId("1");
         event.setType(ServiceEventType.SERVICE_REMOVED);
         event.setGraph("");
-        event.setTimestamp(123);
+        event.setTimestamp(124);
         kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
         updateService.updateServices();
 
