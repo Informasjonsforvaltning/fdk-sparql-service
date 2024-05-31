@@ -11,12 +11,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
 public class TransactionManagerConfig {
     private final DataSourceProperties dataSourceProperties;
+    private final ProfileProperties profileProperties;
 
     @Bean
     public DataSource dataSource() {
@@ -31,7 +33,10 @@ public class TransactionManagerConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+
+        if (Objects.equals(profileProperties.getOnProfile(), "test")) {
+            vendorAdapter.setGenerateDdl(true);
+        }
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
