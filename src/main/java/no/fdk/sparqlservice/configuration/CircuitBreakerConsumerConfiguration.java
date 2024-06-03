@@ -2,17 +2,17 @@ package no.fdk.sparqlservice.configuration;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import no.fdk.sparqlservice.kafka.KafkaManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.annotation.PostConstruct;
 
 @Configuration
-@Slf4j
 @RequiredArgsConstructor
 public class CircuitBreakerConsumerConfiguration {
+    private static final Logger log = LoggerFactory.getLogger(CircuitBreakerConsumerConfiguration.class);
 
     private final CircuitBreakerRegistry circuitBreakerRegistry;
     private final KafkaManager kafkaManager;

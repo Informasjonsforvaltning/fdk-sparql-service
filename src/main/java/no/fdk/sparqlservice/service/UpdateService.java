@@ -1,7 +1,6 @@
 package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import no.fdk.sparqlservice.configuration.FusekiConfiguration;
 import no.fdk.sparqlservice.configuration.HarvestGraphProperties;
 import no.fdk.sparqlservice.fuseki.action.CompactAction;
@@ -17,6 +16,8 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFuseki;
 import org.apache.jena.riot.Lang;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,8 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UpdateService {
+    private static final Logger log = LoggerFactory.getLogger(UpdateService.class);
     private final HarvestGraphProperties graphProperties;
     private final FusekiConfiguration fusekiConfiguration;
     private final CompactAction compactAction;

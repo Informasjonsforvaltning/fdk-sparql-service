@@ -1,6 +1,5 @@
 package no.fdk.sparqlservice.fuseki.action;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.dboe.base.file.Location;
 import org.apache.jena.fuseki.servlets.BaseActionREST;
 import org.apache.jena.fuseki.servlets.HttpAction;
@@ -8,6 +7,8 @@ import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.tdb2.DatabaseMgr;
 import org.apache.jena.tdb2.store.DatasetGraphSwitchable;
 import org.apache.jena.tdb2.sys.TDBInternal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 
@@ -18,9 +19,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-@Slf4j
 @Component
 public class CompactAction extends BaseActionREST {
+    private static final Logger log = LoggerFactory.getLogger(CompactAction.class);
     @Override
     protected void doGet(HttpAction action) {
         compact(action.getDataset());

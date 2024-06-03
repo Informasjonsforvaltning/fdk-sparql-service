@@ -1,7 +1,6 @@
 package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import no.fdk.sparqlservice.configuration.FusekiConfiguration;
 import no.fdk.sparqlservice.fuseki.action.CompactAction;
 import org.apache.jena.fuseki.main.FusekiServer;
@@ -13,6 +12,8 @@ import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.util.Symbol;
 import org.apache.jena.tdb2.TDB2;
 import org.apache.jena.tdb2.TDB2Factory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class FusekiService {
+    private static final Logger log = LoggerFactory.getLogger(FusekiService.class);
     private final FusekiConfiguration fusekiConfiguration;
 
     private static final Symbol nameSymbol = Symbol.create("name");
