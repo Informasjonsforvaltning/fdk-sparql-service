@@ -12,7 +12,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' &&  github.event.pull_request.draft == false }}
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-push.yaml@main
     with:
-      app_name: fdk-sparql-kafka-service
+      app_name: fdk-sparql-service
       environment: staging
       java_version: '17'
       coverage_file_path: ./target/site/jacoco/jacoco.xml
@@ -34,7 +34,7 @@ jobs:
     needs: [ build-fdk-sparql-service ]
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
-      app_name: fdk-sparql-kafka-service
+      app_name: fdk-sparql-service
       environment: staging
       cluster: digdir-fdk-dev
     secrets:

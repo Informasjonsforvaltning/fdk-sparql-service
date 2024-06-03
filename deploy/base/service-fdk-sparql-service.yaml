@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fdk-sparql-kafka-service
+  name: fdk-sparql-service
 spec:
   selector:
-    app: fdk-sparql-kafka-service
+    app: fdk-sparql-service
   ports:
     - name: http
       protocol: TCP
