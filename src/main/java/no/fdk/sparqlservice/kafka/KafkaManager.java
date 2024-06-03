@@ -16,7 +16,7 @@ public class KafkaManager {
     private KafkaListenerEndpointRegistry registry;
 
     public void pause(String id) {
-        LOGGER.debug("Pausing kafka listener containers with id: $id");
+        LOGGER.debug("Pausing kafka listener containers with id: " + id);
         registry.getListenerContainers()
             .forEach(it -> {
                 if (Objects.equals(it.getListenerId(), id)) {
@@ -26,7 +26,7 @@ public class KafkaManager {
     }
 
     public void resume(String id) {
-        LOGGER.debug("Resuming kafka listener containers with id: $id");
+        LOGGER.debug("Resuming kafka listener containers with id: " + id);
         registry.getListenerContainers()
             .forEach(it -> {
                 if (Objects.equals(it.getListenerId(), id)) {

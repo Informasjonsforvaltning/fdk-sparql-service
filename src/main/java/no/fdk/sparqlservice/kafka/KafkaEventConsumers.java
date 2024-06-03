@@ -1,7 +1,6 @@
 package no.fdk.sparqlservice.kafka;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import no.fdk.concept.ConceptEvent;
 import no.fdk.event.EventEvent;
 import no.fdk.informationmodel.InformationModelEvent;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class KafkaEventConsumers {
 

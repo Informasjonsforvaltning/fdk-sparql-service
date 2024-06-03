@@ -1,7 +1,6 @@
 package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import no.fdk.sparqlservice.model.CatalogType;
 import no.fdk.sparqlservice.model.Concept;
 import no.fdk.sparqlservice.model.DataService;
@@ -21,7 +20,6 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ResourceService {
     private final ConceptRepository conceptRepository;
     private final DataServiceRepository dataServiceRepository;
