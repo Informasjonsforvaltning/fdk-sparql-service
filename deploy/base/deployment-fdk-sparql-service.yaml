@@ -2,26 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fdk-sparql-kafka-service
+  name: fdk-sparql-service
   labels:
-    app: fdk-sparql-kafka-service
+    app: fdk-sparql-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fdk-sparql-kafka-service
+      app: fdk-sparql-service
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: fdk-sparql-kafka-service
+        app: fdk-sparql-service
       annotations:
         prometheus.io/scrape: "false"
     spec:
       containers:
-        - name: fdk-sparql-kafka-service
-          image: fdk-sparql-kafka-service
+        - name: fdk-sparql-service
+          image: fdk-sparql-service
           imagePullPolicy: Always
           volumeMounts:
             - name: fuseki

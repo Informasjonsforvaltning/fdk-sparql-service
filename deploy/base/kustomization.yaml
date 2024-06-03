@@ -5,6 +5,6 @@ resources:
   - deployment-fdk-sparql-service.yaml
   - service-fdk-sparql-service.yaml
 images:
-  - name: fdk-sparql-kafka-service
-    newName: eu.gcr.io/digdir-fdk-infra/fdk-sparql-kafka-service
+  - name: fdk-sparql-service
+    newName: eu.gcr.io/digdir-fdk-infra/fdk-sparql-service
     newTag: $(GIT_COMMIT_SHA)

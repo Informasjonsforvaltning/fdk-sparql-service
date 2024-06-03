@@ -10,7 +10,7 @@ jobs:
     name: Build when merged to main
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-push.yaml@main
     with:
-      app_name: fdk-sparql-kafka-service
+      app_name: fdk-sparql-service
       environment: prod
       java_version: '17'
       coverage_file_path: ./target/site/jacoco/jacoco.xml
@@ -24,7 +24,7 @@ jobs:
     needs: build
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
-      app_name: fdk-sparql-kafka-service
+      app_name: fdk-sparql-service
       environment: prod
       cluster: digdir-fdk-prod
     secrets:
@@ -37,7 +37,7 @@ jobs:
     needs: [ build, deploy-prod ]
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
-      app_name: fdk-sparql-kafka-service
+      app_name: fdk-sparql-service
       environment: demo
       cluster: digdir-fdk-dev
     secrets:
