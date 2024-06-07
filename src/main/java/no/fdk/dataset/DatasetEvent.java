@@ -17,7 +17,7 @@ public class DatasetEvent extends org.apache.avro.specific.SpecificRecordBase im
   private static final long serialVersionUID = 1262248989782269649L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DatasetEvent\",\"namespace\":\"no.fdk.dataset\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"DatasetEventType\",\"symbols\":[\"DATASET_REASONED\",\"DATASET_REMOVED\",\"DATASET_HARVESTED\"]}},{\"name\":\"fdkId\",\"type\":\"string\"},{\"name\":\"graph\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"DatasetEvent\",\"namespace\":\"no.fdk.dataset\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"enum\",\"name\":\"DatasetEventType\",\"symbols\":[\"DATASET_REASONED\",\"DATASET_REMOVED\",\"DATASET_HARVESTED\"]}},{\"name\":\"fdkId\",\"type\":\"string\"},{\"name\":\"graph\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"long\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
