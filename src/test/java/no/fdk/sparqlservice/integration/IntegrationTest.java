@@ -53,6 +53,24 @@ public class IntegrationTest extends AbstractContainerTest {
     UpdateService updateService;
 
     @Autowired
+    ConceptRepository conceptRepository;
+
+    @Autowired
+    DataServiceRepository dataServiceRepository;
+
+    @Autowired
+    DatasetRepository datasetRepository;
+
+    @Autowired
+    EventRepository eventRepository;
+
+    @Autowired
+    InformationModelRepository informationModelRepository;
+
+    @Autowired
+    ServiceRepository serviceRepository;
+
+    @Autowired
     ResourceService resourceService;
 
     @Autowired
@@ -60,12 +78,12 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @BeforeEach
     void setup() {
-        resourceService.findAllDatasets().forEach(dataset -> resourceService.deleteDataset(dataset.getId()));
-        resourceService.findAllDataServices().forEach(dataService -> resourceService.deleteDataService(dataService.getId()));
-        resourceService.findAllConcepts().forEach(concept -> resourceService.deleteConcept(concept.getId()));
-        resourceService.findAllEvents().forEach(event -> resourceService.deleteEvent(event.getId()));
-        resourceService.findAllInformationModels().forEach(informationModel -> resourceService.deleteInformationModel(informationModel.getId()));
-        resourceService.findAllServices().forEach(service -> resourceService.deleteService(service.getId()));
+        conceptRepository.deleteAll();
+        dataServiceRepository.deleteAll();
+        datasetRepository.deleteAll();
+        eventRepository.deleteAll();
+        informationModelRepository.deleteAll();
+        serviceRepository.deleteAll();
 
         resourceService.saveConcept("0", ResourceReader.readFile("concept0.ttl"), 123);
         resourceService.saveConcept("1", ResourceReader.readFile("concept1.ttl"), 123);
@@ -117,7 +135,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteConcept() throws JsonProcessingException {
-        resourceService.deleteConcept("1");
+        resourceService.saveConcept("1", "", 124);
         updateService.updateConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
@@ -134,7 +152,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataService() throws JsonProcessingException {
-        resourceService.deleteDataService("1");
+        resourceService.saveDataService("1", "", 124);
         updateService.updateDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
@@ -151,7 +169,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataset() throws JsonProcessingException {
-        resourceService.deleteDataset("1");
+        resourceService.saveDataset("1", "", 124);
         updateService.updateDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
@@ -172,7 +190,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteEvent() throws JsonProcessingException {
-        resourceService.deleteEvent("0");
+        resourceService.saveEvent("0", "", 124);
         updateService.updateEvents();
 
         String businessResponse = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
@@ -189,7 +207,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteInformationModel() throws JsonProcessingException {
-        resourceService.deleteInformationModel("1");
+        resourceService.saveInformationModel("1", "", 124);
         updateService.updateInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
@@ -206,7 +224,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteService() throws JsonProcessingException {
-        resourceService.deleteService("1");
+        resourceService.saveService("1", "", 124);
         updateService.updateServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
