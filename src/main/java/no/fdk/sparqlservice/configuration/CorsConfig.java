@@ -19,11 +19,10 @@ public class CorsConfig {
     private static final Logger log = LoggerFactory.getLogger(CorsConfig.class);
 
     private String workingDirectory;
-    private String file;
     private String originPatterns;
 
     public String generateCorsConfig() {
-        final String corsFilePath = System.getProperty(workingDirectory) + file;
+        final String corsFilePath = System.getProperty(workingDirectory) + "/config/cors.properties";
         final File corsFile = new File(corsFilePath);
 
         try {

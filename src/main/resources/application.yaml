@@ -11,7 +11,6 @@ application:
     enable-verbose-logging: false
   cors:
     working-directory: user.dir
-    file: /config/cors.properties
     originPatterns: ${CORS_ORIGIN_PATTERNS}
   graph:
     datasets: ${GRAPH_BASE}/datasets
@@ -89,5 +88,4 @@ application:
     services: https://staging.fellesdatakatalog.digdir.no/services
   cors:
     working-directory: java.io.tmpdir
-    file: /config/cors.properties
-    originPatterns: *
+    originPatterns: "*"
