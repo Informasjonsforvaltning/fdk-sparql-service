@@ -1,6 +1,8 @@
 !**/src/main/**
 !**/src/test/**
 
+config/cors.properties
+
 .gradle
 target
 store
