@@ -18,15 +18,14 @@ jobs:
       coverage_file_path: ./target/site/jacoco/jacoco.xml
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GCP_SA_DIGDIR_FDK_GCR_KEY: ${{ secrets.GCP_SA_DIGDIR_FDK_GCR_KEY }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   dependabot-build:
     name: Build image on PR from dependabot
     if: ${{ github.actor == 'dependabot[bot]' }}
     uses: Informasjonsforvaltning/workflows/.github/workflows/build.yaml@main
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      java_version: '17'
 
   deploy:
     name: Deploy to staging environment

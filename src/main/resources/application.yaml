@@ -9,6 +9,9 @@ application:
     store-path: store
     dataset-name: fdk
     enable-verbose-logging: false
+  cors:
+    working-directory: user.dir
+    originPatterns: ${CORS_ORIGIN_PATTERNS}
   graph:
     datasets: ${GRAPH_BASE}/datasets
     dataservices: ${GRAPH_BASE}/dataservices
@@ -83,3 +86,6 @@ application:
     informationmodels: https://staging.fellesdatakatalog.digdir.no/informationmodels
     events: https://staging.fellesdatakatalog.digdir.no/events
     services: https://staging.fellesdatakatalog.digdir.no/services
+  cors:
+    working-directory: java.io.tmpdir
+    originPatterns: "*"
