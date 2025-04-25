@@ -70,6 +70,14 @@ matches desired topics.
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
+#### Produce messages
+
+Check if schema id is correct in the script. This should be 1 if there is only one schema in your registry.
+
+```
+sh ./kafka/produce-messages.sh
+```
+
 ### Running tests
 
 ```sh
