@@ -68,6 +68,24 @@ resilience4j:
 
 ---
 spring:
+  config.activate.on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sparql_test
+    username: postgres
+    password: postgres
+application:
+  graph:
+    datasets: https://staging.fellesdatakatalog.digdir.no/datasets
+    dataservices: https://staging.fellesdatakatalog.digdir.no/dataservices
+    concepts: https://staging.fellesdatakatalog.digdir.no/concepts
+    informationmodels: https://staging.fellesdatakatalog.digdir.no/informationmodels
+    events: https://staging.fellesdatakatalog.digdir.no/events
+    services: https://staging.fellesdatakatalog.digdir.no/services
+  cors:
+    working-directory: java.io.tmpdir
+    originPatterns: "*"
+---
+spring:
   config.activate.on-profile: test
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
