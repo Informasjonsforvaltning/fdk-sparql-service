@@ -8,4 +8,4 @@ RUN addgroup --gid 1001 --system app && \
   chmod 770 -R /app
 USER app:app
 COPY --chown=app:app /target/app.jar app.jar
-CMD java -XX:+UseZGC -Xmx8g -jar app.jar
+CMD ["java", "-XX:+UseZGC", "-Xmx8g", "-jar", "app.jar"]
