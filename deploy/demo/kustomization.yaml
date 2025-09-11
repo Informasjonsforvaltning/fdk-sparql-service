@@ -5,6 +5,3 @@ namespace: demo
 resources:
   - ../base
   - pvc-fdk-sparql-service.yaml
-
-patchesStrategicMerge:
-  - env.yaml
