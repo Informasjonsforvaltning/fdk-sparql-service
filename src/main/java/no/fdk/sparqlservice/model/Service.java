@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @AllArgsConstructor
@@ -19,9 +18,11 @@ public class Service {
     @Id
     private String id;
 
-    @Lob
-    private String graph;
+    private byte[] graph;
 
     @Column(name = "timestamp", nullable = false)
     private long timestamp;
+
+    @Column(name = "removed", nullable = false)
+    private boolean removed;
 }

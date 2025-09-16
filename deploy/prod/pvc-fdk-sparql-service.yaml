@@ -1,12 +1,28 @@
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fdk-prod-sparql-pv
+spec:
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  gcePersistentDisk:
+    pdName: fdk-prod-sparql
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: fdk-sparql-service
+  namespace: prod
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: premium-rwo
   resources:
     requests:
-      storage: 10Gi
+      storage: 200Gi
+  storageClassName: ""
+  volumeName: fdk-prod-sparql-pv

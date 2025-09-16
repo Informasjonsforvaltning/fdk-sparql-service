@@ -39,7 +39,7 @@ public class KafkaEventCircuitBreakers {
                         event.getTimestamp()
                 );
             } else if(event.getType() == ServiceEventType.SERVICE_REMOVED && hasHigherTimestamp) {
-                resourceService.saveService(event.getFdkId().toString(), "", event.getTimestamp());
+                resourceService.removeService(event.getFdkId().toString(), event.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -61,7 +61,7 @@ public class KafkaEventCircuitBreakers {
                         event.getTimestamp()
                 );
             } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED && hasHigherTimestamp) {
-                resourceService.saveInformationModel(event.getFdkId().toString(), "", event.getTimestamp());
+                resourceService.removeInformationModel(event.getFdkId().toString(), event.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -83,7 +83,7 @@ public class KafkaEventCircuitBreakers {
                         kafkaEvent.getTimestamp()
                 );
             } else if(kafkaEvent.getType() == EventEventType.EVENT_REMOVED && hasHigherTimestamp) {
-                resourceService.saveEvent(kafkaEvent.getFdkId().toString(), "", kafkaEvent.getTimestamp());
+                resourceService.removeEvent(kafkaEvent.getFdkId().toString(), kafkaEvent.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -105,7 +105,7 @@ public class KafkaEventCircuitBreakers {
                         event.getTimestamp()
                 );
             } else if(event.getType() == DatasetEventType.DATASET_REMOVED && hasHigherTimestamp) {
-                resourceService.saveDataset(event.getFdkId().toString(), "", event.getTimestamp());
+                resourceService.removeDataset(event.getFdkId().toString(), event.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -127,7 +127,7 @@ public class KafkaEventCircuitBreakers {
                         event.getTimestamp()
                 );
             } else if(event.getType() == DataServiceEventType.DATA_SERVICE_REMOVED && hasHigherTimestamp) {
-                resourceService.saveDataService(event.getFdkId().toString(), "", event.getTimestamp());
+                resourceService.removeDataService(event.getFdkId().toString(), event.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -149,7 +149,7 @@ public class KafkaEventCircuitBreakers {
                         event.getTimestamp()
                 );
             } else if(event.getType() == ConceptEventType.CONCEPT_REMOVED && hasHigherTimestamp) {
-                resourceService.saveConcept(event.getFdkId().toString(), "", event.getTimestamp());
+                resourceService.removeConcept(event.getFdkId().toString(), event.getTimestamp());
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);

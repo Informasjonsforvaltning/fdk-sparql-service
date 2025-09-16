@@ -19,6 +19,15 @@ spec:
       annotations:
         prometheus.io/scrape: "false"
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox:1.35
+          command: ['sh', '-c', 'chown 1001:1001 /app/store && chmod 755 /app/store']
+          volumeMounts:
+            - name: fuseki
+              mountPath: /app/store
+          securityContext:
+            runAsUser: 0
       containers:
         - name: fdk-sparql-service
           env:
@@ -92,7 +101,7 @@ spec:
             failureThreshold: 5
           resources:
             requests:
-              memory: 9Gi
+              memory: 15Gi
       securityContext:
         runAsUser: 1001
         runAsGroup: 1001

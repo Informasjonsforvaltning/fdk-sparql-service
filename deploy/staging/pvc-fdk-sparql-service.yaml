@@ -1,11 +1,28 @@
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fdk-dev-staging-sparql-pv
+spec:
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  gcePersistentDisk:
+    pdName: fdk-dev-staging-sparql
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: fdk-sparql-service
+  namespace: staging
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 200Gi
+  storageClassName: ""
+  volumeName: fdk-dev-staging-sparql-pv

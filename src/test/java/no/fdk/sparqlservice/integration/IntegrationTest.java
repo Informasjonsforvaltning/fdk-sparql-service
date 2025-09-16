@@ -15,27 +15,13 @@ import no.fdk.informationmodel.InformationModelEvent;
 import no.fdk.informationmodel.InformationModelEventType;
 import no.fdk.service.ServiceEvent;
 import no.fdk.service.ServiceEventType;
-import no.fdk.sparqlservice.kafka.KafkaEventCircuitBreakers;
 import no.fdk.sparqlservice.kafka.KafkaEventConsumers;
-import no.fdk.sparqlservice.model.CatalogType;
-import no.fdk.sparqlservice.model.Concept;
-import no.fdk.sparqlservice.model.DataService;
-import no.fdk.sparqlservice.model.Dataset;
-import no.fdk.sparqlservice.model.Event;
-import no.fdk.sparqlservice.model.InformationModel;
-import no.fdk.sparqlservice.model.Service;
-import no.fdk.sparqlservice.repository.ConceptRepository;
-import no.fdk.sparqlservice.repository.DataServiceRepository;
-import no.fdk.sparqlservice.repository.DatasetRepository;
-import no.fdk.sparqlservice.repository.EventRepository;
-import no.fdk.sparqlservice.repository.InformationModelRepository;
-import no.fdk.sparqlservice.repository.ServiceRepository;
+import no.fdk.sparqlservice.repository.*;
 import no.fdk.sparqlservice.service.ResourceService;
 import no.fdk.sparqlservice.service.UpdateService;
 import no.fdk.sparqlservice.utils.AbstractContainerTest;
 import no.fdk.sparqlservice.utils.ResourceReader;
 import no.fdk.sparqlservice.utils.TestQuery;
-import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -53,57 +39,48 @@ public class IntegrationTest extends AbstractContainerTest {
     UpdateService updateService;
 
     @Autowired
-    ConceptRepository conceptRepository;
-
-    @Autowired
-    DataServiceRepository dataServiceRepository;
-
-    @Autowired
-    DatasetRepository datasetRepository;
-
-    @Autowired
-    EventRepository eventRepository;
-
-    @Autowired
-    InformationModelRepository informationModelRepository;
-
-    @Autowired
-    ServiceRepository serviceRepository;
-
-    @Autowired
     ResourceService resourceService;
 
     @Autowired
     KafkaEventConsumers kafkaEventConsumers;
 
+    @Autowired
+    MetadataRepository metadataRepository;
+
     @BeforeEach
     void setup() {
-        conceptRepository.deleteAll();
-        dataServiceRepository.deleteAll();
-        datasetRepository.deleteAll();
-        eventRepository.deleteAll();
-        informationModelRepository.deleteAll();
-        serviceRepository.deleteAll();
-
         resourceService.saveConcept("0", ResourceReader.readFile("concept0.ttl"), 123);
         resourceService.saveConcept("1", ResourceReader.readFile("concept1.ttl"), 123);
+        resourceService.removeConcept("2", 10);
+
         resourceService.saveDataService("0", ResourceReader.readFile("dataservice0.ttl"), 123);
         resourceService.saveDataService("1", ResourceReader.readFile("dataservice1.ttl"), 123);
+        resourceService.removeDataService("2", 10);
+
         resourceService.saveDataset("0", ResourceReader.readFile("dataset0.ttl"), 123);
         resourceService.saveDataset("1", ResourceReader.readFile("dataset1.ttl"), 123);
+        resourceService.removeDataset("2", 10);
+
         resourceService.saveEvent("0", ResourceReader.readFile("event0.ttl"), 123);
         resourceService.saveEvent("1", ResourceReader.readFile("event1.ttl"), 123);
+        resourceService.removeEvent("2", 10);
+
         resourceService.saveInformationModel("0", ResourceReader.readFile("infomodel0.ttl"), 123);
         resourceService.saveInformationModel("1", ResourceReader.readFile("infomodel1.ttl"), 123);
+        resourceService.removeInformationModel("2", 10);
+
         resourceService.saveService("0", ResourceReader.readFile("service0.ttl"), 123);
         resourceService.saveService("1", ResourceReader.readFile("service1.ttl"), 123);
+        resourceService.removeService("2", 10);
 
-        updateService.updateConcepts();
-        updateService.updateDataServices();
-        updateService.updateDatasets();
-        updateService.updateEvents();
-        updateService.updateInformationModels();
-        updateService.updateServices();
+        metadataRepository.deleteAll();
+
+        updateService.updateFusekiForChangedConcepts();
+        updateService.updateFusekiForChangedDataServices();
+        updateService.updateFusekiForChangedDatasets();
+        updateService.updateFusekiForChangedEvents();
+        updateService.updateFusekiForChangedInformationModels();
+        updateService.updateFusekiForChangedServices();
     }
 
     private String countQuery(String rdfType) {
@@ -135,8 +112,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteConcept() throws JsonProcessingException {
-        resourceService.saveConcept("1", "", 124);
-        updateService.updateConcepts();
+        resourceService.removeConcept("1", 124);
+        updateService.updateFusekiForChangedConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
         Integer result = getCountFromSelectResponse(response);
@@ -152,8 +129,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataService() throws JsonProcessingException {
-        resourceService.saveDataService("1", "", 124);
-        updateService.updateDataServices();
+        resourceService.removeDataService("1", 124);
+        updateService.updateFusekiForChangedDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
         Integer result = getCountFromSelectResponse(response);
@@ -169,8 +146,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataset() throws JsonProcessingException {
-        resourceService.saveDataset("1", "", 124);
-        updateService.updateDatasets();
+        resourceService.removeDataset("1", 124);
+        updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
         Integer result = getCountFromSelectResponse(response);
@@ -190,8 +167,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteEvent() throws JsonProcessingException {
-        resourceService.saveEvent("0", "", 124);
-        updateService.updateEvents();
+        resourceService.removeEvent("0", 124);
+        updateService.updateFusekiForChangedEvents();
 
         String businessResponse = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
         Integer businessResult = getCountFromSelectResponse(businessResponse);
@@ -207,8 +184,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteInformationModel() throws JsonProcessingException {
-        resourceService.saveInformationModel("1", "", 124);
-        updateService.updateInformationModels();
+        resourceService.removeInformationModel("1", 124);
+        updateService.updateFusekiForChangedInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
         Integer result = getCountFromSelectResponse(response);
@@ -224,8 +201,8 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteService() throws JsonProcessingException {
-        resourceService.saveService("1", "", 124);
-        updateService.updateServices();
+        resourceService.removeService("1", 124);
+        updateService.updateFusekiForChangedServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
@@ -242,7 +219,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("dataset2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.datasetListener(new ConsumerRecord<String, DatasetEvent>("dataset-events", 0, 0L, "key", event), ack);
-        updateService.updateDatasets();
+        updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
         Integer result = getCountFromSelectResponse(response);
@@ -259,7 +236,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.datasetListener(new ConsumerRecord<>("dataset-events", 0, 0L, "key", event), ack);
-        updateService.updateDatasets();
+        updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
         Integer result = getCountFromSelectResponse(response);
@@ -276,7 +253,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("dataservice2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
-        updateService.updateDataServices();
+        updateService.updateFusekiForChangedDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
         Integer result = getCountFromSelectResponse(response);
@@ -293,7 +270,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.dataServiceListener(new ConsumerRecord<>("data-service-events", 0, 0L, "key", event), ack);
-        updateService.updateDataServices();
+        updateService.updateFusekiForChangedDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
         Integer result = getCountFromSelectResponse(response);
@@ -310,7 +287,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("concept2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
-        updateService.updateConcepts();
+        updateService.updateFusekiForChangedConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
         Integer result = getCountFromSelectResponse(response);
@@ -327,7 +304,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.conceptListener(new ConsumerRecord<>("concept-events", 0, 0L, "key", event), ack);
-        updateService.updateConcepts();
+        updateService.updateFusekiForChangedConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
         Integer result = getCountFromSelectResponse(response);
@@ -344,7 +321,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("infomodel2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
-        updateService.updateInformationModels();
+        updateService.updateFusekiForChangedInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
         Integer result = getCountFromSelectResponse(response);
@@ -361,7 +338,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.infoModelListener(new ConsumerRecord<>("information-model-events", 0, 0L, "key", event), ack);
-        updateService.updateInformationModels();
+        updateService.updateFusekiForChangedInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
         Integer result = getCountFromSelectResponse(response);
@@ -378,7 +355,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("event2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
-        updateService.updateEvents();
+        updateService.updateFusekiForChangedEvents();
 
         String response = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
         Integer result = getCountFromSelectResponse(response);
@@ -395,7 +372,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
-        updateService.updateEvents();
+        updateService.updateFusekiForChangedEvents();
 
         String response = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
         Integer result = getCountFromSelectResponse(response);
@@ -412,7 +389,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph(ResourceReader.readFile("service2.ttl"));
         event.setTimestamp(124);
         kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
-        updateService.updateServices();
+        updateService.updateFusekiForChangedServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
@@ -429,7 +406,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setGraph("");
         event.setTimestamp(124);
         kafkaEventConsumers.serviceListener(new ConsumerRecord<>("service-events", 0, 0L, "key", event), ack);
-        updateService.updateServices();
+        updateService.updateFusekiForChangedServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
