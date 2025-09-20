@@ -38,7 +38,6 @@ public class ResourceService {
     public void removeConcept(String fdkId, long timestamp) {
         conceptRepository.findById(fdkId).ifPresentOrElse(
                 concept -> {
-                    concept.setGraph("".getBytes(StandardCharsets.UTF_8));
                     concept.setTimestamp(timestamp);
                     concept.setRemoved(true);
                     conceptRepository.save(concept);
@@ -68,7 +67,6 @@ public class ResourceService {
     public void removeDataService(String fdkId, long timestamp) {
         dataServiceRepository.findById(fdkId).ifPresentOrElse(
                 dataService -> {
-                    dataService.setGraph("".getBytes(StandardCharsets.UTF_8));
                     dataService.setTimestamp(timestamp);
                     dataService.setRemoved(true);
                     dataServiceRepository.save(dataService);
@@ -98,7 +96,6 @@ public class ResourceService {
     public void removeDataset(String fdkId, long timestamp) {
         datasetRepository.findById(fdkId).ifPresentOrElse(
                 dataset -> {
-                    dataset.setGraph("".getBytes(StandardCharsets.UTF_8));
                     dataset.setTimestamp(timestamp);
                     dataset.setRemoved(true);
                     datasetRepository.save(dataset);
@@ -128,7 +125,6 @@ public class ResourceService {
     public void removeEvent(String fdkId, long timestamp) {
         eventRepository.findById(fdkId).ifPresentOrElse(
                 fdkEvent -> {
-                    fdkEvent.setGraph("".getBytes(StandardCharsets.UTF_8));
                     fdkEvent.setTimestamp(timestamp);
                     fdkEvent.setRemoved(true);
                     eventRepository.save(fdkEvent);
@@ -158,7 +154,6 @@ public class ResourceService {
     public void removeInformationModel(String fdkId, long timestamp) {
         informationModelRepository.findById(fdkId).ifPresentOrElse(
                 infoModel -> {
-                    infoModel.setGraph("".getBytes(StandardCharsets.UTF_8));
                     infoModel.setTimestamp(timestamp);
                     infoModel.setRemoved(true);
                     informationModelRepository.save(infoModel);
@@ -188,7 +183,6 @@ public class ResourceService {
     public void removeService(String fdkId, long timestamp) {
         serviceRepository.findById(fdkId).ifPresentOrElse(
                 service -> {
-                    service.setGraph("".getBytes(StandardCharsets.UTF_8));
                     service.setTimestamp(timestamp);
                     service.setRemoved(true);
                     serviceRepository.save(service);

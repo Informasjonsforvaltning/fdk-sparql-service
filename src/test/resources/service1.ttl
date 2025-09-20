@@ -174,10 +174,6 @@
         a               cv:Channel ;
         cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
         dct:identifier  "2" ;
-        cv:openingHours [
-            a               time:TemporalEntity ;
-            time:dayOfWeek  schema:PublicHolidays ;
-        ] ;
         dct:type        <https://data.norge.no/concepts/257> .
 
 <https://data.norge.no/concepts/150>

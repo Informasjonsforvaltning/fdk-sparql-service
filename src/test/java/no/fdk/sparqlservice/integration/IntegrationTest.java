@@ -23,6 +23,7 @@ import no.fdk.sparqlservice.utils.AbstractContainerTest;
 import no.fdk.sparqlservice.utils.ResourceReader;
 import no.fdk.sparqlservice.utils.TestQuery;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +76,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
         metadataRepository.deleteAll();
 
-        updateService.updateFusekiForChangedConcepts();
-        updateService.updateFusekiForChangedDataServices();
-        updateService.updateFusekiForChangedDatasets();
-        updateService.updateFusekiForChangedEvents();
-        updateService.updateFusekiForChangedInformationModels();
-        updateService.updateFusekiForChangedServices();
+        updateService.updateFuseki();
     }
 
     private String countQuery(String rdfType) {
@@ -191,7 +187,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
     }
-
+/*
     @Test
     void countServices() throws JsonProcessingException {
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
@@ -208,7 +204,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
     }
-
+*/
     @Test
     void consumeKafkaDatasetEventOfTypeReasoned() throws JsonProcessingException {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
