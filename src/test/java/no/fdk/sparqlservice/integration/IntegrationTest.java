@@ -23,7 +23,6 @@ import no.fdk.sparqlservice.utils.AbstractContainerTest;
 import no.fdk.sparqlservice.utils.ResourceReader;
 import no.fdk.sparqlservice.utils.TestQuery;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,29 +49,29 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @BeforeEach
     void setup() {
-        resourceService.saveConcept("0", ResourceReader.readFile("concept0.ttl"), 123);
-        resourceService.saveConcept("1", ResourceReader.readFile("concept1.ttl"), 123);
-        resourceService.removeConcept("2", 10);
+        resourceService.saveConcept("fdk-0", ResourceReader.readFile("concept0.ttl"), 123);
+        resourceService.saveConcept("fdk-1", ResourceReader.readFile("concept1.ttl"), 123);
+        resourceService.removeConcept("fdk-2", 10);
 
-        resourceService.saveDataService("0", ResourceReader.readFile("dataservice0.ttl"), 123);
-        resourceService.saveDataService("1", ResourceReader.readFile("dataservice1.ttl"), 123);
-        resourceService.removeDataService("2", 10);
+        resourceService.saveDataService("fdk-0", ResourceReader.readFile("dataservice0.ttl"), 123);
+        resourceService.saveDataService("fdk-1", ResourceReader.readFile("dataservice1.ttl"), 123);
+        resourceService.removeDataService("fdk-2", 10);
 
-        resourceService.saveDataset("0", ResourceReader.readFile("dataset0.ttl"), 123);
-        resourceService.saveDataset("1", ResourceReader.readFile("dataset1.ttl"), 123);
-        resourceService.removeDataset("2", 10);
+        resourceService.saveDataset("fdk-0", ResourceReader.readFile("dataset0.ttl"), 123);
+        resourceService.saveDataset("fdk-1", ResourceReader.readFile("dataset1.ttl"), 123);
+        resourceService.removeDataset("fdk-2", 10);
 
-        resourceService.saveEvent("0", ResourceReader.readFile("event0.ttl"), 123);
-        resourceService.saveEvent("1", ResourceReader.readFile("event1.ttl"), 123);
-        resourceService.removeEvent("2", 10);
+        resourceService.saveEvent("fdk-0", ResourceReader.readFile("event0.ttl"), 123);
+        resourceService.saveEvent("fdk-1", ResourceReader.readFile("event1.ttl"), 123);
+        resourceService.removeEvent("fdk-2", 10);
 
-        resourceService.saveInformationModel("0", ResourceReader.readFile("infomodel0.ttl"), 123);
-        resourceService.saveInformationModel("1", ResourceReader.readFile("infomodel1.ttl"), 123);
-        resourceService.removeInformationModel("2", 10);
+        resourceService.saveInformationModel("fdk-0", ResourceReader.readFile("infomodel0.ttl"), 123);
+        resourceService.saveInformationModel("fdk-1", ResourceReader.readFile("infomodel1.ttl"), 123);
+        resourceService.removeInformationModel("fdk-2", 10);
 
-        resourceService.saveService("0", ResourceReader.readFile("service0.ttl"), 123);
-        resourceService.saveService("1", ResourceReader.readFile("service1.ttl"), 123);
-        resourceService.removeService("2", 10);
+        resourceService.saveService("fdk-0", ResourceReader.readFile("service0.ttl"), 123);
+        resourceService.saveService("fdk-1", ResourceReader.readFile("service1.ttl"), 123);
+        resourceService.removeService("fdk-2", 10);
 
         metadataRepository.deleteAll();
 
@@ -88,10 +87,25 @@ public class IntegrationTest extends AbstractContainerTest {
                 "PREFIX modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#>\n" +
                 "SELECT (COUNT(DISTINCT ?resource) AS ?count)\n" +
                 "WHERE {\n" +
+                "GRAPH <https://test.fellesdatakatalog.digdir.no> {\n" +
                 "?record a dcat:CatalogRecord .\n" +
                 "?record foaf:primaryTopic ?resource .\n" +
                 "?resource a " + rdfType + " .\n" +
-                "}\n";
+                "}}\n";
+    }
+
+    private String countPropertiesOfResource(String uri) {
+        return "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+                "PREFIX cpsv: <http://purl.org/vocab/cpsv#>\n" +
+                "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n" +
+                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>\n" +
+                "PREFIX cv: <http://data.europa.eu/m8g/>\n" +
+                "PREFIX modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#>\n" +
+                "SELECT (COUNT(DISTINCT ?object) AS ?count)\n" +
+                "WHERE {\n" +
+                "GRAPH <https://test.fellesdatakatalog.digdir.no> {\n" +
+                "<" + uri + "> ?predicate ?object .\n" +
+                "}}\n";
     }
 
     private Integer getCountFromSelectResponse(String response) throws JsonProcessingException {
@@ -108,7 +122,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteConcept() throws JsonProcessingException {
-        resourceService.removeConcept("1", 124);
+        resourceService.removeConcept("fdk-1", 124);
         updateService.updateFusekiForChangedConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
@@ -125,7 +139,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataService() throws JsonProcessingException {
-        resourceService.removeDataService("1", 124);
+        resourceService.removeDataService("fdk-1", 124);
         updateService.updateFusekiForChangedDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
@@ -142,7 +156,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataset() throws JsonProcessingException {
-        resourceService.removeDataset("1", 124);
+        resourceService.removeDataset("fdk-1", 124);
         updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
@@ -163,7 +177,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteEvent() throws JsonProcessingException {
-        resourceService.removeEvent("0", 124);
+        resourceService.removeEvent("fdk-0", 124);
         updateService.updateFusekiForChangedEvents();
 
         String businessResponse = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
@@ -180,14 +194,14 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteInformationModel() throws JsonProcessingException {
-        resourceService.removeInformationModel("1", 124);
+        resourceService.removeInformationModel("fdk-1", 124);
         updateService.updateFusekiForChangedInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
     }
-/*
+
     @Test
     void countServices() throws JsonProcessingException {
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
@@ -197,20 +211,20 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteService() throws JsonProcessingException {
-        resourceService.removeService("1", 124);
+        resourceService.removeService("fdk-1", 124);
         updateService.updateFusekiForChangedServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
     }
-*/
+
     @Test
     void consumeKafkaDatasetEventOfTypeReasoned() throws JsonProcessingException {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         DatasetEvent event = new DatasetEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(DatasetEventType.DATASET_REASONED);
         event.setGraph(ResourceReader.readFile("dataset2.ttl"));
         event.setTimestamp(124);
@@ -227,7 +241,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         DatasetEvent event = new DatasetEvent();
-        event.setFdkId("1");
+        event.setFdkId("fdk-1");
         event.setType(DatasetEventType.DATASET_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -244,7 +258,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         DataServiceEvent event = new DataServiceEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(DataServiceEventType.DATA_SERVICE_REASONED);
         event.setGraph(ResourceReader.readFile("dataservice2.ttl"));
         event.setTimestamp(124);
@@ -261,7 +275,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         DataServiceEvent event = new DataServiceEvent();
-        event.setFdkId("1");
+        event.setFdkId("fdk-1");
         event.setType(DataServiceEventType.DATA_SERVICE_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -278,7 +292,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         ConceptEvent event = new ConceptEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(ConceptEventType.CONCEPT_REASONED);
         event.setGraph(ResourceReader.readFile("concept2.ttl"));
         event.setTimestamp(124);
@@ -295,7 +309,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         ConceptEvent event = new ConceptEvent();
-        event.setFdkId("1");
+        event.setFdkId("fdk-1");
         event.setType(ConceptEventType.CONCEPT_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -312,7 +326,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         InformationModelEvent event = new InformationModelEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(InformationModelEventType.INFORMATION_MODEL_REASONED);
         event.setGraph(ResourceReader.readFile("infomodel2.ttl"));
         event.setTimestamp(124);
@@ -329,7 +343,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         InformationModelEvent event = new InformationModelEvent();
-        event.setFdkId("1");
+        event.setFdkId("fdk-1");
         event.setType(InformationModelEventType.INFORMATION_MODEL_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -346,7 +360,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         EventEvent event = new EventEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(EventEventType.EVENT_REASONED);
         event.setGraph(ResourceReader.readFile("event2.ttl"));
         event.setTimestamp(124);
@@ -363,7 +377,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         EventEvent event = new EventEvent();
-        event.setFdkId("0");
+        event.setFdkId("fdk-0");
         event.setType(EventEventType.EVENT_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -380,7 +394,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         ServiceEvent event = new ServiceEvent();
-        event.setFdkId("2");
+        event.setFdkId("fdk-2");
         event.setType(ServiceEventType.SERVICE_REASONED);
         event.setGraph(ResourceReader.readFile("service2.ttl"));
         event.setTimestamp(124);
@@ -397,7 +411,7 @@ public class IntegrationTest extends AbstractContainerTest {
         Acknowledgment ack = Mockito.mock(Acknowledgment.class);
 
         ServiceEvent event = new ServiceEvent();
-        event.setFdkId("1");
+        event.setFdkId("fdk-1");
         event.setType(ServiceEventType.SERVICE_REMOVED);
         event.setGraph("");
         event.setTimestamp(124);
@@ -407,5 +421,22 @@ public class IntegrationTest extends AbstractContainerTest {
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void removalOfResourceDoesNotRemoveTriplesFromOthers() throws JsonProcessingException {
+        Acknowledgment ack = Mockito.mock(Acknowledgment.class);
+
+        EventEvent event = new EventEvent();
+        event.setFdkId("fdk-1");
+        event.setType(EventEventType.EVENT_REMOVED);
+        event.setGraph("");
+        event.setTimestamp(124);
+        kafkaEventConsumers.eventListener(new ConsumerRecord<>("event-events", 0, 0L, "key", event), ack);
+        updateService.updateFusekiForChangedEvents();
+
+        String response = TestQuery.sendQuery(countPropertiesOfResource("https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789"));
+        Integer result = getCountFromSelectResponse(response);
+        Assertions.assertEquals(7, result);
     }
 }

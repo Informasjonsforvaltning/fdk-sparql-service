@@ -9,9 +9,9 @@
         rdf:type  vcard:Organization;
         vcard:fn  "Contact information | (910258028)" .
 
-<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/9340f59d-0af4-3583-8ddb-738315c1ea73>
+<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/fdk-2>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "9340f59d-0af4-3583-8ddb-738315c1ea73";
+        dct:identifier     "fdk-2";
         dct:isPartOf       <https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs/d07885d9-0925-339f-bb22-58c28dc30409>;
         dct:issued         "2021-03-17T10:00:04.609Z"^^xsd:dateTime;
         dct:modified       "2023-02-02T14:09:30.492Z"^^xsd:dateTime;

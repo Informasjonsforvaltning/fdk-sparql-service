@@ -13,9 +13,9 @@
         vcard:hasTelephone         <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b6fc26087749e9be1760/.well-known/skolem/33a615f9-308a-36db-be2e-89b7f5bb40de>;
         vcard:hasURL               <https://datatjenestegruppa.com> .
 
-<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/827a7ffa-c171-3432-85dd-17dd7c56f831>
+<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/fdk-0>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "827a7ffa-c171-3432-85dd-17dd7c56f831";
+        dct:identifier     "fdk-0";
         dct:isPartOf       <https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs/d07885d9-0925-339f-bb22-58c28dc30409>;
         dct:issued         "2021-03-17T10:00:04.609Z"^^xsd:dateTime;
         dct:modified       "2023-02-02T14:09:30.492Z"^^xsd:dateTime;

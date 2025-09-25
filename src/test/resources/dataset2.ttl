@@ -76,9 +76,9 @@
         rdf:type        skos:Concept;
         skos:prefLabel  "Utleveringshjemmel"@nb .
 
-<https://datasets.staging.fellesdatakatalog.digdir.no/datasets/04edc67b-046c-37a8-9822-29f03d2f1e80>
+<https://datasets.staging.fellesdatakatalog.digdir.no/datasets/fdk-2>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "04edc67b-046c-37a8-9822-29f03d2f1e80";
+        dct:identifier     "fdk-2";
         dct:isPartOf       <https://datasets.staging.fellesdatakatalog.digdir.no/catalogs/821c273e-c4b0-3807-8d54-f54998747507>;
         dct:issued         "2021-05-12T09:11:52.174Z"^^xsd:dateTime;
         dct:modified       "2023-02-17T08:00:05.15Z"^^xsd:dateTime;
