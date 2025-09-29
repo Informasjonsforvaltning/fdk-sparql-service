@@ -121,7 +121,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedConcepts() {
-        List<Concept> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 500));
+        List<Concept> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} concepts", concepts.size());
         for (Concept concept : concepts) {
 
@@ -141,7 +141,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedDataServices() {
-        List<DataService> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 500));
+        List<DataService> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} data services", dataServices.size());
         for (DataService dataService : dataServices) {
 
@@ -161,7 +161,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedDatasets() {
-        List<Dataset> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 500));
+        List<Dataset> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} datasets", datasets.size());
         for (Dataset dataset : datasets) {
 
@@ -181,7 +181,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedEvents() {
-        List<Event> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 500));
+        List<Event> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} events", events.size());
         for (Event event : events) {
 
@@ -201,7 +201,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedInformationModels() {
-        List<InformationModel> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 500));
+        List<InformationModel> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} information models", infoModels.size());
         for (InformationModel infoModel : infoModels) {
 
@@ -221,7 +221,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedServices() {
-        List<no.fdk.sparqlservice.model.Service> services = resourceService.findNonSyncedServices(PageRequest.of(0, 500));
+        List<no.fdk.sparqlservice.model.Service> services = resourceService.findNonSyncedServices(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} services", services.size());
         for (no.fdk.sparqlservice.model.Service service : services) {
 
@@ -256,7 +256,7 @@ public class UpdateService {
         }
     }
 
-    @Scheduled(initialDelay = 5, fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(initialDelay = 5, fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
     private void scheduledSynchronization() {
         log.info("Starting fuseki synchronization");
         updateFuseki();
