@@ -1,22 +1,15 @@
 package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
-import no.fdk.sparqlservice.model.CatalogType;
-import no.fdk.sparqlservice.model.Concept;
-import no.fdk.sparqlservice.model.DataService;
-import no.fdk.sparqlservice.model.Dataset;
-import no.fdk.sparqlservice.model.Event;
-import no.fdk.sparqlservice.model.InformationModel;
-import no.fdk.sparqlservice.repository.ConceptRepository;
-import no.fdk.sparqlservice.repository.DataServiceRepository;
-import no.fdk.sparqlservice.repository.DatasetRepository;
-import no.fdk.sparqlservice.repository.EventRepository;
-import no.fdk.sparqlservice.repository.InformationModelRepository;
-import no.fdk.sparqlservice.repository.ServiceRepository;
+import no.fdk.sparqlservice.model.*;
+import no.fdk.sparqlservice.repository.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,86 +21,202 @@ public class ResourceService {
     private final InformationModelRepository informationModelRepository;
     private final ServiceRepository serviceRepository;
 
-    private final Set<CatalogType> UPDATED_CATALOGS = new HashSet<>(
-            Arrays.asList(
-                    CatalogType.CONCEPTS,
-                    CatalogType.DATA_SERVICES,
-                    CatalogType.DATASETS,
-                    CatalogType.EVENTS,
-                    CatalogType.INFORMATION_MODELS,
-                    CatalogType.SERVICES
-            )
-    );
-
-    public Set<CatalogType> getAndResetUpdatedCatalogs() {
-        Set<CatalogType> updatedCatalogs = new HashSet<>(UPDATED_CATALOGS);
-        UPDATED_CATALOGS.clear();
-        return  updatedCatalogs;
+    @Transactional
+    public void saveConcept(String fdkId, String graph, long timestamp) {
+        conceptRepository.findById(fdkId).ifPresentOrElse(
+                concept -> {
+                    concept.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    concept.setTimestamp(timestamp);
+                    concept.setRemoved(false);
+                    conceptRepository.save(concept);
+                },
+                () -> conceptRepository.save(new Concept(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
     @Transactional
-    public void saveConcept(String fdkId, String graph, long timestamp) {
-        Concept concept = new Concept(fdkId, graph, timestamp);
-        conceptRepository.save(concept);
-        UPDATED_CATALOGS.add(CatalogType.CONCEPTS);
+    public void removeConcept(String fdkId, long timestamp) {
+        conceptRepository.findById(fdkId).ifPresentOrElse(
+                concept -> {
+                    concept.setTimestamp(timestamp);
+                    concept.setRemoved(true);
+                    conceptRepository.save(concept);
+                },
+                () -> conceptRepository.save(new Concept(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
     }
-    public List<Concept> findAllConcepts() {
-        return conceptRepository.findAll();
+
+    public List<String> findNonSyncedConcepts(Pageable pageable) {
+        return conceptRepository.findNonSynchronizedConcepts(pageable);
+    }
+
+    public Optional<Concept> findConceptById(String fdkId) {
+        return conceptRepository.findById(fdkId);
     }
 
     @Transactional
     public void saveDataService(String fdkId, String graph, long timestamp) {
-        DataService dataService = new DataService(fdkId, graph, timestamp);
-        dataServiceRepository.save(dataService);
-        UPDATED_CATALOGS.add(CatalogType.DATA_SERVICES);
+        dataServiceRepository.findById(fdkId).ifPresentOrElse(
+                dataService -> {
+                    dataService.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    dataService.setTimestamp(timestamp);
+                    dataService.setRemoved(false);
+                    dataServiceRepository.save(dataService);
+                },
+                () -> dataServiceRepository.save(new DataService(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
-    public List<DataService> findAllDataServices() {
-        return dataServiceRepository.findAll();
+    @Transactional
+    public void removeDataService(String fdkId, long timestamp) {
+        dataServiceRepository.findById(fdkId).ifPresentOrElse(
+                dataService -> {
+                    dataService.setTimestamp(timestamp);
+                    dataService.setRemoved(true);
+                    dataServiceRepository.save(dataService);
+                },
+                () -> dataServiceRepository.save(new DataService(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
+    }
+
+    public List<String> findNonSyncedDataServices(Pageable pageable) {
+        return dataServiceRepository.findNonSynchronizedDataServices(pageable);
+    }
+
+    public Optional<DataService> findDataServiceById(String fdkId) {
+        return dataServiceRepository.findById(fdkId);
     }
 
     @Transactional
     public void saveDataset(String fdkId, String graph, long timestamp) {
-        Dataset dataset = new Dataset(fdkId, graph, timestamp);
-        datasetRepository.save(dataset);
-        UPDATED_CATALOGS.add(CatalogType.DATASETS);
+        datasetRepository.findById(fdkId).ifPresentOrElse(
+                dataset -> {
+                    dataset.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    dataset.setTimestamp(timestamp);
+                    dataset.setRemoved(false);
+                    datasetRepository.save(dataset);
+                },
+                () -> datasetRepository.save(new Dataset(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
-    public List<Dataset> findAllDatasets() {
-        return datasetRepository.findAll();
+    @Transactional
+    public void removeDataset(String fdkId, long timestamp) {
+        datasetRepository.findById(fdkId).ifPresentOrElse(
+                dataset -> {
+                    dataset.setTimestamp(timestamp);
+                    dataset.setRemoved(true);
+                    datasetRepository.save(dataset);
+                },
+                () -> datasetRepository.save(new Dataset(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
+    }
+
+    public List<String> findNonSyncedDatasets(Pageable pageable) {
+        return datasetRepository.findNonSynchronizedDatasets(pageable);
+    }
+
+    public Optional<Dataset> findDatasetById(String fdkId) {
+        return datasetRepository.findById(fdkId);
     }
 
     @Transactional
     public void saveEvent(String fdkId, String graph, long timestamp) {
-        Event fdkEvent = new Event(fdkId, graph, timestamp);
-        eventRepository.save(fdkEvent);
-        UPDATED_CATALOGS.add(CatalogType.EVENTS);
+        eventRepository.findById(fdkId).ifPresentOrElse(
+                fdkEvent -> {
+                    fdkEvent.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    fdkEvent.setTimestamp(timestamp);
+                    fdkEvent.setRemoved(false);
+                    eventRepository.save(fdkEvent);
+                },
+                () -> eventRepository.save(new Event(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
-    public List<Event> findAllEvents() {
-        return eventRepository.findAll();
+    @Transactional
+    public void removeEvent(String fdkId, long timestamp) {
+        eventRepository.findById(fdkId).ifPresentOrElse(
+                fdkEvent -> {
+                    fdkEvent.setTimestamp(timestamp);
+                    fdkEvent.setRemoved(true);
+                    eventRepository.save(fdkEvent);
+                },
+                () -> eventRepository.save(new Event(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
+    }
+
+    public List<String> findNonSyncedEvents(Pageable pageable) {
+        return eventRepository.findNonSynchronizedEvents(pageable);
+    }
+
+    public Optional<Event> findEventById(String fdkId) {
+        return eventRepository.findById(fdkId);
     }
 
     @Transactional
     public void saveInformationModel(String fdkId, String graph, long timestamp) {
-        InformationModel infoModel = new InformationModel(fdkId, graph, timestamp);
-        informationModelRepository.save(infoModel);
-        UPDATED_CATALOGS.add(CatalogType.INFORMATION_MODELS);
+        informationModelRepository.findById(fdkId).ifPresentOrElse(
+                infoModel -> {
+                    infoModel.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    infoModel.setTimestamp(timestamp);
+                    infoModel.setRemoved(false);
+                    informationModelRepository.save(infoModel);
+                },
+                () -> informationModelRepository.save(new InformationModel(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
-    public List<InformationModel> findAllInformationModels() {
-        return informationModelRepository.findAll();
+    @Transactional
+    public void removeInformationModel(String fdkId, long timestamp) {
+        informationModelRepository.findById(fdkId).ifPresentOrElse(
+                infoModel -> {
+                    infoModel.setTimestamp(timestamp);
+                    infoModel.setRemoved(true);
+                    informationModelRepository.save(infoModel);
+                },
+                () -> informationModelRepository.save(new InformationModel(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
+    }
+
+    public List<String> findNonSyncedInformationModels(Pageable pageable) {
+        return informationModelRepository.findNonSynchronizedInformationModels(pageable);
+    }
+
+    public Optional<InformationModel> findInformationModelById(String fdkId) {
+        return informationModelRepository.findById(fdkId);
     }
 
     @Transactional
     public void saveService(String fdkId, String graph, long timestamp) {
-        no.fdk.sparqlservice.model.Service service = new no.fdk.sparqlservice.model.Service(fdkId, graph, timestamp);
-        serviceRepository.save(service);
-        UPDATED_CATALOGS.add(CatalogType.SERVICES);
+        serviceRepository.findById(fdkId).ifPresentOrElse(
+                service -> {
+                    service.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+                    service.setTimestamp(timestamp);
+                    service.setRemoved(false);
+                    serviceRepository.save(service);
+                },
+                () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false))
+        );
     }
 
-    public List<no.fdk.sparqlservice.model.Service> findAllServices() {
-        return serviceRepository.findAll();
+    @Transactional
+    public void removeService(String fdkId, long timestamp) {
+        serviceRepository.findById(fdkId).ifPresentOrElse(
+                service -> {
+                    service.setTimestamp(timestamp);
+                    service.setRemoved(true);
+                    serviceRepository.save(service);
+                },
+                () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true))
+        );
+    }
+
+    public List<String> findNonSyncedServices(Pageable pageable) {
+        return serviceRepository.findNonSynchronizedServices(pageable);
+    }
+
+    public Optional<no.fdk.sparqlservice.model.Service> findServiceById(String fdkId) {
+        return serviceRepository.findById(fdkId);
     }
 
     public boolean timestampIsHigherThanSaved(String fdkId, long timestamp, CatalogType type) {

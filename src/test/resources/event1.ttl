@@ -24,9 +24,9 @@
         skos:prefLabel "Dødsfall og arv"@nb ;
 .
 
-<http://localhost:5000/events/fdk-0>
+<http://localhost:5000/events/fdk-1>
         a                  dcat:CatalogRecord ;
-        dct:identifier     "fdk-0" ;
+        dct:identifier     "fdk-1" ;
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/events/0>

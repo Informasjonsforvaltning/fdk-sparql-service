@@ -102,9 +102,9 @@
         a               skos:Concept ;
         skos:prefLabel  "Post"@nb , "Mail"@en .
 
-<https://www.staging.fellesdatakatalog.digdir.no/public-services/d5d0c07c-c14f-3741-9aa3-126960958cf0>
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/fdk-1>
         a                  dcat:CatalogRecord ;
-        dct:identifier     "d5d0c07c-c14f-3741-9aa3-126960958cf0" ;
+        dct:identifier     "fdk-1" ;
         dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
         dct:modified       "2021-08-25T08:00:03.178Z"^^xsd:dateTime ;
         foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> .
@@ -174,10 +174,6 @@
         a               cv:Channel ;
         cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
         dct:identifier  "2" ;
-        cv:openingHours [
-            a               time:TemporalEntity ;
-            time:dayOfWeek  schema:PublicHolidays ;
-        ] ;
         dct:type        <https://data.norge.no/concepts/257> .
 
 <https://data.norge.no/concepts/150>

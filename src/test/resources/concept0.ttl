@@ -42,9 +42,9 @@
         skosxl:prefLabel   <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/b8f0c636-b849-3938-b27a-da67b14a7726>;
         skosno:definisjon  <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/7066ded4-93f2-4651-8fd4-d7d3520ac97f/.well-known/skolem/5ebfb542-5f98-337b-8ddf-2bf8e1edc286> .
 
-<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/2167b48d-0906-36f7-afe5-1598d6060c69>
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/fdk-0>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "2167b48d-0906-36f7-afe5-1598d6060c69";
+        dct:identifier     "fdk-0";
         dct:isPartOf       <https://concepts.staging.fellesdatakatalog.digdir.no/collections/7b82acf0-fa3d-3a37-88b7-0d17294691f4>;
         dct:issued         "2021-12-14T11:54:13.389Z"^^xsd:dateTime;
         dct:modified       "2023-11-09T05:24:42.888Z"^^xsd:dateTime;

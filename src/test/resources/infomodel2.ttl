@@ -433,9 +433,9 @@ digdir:OrganisasjonsnummerType
         modelldcatno:typeDefinitionReference
                 "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
 
-<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/60ecfff8-9ea3-41ee-92cc-7e791d73dac0>
+<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/fdk-2>
         a                  dcat:CatalogRecord;
-        dct:identifier     "60ecfff8-9ea3-41ee-92cc-7e791d73dac0";
+        dct:identifier     "fdk-2";
         dct:isPartOf       <https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs/03953a9d-5b6b-34ec-b41c-dcdcb21874d9>;
         dct:issued         "2020-08-14T14:18:27Z"^^xsd:dateTime;
         dct:modified       "2023-11-27T12:51:28.097Z"^^xsd:dateTime;

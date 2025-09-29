@@ -117,9 +117,9 @@ digdir:adressekode  a               modelldcatno:Attribute;
         xsd:maxOccurs               "1"^^xsd:nonNegativeInteger;
         modelldcatno:hasSimpleType  digdir:Tekst .
 
-<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/a40bc112-f3bc-4c80-95d5-82986ab009b3>
+<https://informationmodels.staging.fellesdatakatalog.digdir.no/informationmodels/fdk-0>
         a                  dcat:CatalogRecord;
-        dct:identifier     "a40bc112-f3bc-4c80-95d5-82986ab009b3";
+        dct:identifier     "fdk-0";
         dct:isPartOf       <https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs/03953a9d-5b6b-34ec-b41c-dcdcb21874d9>;
         dct:issued         "2020-08-14T14:18:27Z"^^xsd:dateTime;
         dct:modified       "2023-11-27T12:51:28.097Z"^^xsd:dateTime;

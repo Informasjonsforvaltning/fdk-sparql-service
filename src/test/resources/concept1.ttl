@@ -40,9 +40,9 @@
 <https://concept-catalog.staging.fellesdatakatalog.digdir.no/collections/910244132/concepts/875e167a-ff15-4d47-92f2-14e42f4a77f4/.well-known/skolem/486de28f-aedc-346a-8914-67b59834cabf>
         rdfs:label  "Gangsperre vs stølhet"@nb .
 
-<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/7e2774f0-d9ae-4861-ae77-7f69d42082a2>
+<https://concepts.staging.fellesdatakatalog.digdir.no/concepts/fdk-1>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "7e2774f0-d9ae-4861-ae77-7f69d42082a2";
+        dct:identifier     "fdk-1";
         dct:isPartOf       <https://concepts.staging.fellesdatakatalog.digdir.no/collections/7b82acf0-fa3d-3a37-88b7-0d17294691f4>;
         dct:issued         "2020-07-03T09:57:40.283Z"^^xsd:dateTime;
         dct:modified       "2023-08-29T12:00:02.617Z"^^xsd:dateTime;

@@ -1,3 +1,5 @@
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
@@ -9,9 +11,9 @@
         rdf:type  vcard:Organization;
         vcard:fn  "Contact information | (910258028)" .
 
-<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/9340f59d-0af4-3583-8ddb-738315c1ea73>
+<https://dataservices.staging.fellesdatakatalog.digdir.no/dataservices/fdk-1>
         rdf:type           dcat:CatalogRecord;
-        dct:identifier     "9340f59d-0af4-3583-8ddb-738315c1ea73";
+        dct:identifier     "fdk-1";
         dct:isPartOf       <https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs/d07885d9-0925-339f-bb22-58c28dc30409>;
         dct:issued         "2021-03-17T10:00:04.609Z"^^xsd:dateTime;
         dct:modified       "2023-02-02T14:09:30.492Z"^^xsd:dateTime;
@@ -22,6 +24,14 @@
         dct:conformsTo      <https://data.norge.no/def/serviceType#CUSTOMER_RELATIONS>;
         dct:description     "Creme de la creme"@nb;
         dct:title           "Datatjeneste for iskrem"@nb;
+        dct:publisher       <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789> ;
         dcat:contactPoint   <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f60a780cbf97c1bd3bdd8fa/.well-known/skolem/1ca9ba97-111f-396f-924f-d208ab786e68>;
         dcat:endpointURL    <http://db.no>;
         dcat:servesDataset  <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910258028/datasets/4a157352-803b-46eb-b695-3250b1a69fa0> .
+
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/123456789>
+        a                      rov:RegisteredOrganization ;
+        dct:identifier         "123456789" ;
+        rov:legalName          "Digitaliseringsdirektoratet" ;
+        foaf:name              "Digitaliseringsdirektoratet"@nn , "Digitaliseringsdirektoratet"@nb , "Norwegian Digitalisation Agency"@en ;
+        br:orgPath             "/STAT/987654321/123456789" .
