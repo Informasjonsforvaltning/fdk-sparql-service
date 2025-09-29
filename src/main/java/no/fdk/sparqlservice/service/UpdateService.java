@@ -122,7 +122,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedConcepts() {
-        List<String> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 100));
+        List<String> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} concepts", concepts.size());
         for (String fdkId : concepts) {
             Optional<Concept> conceptWrap = resourceService.findConceptById(fdkId);
@@ -145,7 +145,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedDataServices() {
-        List<String> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 100));
+        List<String> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} data services", dataServices.size());
         for (String fdkId : dataServices) {
             Optional<DataService> dataServiceWrap = resourceService.findDataServiceById(fdkId);
@@ -168,7 +168,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedDatasets() {
-        List<String> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 100));
+        List<String> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} datasets", datasets.size());
         for (String fdkId : datasets) {
             Optional<Dataset> datasetWrap = resourceService.findDatasetById(fdkId);
@@ -191,7 +191,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedEvents() {
-        List<String> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 100));
+        List<String> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} events", events.size());
         for (String fdkId : events) {
             Optional<Event> eventWrap = resourceService.findEventById(fdkId);
@@ -214,7 +214,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedInformationModels() {
-        List<String> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 100));
+        List<String> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} information models", infoModels.size());
         for (String fdkId : infoModels) {
             Optional<InformationModel> infoModelWrap = resourceService.findInformationModelById(fdkId);
@@ -237,7 +237,7 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedServices() {
-        List<String> services = resourceService.findNonSyncedServices(PageRequest.of(0, 100));
+        List<String> services = resourceService.findNonSyncedServices(PageRequest.of(0, 500));
         log.debug("updating fuseki with {} services", services.size());
         for (String fdkId : services) {
             Optional<no.fdk.sparqlservice.model.Service> serviceWrap = resourceService.findServiceById(fdkId);
