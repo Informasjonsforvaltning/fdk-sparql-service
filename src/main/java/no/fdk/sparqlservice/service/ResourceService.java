@@ -46,8 +46,12 @@ public class ResourceService {
         );
     }
 
-    public List<Concept> findNonSyncedConcepts(Pageable pageable) {
+    public List<String> findNonSyncedConcepts(Pageable pageable) {
         return conceptRepository.findNonSynchronizedConcepts(pageable);
+    }
+
+    public Optional<Concept> findConceptById(String fdkId) {
+        return conceptRepository.findById(fdkId);
     }
 
     @Transactional
@@ -75,8 +79,12 @@ public class ResourceService {
         );
     }
 
-    public List<DataService> findNonSyncedDataServices(Pageable pageable) {
+    public List<String> findNonSyncedDataServices(Pageable pageable) {
         return dataServiceRepository.findNonSynchronizedDataServices(pageable);
+    }
+
+    public Optional<DataService> findDataServiceById(String fdkId) {
+        return dataServiceRepository.findById(fdkId);
     }
 
     @Transactional
@@ -104,8 +112,12 @@ public class ResourceService {
         );
     }
 
-    public List<Dataset> findNonSyncedDatasets(Pageable pageable) {
+    public List<String> findNonSyncedDatasets(Pageable pageable) {
         return datasetRepository.findNonSynchronizedDatasets(pageable);
+    }
+
+    public Optional<Dataset> findDatasetById(String fdkId) {
+        return datasetRepository.findById(fdkId);
     }
 
     @Transactional
@@ -133,8 +145,12 @@ public class ResourceService {
         );
     }
 
-    public List<Event> findNonSyncedEvents(Pageable pageable) {
+    public List<String> findNonSyncedEvents(Pageable pageable) {
         return eventRepository.findNonSynchronizedEvents(pageable);
+    }
+
+    public Optional<Event> findEventById(String fdkId) {
+        return eventRepository.findById(fdkId);
     }
 
     @Transactional
@@ -162,8 +178,12 @@ public class ResourceService {
         );
     }
 
-    public List<InformationModel> findNonSyncedInformationModels(Pageable pageable) {
+    public List<String> findNonSyncedInformationModels(Pageable pageable) {
         return informationModelRepository.findNonSynchronizedInformationModels(pageable);
+    }
+
+    public Optional<InformationModel> findInformationModelById(String fdkId) {
+        return informationModelRepository.findById(fdkId);
     }
 
     @Transactional
@@ -191,8 +211,12 @@ public class ResourceService {
         );
     }
 
-    public List<no.fdk.sparqlservice.model.Service> findNonSyncedServices(Pageable pageable) {
+    public List<String> findNonSyncedServices(Pageable pageable) {
         return serviceRepository.findNonSynchronizedServices(pageable);
+    }
+
+    public Optional<no.fdk.sparqlservice.model.Service> findServiceById(String fdkId) {
+        return serviceRepository.findById(fdkId);
     }
 
     public boolean timestampIsHigherThanSaved(String fdkId, long timestamp, CatalogType type) {

@@ -10,7 +10,7 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, String> {
     @Query(
             value = """
-                    SELECT e.id, e.graph, e.removed, e.timestamp
+                    SELECT e.id
                     FROM events e
                     LEFT JOIN metadata m 
                       ON m.id = CONCAT('latest-sync-event-', e.id)
@@ -19,5 +19,5 @@ public interface EventRepository extends JpaRepository<Event, String> {
                     """,
             nativeQuery = true
     )
-    List<Event> findNonSynchronizedEvents(Pageable pageable);
+    List<String> findNonSynchronizedEvents(Pageable pageable);
 }

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -121,122 +122,140 @@ public class UpdateService {
     }
 
     public void updateFusekiForChangedConcepts() {
-        List<Concept> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 100));
+        List<String> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} concepts", concepts.size());
-        for (Concept concept : concepts) {
-
-            if (concept.isRemoved()) {
-                String graph = graphAsStringForDelete(concept.getGraph(), concept.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : concepts) {
+            Optional<Concept> conceptWrap = resourceService.findConceptById(fdkId);
+            if (conceptWrap.isPresent()) {
+                Concept concept = conceptWrap.get();
+                if (concept.isRemoved()) {
+                    String graph = graphAsStringForDelete(concept.getGraph(), concept.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(concept.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(concept.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.CONCEPTS, concept.getId(), concept.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.CONCEPTS, concept.getId(), concept.getTimestamp());
         }
     }
 
     public void updateFusekiForChangedDataServices() {
-        List<DataService> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 100));
+        List<String> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} data services", dataServices.size());
-        for (DataService dataService : dataServices) {
-
-            if (dataService.isRemoved()) {
-                String graph = graphAsStringForDelete(dataService.getGraph(), dataService.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : dataServices) {
+            Optional<DataService> dataServiceWrap = resourceService.findDataServiceById(fdkId);
+            if (dataServiceWrap.isPresent()) {
+                DataService dataService = dataServiceWrap.get();
+                if (dataService.isRemoved()) {
+                    String graph = graphAsStringForDelete(dataService.getGraph(), dataService.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(dataService.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(dataService.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.DATA_SERVICES, dataService.getId(), dataService.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.DATA_SERVICES, dataService.getId(), dataService.getTimestamp());
         }
     }
 
     public void updateFusekiForChangedDatasets() {
-        List<Dataset> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 100));
+        List<String> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} datasets", datasets.size());
-        for (Dataset dataset : datasets) {
-
-            if (dataset.isRemoved()) {
-                String graph = graphAsStringForDelete(dataset.getGraph(), dataset.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : datasets) {
+            Optional<Dataset> datasetWrap = resourceService.findDatasetById(fdkId);
+            if (datasetWrap.isPresent()) {
+                Dataset dataset = datasetWrap.get();
+                if (dataset.isRemoved()) {
+                    String graph = graphAsStringForDelete(dataset.getGraph(), dataset.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(dataset.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(dataset.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.DATASETS, dataset.getId(), dataset.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.DATASETS, dataset.getId(), dataset.getTimestamp());
         }
     }
 
     public void updateFusekiForChangedEvents() {
-        List<Event> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 100));
+        List<String> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} events", events.size());
-        for (Event event : events) {
-
-            if (event.isRemoved()) {
-                String graph = graphAsStringForDelete(event.getGraph(), event.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : events) {
+            Optional<Event> eventWrap = resourceService.findEventById(fdkId);
+            if (eventWrap.isPresent()) {
+                Event event = eventWrap.get();
+                if (event.isRemoved()) {
+                    String graph = graphAsStringForDelete(event.getGraph(), event.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(event.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(event.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.EVENTS, event.getId(), event.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.EVENTS, event.getId(), event.getTimestamp());
         }
     }
 
     public void updateFusekiForChangedInformationModels() {
-        List<InformationModel> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 100));
+        List<String> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} information models", infoModels.size());
-        for (InformationModel infoModel : infoModels) {
-
-            if (infoModel.isRemoved()) {
-                String graph = graphAsStringForDelete(infoModel.getGraph(), infoModel.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : infoModels) {
+            Optional<InformationModel> infoModelWrap = resourceService.findInformationModelById(fdkId);
+            if (infoModelWrap.isPresent()) {
+                InformationModel infoModel = infoModelWrap.get();
+                if (infoModel.isRemoved()) {
+                    String graph = graphAsStringForDelete(infoModel.getGraph(), infoModel.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(infoModel.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(infoModel.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.INFORMATION_MODELS, infoModel.getId(), infoModel.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.INFORMATION_MODELS, infoModel.getId(), infoModel.getTimestamp());
         }
     }
 
     public void updateFusekiForChangedServices() {
-        List<no.fdk.sparqlservice.model.Service> services = resourceService.findNonSyncedServices(PageRequest.of(0, 100));
+        List<String> services = resourceService.findNonSyncedServices(PageRequest.of(0, 100));
         log.debug("updating fuseki with {} services", services.size());
-        for (no.fdk.sparqlservice.model.Service service : services) {
-
-            if (service.isRemoved()) {
-                String graph = graphAsStringForDelete(service.getGraph(), service.getId());
-                if (!graph.isBlank()) {
-                    removeTurtleGraph(graph);
+        for (String fdkId : services) {
+            Optional<no.fdk.sparqlservice.model.Service> serviceWrap = resourceService.findServiceById(fdkId);
+            if (serviceWrap.isPresent()) {
+                no.fdk.sparqlservice.model.Service service = serviceWrap.get();
+                if (service.isRemoved()) {
+                    String graph = graphAsStringForDelete(service.getGraph(), service.getId());
+                    if (!graph.isBlank()) {
+                        removeTurtleGraph(graph);
+                    }
+                } else {
+                    String graph = graphAsStringForInsert(service.getGraph());
+                    if (!graph.isBlank()) {
+                        insertTurtleGraph(graph);
+                    }
                 }
-            } else {
-                String graph = graphAsStringForInsert(service.getGraph());
-                if (!graph.isBlank()) {
-                    insertTurtleGraph(graph);
-                }
+                syncDataService.updateLatestSync(CatalogType.SERVICES, service.getId(), service.getTimestamp());
             }
-            syncDataService.updateLatestSync(CatalogType.SERVICES, service.getId(), service.getTimestamp());
         }
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 public interface DatasetRepository extends JpaRepository<Dataset, String> {
     @Query(
             value = """
-                    SELECT d.id, d.graph, d.removed, d.timestamp
+                    SELECT d.id
                     FROM datasets d
                     LEFT JOIN metadata m 
                       ON m.id = CONCAT('latest-sync-dataset-', d.id)
@@ -19,5 +19,5 @@ public interface DatasetRepository extends JpaRepository<Dataset, String> {
                     """,
             nativeQuery = true
     )
-    List<Dataset> findNonSynchronizedDatasets(Pageable pageable);
+    List<String> findNonSynchronizedDatasets(Pageable pageable);
 }

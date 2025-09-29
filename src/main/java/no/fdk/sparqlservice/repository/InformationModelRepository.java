@@ -10,7 +10,7 @@ import java.util.List;
 public interface InformationModelRepository extends JpaRepository<InformationModel, String> {
     @Query(
             value = """
-                    SELECT i.id, i.graph, i.removed, i.timestamp
+                    SELECT i.id
                     FROM information_models i
                     LEFT JOIN metadata m
                       ON m.id = CONCAT('latest-sync-information-model-', i.id)
@@ -19,5 +19,5 @@ public interface InformationModelRepository extends JpaRepository<InformationMod
                     """,
             nativeQuery = true
     )
-    List<InformationModel> findNonSynchronizedInformationModels(Pageable pageable);
+    List<String> findNonSynchronizedInformationModels(Pageable pageable);
 }

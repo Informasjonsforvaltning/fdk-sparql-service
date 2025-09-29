@@ -10,7 +10,7 @@ import java.util.List;
 public interface ConceptRepository extends JpaRepository<Concept, String> {
     @Query(
             value = """
-                    SELECT c.id, c.graph, c.removed, c.timestamp
+                    SELECT c.id
                     FROM concepts c
                     LEFT JOIN metadata m
                       ON m.id = CONCAT('latest-sync-concept-', c.id)
@@ -19,5 +19,5 @@ public interface ConceptRepository extends JpaRepository<Concept, String> {
                     """,
             nativeQuery = true
     )
-    List<Concept> findNonSynchronizedConcepts(Pageable pageable);
+    List<String> findNonSynchronizedConcepts(Pageable pageable);
 }

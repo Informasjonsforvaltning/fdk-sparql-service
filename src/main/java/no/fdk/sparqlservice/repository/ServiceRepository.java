@@ -10,7 +10,7 @@ import java.util.List;
 public interface ServiceRepository extends JpaRepository<Service, String> {
     @Query(
             value = """
-                    SELECT s.id, s.graph, s.removed, s.timestamp
+                    SELECT s.id
                     FROM services s
                     LEFT JOIN metadata m 
                       ON m.id = CONCAT('latest-sync-service-', s.id)
@@ -19,5 +19,5 @@ public interface ServiceRepository extends JpaRepository<Service, String> {
                     """,
             nativeQuery = true
     )
-    List<Service> findNonSynchronizedServices(Pageable pageable);
+    List<String> findNonSynchronizedServices(Pageable pageable);
 }
