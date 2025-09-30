@@ -123,7 +123,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedConcepts() {
         List<String> concepts = resourceService.findNonSyncedConcepts(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} concepts", concepts.size());
+        if (!concepts.isEmpty()) {
+            log.info("updating fuseki with {} concept graphs", concepts.size());
+        }
         for (String fdkId : concepts) {
             Optional<Concept> conceptWrap = resourceService.findConceptById(fdkId);
             if (conceptWrap.isPresent()) {
@@ -146,7 +148,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedDataServices() {
         List<String> dataServices = resourceService.findNonSyncedDataServices(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} data services", dataServices.size());
+        if (!dataServices.isEmpty()) {
+            log.info("updating fuseki with {} data service graphs", dataServices.size());
+        }
         for (String fdkId : dataServices) {
             Optional<DataService> dataServiceWrap = resourceService.findDataServiceById(fdkId);
             if (dataServiceWrap.isPresent()) {
@@ -169,7 +173,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedDatasets() {
         List<String> datasets = resourceService.findNonSyncedDatasets(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} datasets", datasets.size());
+        if (!datasets.isEmpty()) {
+            log.info("updating fuseki with {} dataset graphs", datasets.size());
+        }
         for (String fdkId : datasets) {
             Optional<Dataset> datasetWrap = resourceService.findDatasetById(fdkId);
             if (datasetWrap.isPresent()) {
@@ -192,7 +198,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedEvents() {
         List<String> events = resourceService.findNonSyncedEvents(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} events", events.size());
+        if (!events.isEmpty()) {
+            log.info("updating fuseki with {} event graphs", events.size());
+        }
         for (String fdkId : events) {
             Optional<Event> eventWrap = resourceService.findEventById(fdkId);
             if (eventWrap.isPresent()) {
@@ -215,7 +223,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedInformationModels() {
         List<String> infoModels = resourceService.findNonSyncedInformationModels(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} information models", infoModels.size());
+        if (!infoModels.isEmpty()) {
+            log.info("updating fuseki with {} information model graphs", infoModels.size());
+        }
         for (String fdkId : infoModels) {
             Optional<InformationModel> infoModelWrap = resourceService.findInformationModelById(fdkId);
             if (infoModelWrap.isPresent()) {
@@ -238,7 +248,9 @@ public class UpdateService {
 
     public void updateFusekiForChangedServices() {
         List<String> services = resourceService.findNonSyncedServices(PageRequest.of(0, 500));
-        log.debug("updating fuseki with {} services", services.size());
+        if (!services.isEmpty()) {
+            log.info("updating fuseki with {} service graphs", services.size());
+        }
         for (String fdkId : services) {
             Optional<no.fdk.sparqlservice.model.Service> serviceWrap = resourceService.findServiceById(fdkId);
             if (serviceWrap.isPresent()) {
@@ -269,7 +281,7 @@ public class UpdateService {
             updateFusekiForChangedEvents();
             updateFusekiForChangedInformationModels();
             updateFusekiForChangedServices();
-            log.info("Fuseki synchronization complete");
+            log.debug("Fuseki synchronization complete");
         } catch (Exception exception) {
             log.error("Fuseki synchronization was aborted", exception);
         }
@@ -277,7 +289,7 @@ public class UpdateService {
 
     @Scheduled(initialDelay = 5, fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
     private void scheduledSynchronization() {
-        log.info("Starting fuseki synchronization");
+        log.debug("Starting fuseki synchronization");
         updateFuseki();
     }
 

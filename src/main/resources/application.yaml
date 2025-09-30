@@ -1,6 +1,6 @@
 logging.level:
   root: ERROR
-  no.fdk: DEBUG
+  no.fdk: INFO
 application:
   fuseki:
     realm: fdk
