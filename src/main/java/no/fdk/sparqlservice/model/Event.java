@@ -25,4 +25,10 @@ public class Event {
 
     @Column(name = "removed", nullable = false)
     private boolean removed;
+
+    @Column(name = "harvest_run_id")
+    private String harvestRunId;
+
+    @Column(name = "pending_harvest_event", nullable = false)
+    private boolean pendingHarvestEvent = false;
 }

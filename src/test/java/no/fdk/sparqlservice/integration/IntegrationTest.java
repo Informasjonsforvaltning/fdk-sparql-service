@@ -49,29 +49,29 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @BeforeEach
     void setup() {
-        resourceService.saveConcept("fdk-0", ResourceReader.readFile("concept0.ttl"), 123);
-        resourceService.saveConcept("fdk-1", ResourceReader.readFile("concept1.ttl"), 123);
-        resourceService.removeConcept("fdk-2", 10);
+        resourceService.saveConcept("fdk-0", ResourceReader.readFile("concept0.ttl"), 123, null);
+        resourceService.saveConcept("fdk-1", ResourceReader.readFile("concept1.ttl"), 123, null);
+        resourceService.removeConcept("fdk-2", 10, null);
 
-        resourceService.saveDataService("fdk-0", ResourceReader.readFile("dataservice0.ttl"), 123);
-        resourceService.saveDataService("fdk-1", ResourceReader.readFile("dataservice1.ttl"), 123);
-        resourceService.removeDataService("fdk-2", 10);
+        resourceService.saveDataService("fdk-0", ResourceReader.readFile("dataservice0.ttl"), 123, null);
+        resourceService.saveDataService("fdk-1", ResourceReader.readFile("dataservice1.ttl"), 123, null);
+        resourceService.removeDataService("fdk-2", 10, null);
 
-        resourceService.saveDataset("fdk-0", ResourceReader.readFile("dataset0.ttl"), 123);
-        resourceService.saveDataset("fdk-1", ResourceReader.readFile("dataset1.ttl"), 123);
-        resourceService.removeDataset("fdk-2", 10);
+        resourceService.saveDataset("fdk-0", ResourceReader.readFile("dataset0.ttl"), 123, null);
+        resourceService.saveDataset("fdk-1", ResourceReader.readFile("dataset1.ttl"), 123, null);
+        resourceService.removeDataset("fdk-2", 10, null);
 
-        resourceService.saveEvent("fdk-0", ResourceReader.readFile("event0.ttl"), 123);
-        resourceService.saveEvent("fdk-1", ResourceReader.readFile("event1.ttl"), 123);
-        resourceService.removeEvent("fdk-2", 10);
+        resourceService.saveEvent("fdk-0", ResourceReader.readFile("event0.ttl"), 123, null);
+        resourceService.saveEvent("fdk-1", ResourceReader.readFile("event1.ttl"), 123, null);
+        resourceService.removeEvent("fdk-2", 10, null);
 
-        resourceService.saveInformationModel("fdk-0", ResourceReader.readFile("infomodel0.ttl"), 123);
-        resourceService.saveInformationModel("fdk-1", ResourceReader.readFile("infomodel1.ttl"), 123);
-        resourceService.removeInformationModel("fdk-2", 10);
+        resourceService.saveInformationModel("fdk-0", ResourceReader.readFile("infomodel0.ttl"), 123, null);
+        resourceService.saveInformationModel("fdk-1", ResourceReader.readFile("infomodel1.ttl"), 123, null);
+        resourceService.removeInformationModel("fdk-2", 10, null);
 
-        resourceService.saveService("fdk-0", ResourceReader.readFile("service0.ttl"), 123);
-        resourceService.saveService("fdk-1", ResourceReader.readFile("service1.ttl"), 123);
-        resourceService.removeService("fdk-2", 10);
+        resourceService.saveService("fdk-0", ResourceReader.readFile("service0.ttl"), 123, null);
+        resourceService.saveService("fdk-1", ResourceReader.readFile("service1.ttl"), 123, null);
+        resourceService.removeService("fdk-2", 10, null);
 
         metadataRepository.deleteAll();
 
@@ -122,7 +122,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteConcept() throws JsonProcessingException {
-        resourceService.removeConcept("fdk-1", 124);
+        resourceService.removeConcept("fdk-1", 124, null);
         updateService.updateFusekiForChangedConcepts();
 
         String response = TestQuery.sendQuery(countQuery("skos:Concept"));
@@ -139,7 +139,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataService() throws JsonProcessingException {
-        resourceService.removeDataService("fdk-1", 124);
+        resourceService.removeDataService("fdk-1", 124, null);
         updateService.updateFusekiForChangedDataServices();
 
         String response = TestQuery.sendQuery(countQuery("dcat:DataService"));
@@ -156,7 +156,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteDataset() throws JsonProcessingException {
-        resourceService.removeDataset("fdk-1", 124);
+        resourceService.removeDataset("fdk-1", 124, null);
         updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));
@@ -177,7 +177,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteEvent() throws JsonProcessingException {
-        resourceService.removeEvent("fdk-0", 124);
+        resourceService.removeEvent("fdk-0", 124, null);
         updateService.updateFusekiForChangedEvents();
 
         String businessResponse = TestQuery.sendQuery(countQuery("cv:BusinessEvent"));
@@ -194,7 +194,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteInformationModel() throws JsonProcessingException {
-        resourceService.removeInformationModel("fdk-1", 124);
+        resourceService.removeInformationModel("fdk-1", 124, null);
         updateService.updateFusekiForChangedInformationModels();
 
         String response = TestQuery.sendQuery(countQuery("modelldcatno:InformationModel"));
@@ -211,7 +211,7 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @Test
     void deleteService() throws JsonProcessingException {
-        resourceService.removeService("fdk-1", 124);
+        resourceService.removeService("fdk-1", 124, null);
         updateService.updateFusekiForChangedServices();
 
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
