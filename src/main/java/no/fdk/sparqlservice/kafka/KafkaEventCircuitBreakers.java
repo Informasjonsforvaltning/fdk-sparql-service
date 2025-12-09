@@ -31,15 +31,17 @@ public class KafkaEventCircuitBreakers {
     public void processServiceEvent(ConsumerRecord<String, ServiceEvent> record) {
         try {
             ServiceEvent event = record.value();
+            String harvestRunId = event.getHarvestRunId() != null ? event.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.SERVICES);
             if(event.getType() == ServiceEventType.SERVICE_REASONED && hasHigherTimestamp) {
                 resourceService.saveService(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
-                        event.getTimestamp()
+                        event.getTimestamp(),
+                        harvestRunId
                 );
             } else if(event.getType() == ServiceEventType.SERVICE_REMOVED && hasHigherTimestamp) {
-                resourceService.removeService(event.getFdkId().toString(), event.getTimestamp());
+                resourceService.removeService(event.getFdkId().toString(), event.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -53,15 +55,17 @@ public class KafkaEventCircuitBreakers {
     public void processInformationModelEvent(ConsumerRecord<String, InformationModelEvent> record) {
         try {
             InformationModelEvent event = record.value();
+            String harvestRunId = event.getHarvestRunId() != null ? event.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.INFORMATION_MODELS);
             if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REASONED && hasHigherTimestamp) {
                 resourceService.saveInformationModel(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
-                        event.getTimestamp()
+                        event.getTimestamp(),
+                        harvestRunId
                 );
             } else if(event.getType() == InformationModelEventType.INFORMATION_MODEL_REMOVED && hasHigherTimestamp) {
-                resourceService.removeInformationModel(event.getFdkId().toString(), event.getTimestamp());
+                resourceService.removeInformationModel(event.getFdkId().toString(), event.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -75,15 +79,17 @@ public class KafkaEventCircuitBreakers {
     public void processEventEvent(ConsumerRecord<String, EventEvent> record) {
         try {
             EventEvent kafkaEvent = record.value();
+            String harvestRunId = kafkaEvent.getHarvestRunId() != null ? kafkaEvent.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(kafkaEvent.getFdkId().toString(), kafkaEvent.getTimestamp(), CatalogType.EVENTS);
             if(kafkaEvent.getType() == EventEventType.EVENT_REASONED && hasHigherTimestamp) {
                 resourceService.saveEvent(
                         kafkaEvent.getFdkId().toString(),
                         kafkaEvent.getGraph().toString(),
-                        kafkaEvent.getTimestamp()
+                        kafkaEvent.getTimestamp(),
+                        harvestRunId
                 );
             } else if(kafkaEvent.getType() == EventEventType.EVENT_REMOVED && hasHigherTimestamp) {
-                resourceService.removeEvent(kafkaEvent.getFdkId().toString(), kafkaEvent.getTimestamp());
+                resourceService.removeEvent(kafkaEvent.getFdkId().toString(), kafkaEvent.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -97,15 +103,17 @@ public class KafkaEventCircuitBreakers {
     public void processDatasetEvent(ConsumerRecord<String, DatasetEvent> record) {
         try {
             DatasetEvent event = record.value();
+            String harvestRunId = event.getHarvestRunId() != null ? event.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.DATASETS);
             if(event.getType() == DatasetEventType.DATASET_REASONED && hasHigherTimestamp) {
                 resourceService.saveDataset(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
-                        event.getTimestamp()
+                        event.getTimestamp(),
+                        harvestRunId
                 );
             } else if(event.getType() == DatasetEventType.DATASET_REMOVED && hasHigherTimestamp) {
-                resourceService.removeDataset(event.getFdkId().toString(), event.getTimestamp());
+                resourceService.removeDataset(event.getFdkId().toString(), event.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -119,15 +127,17 @@ public class KafkaEventCircuitBreakers {
     public void processDataServiceEvent(ConsumerRecord<String, DataServiceEvent> record) {
         try {
             DataServiceEvent event = record.value();
+            String harvestRunId = event.getHarvestRunId() != null ? event.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.DATA_SERVICES);
             if(event.getType() == DataServiceEventType.DATA_SERVICE_REASONED && hasHigherTimestamp) {
                 resourceService.saveDataService(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
-                        event.getTimestamp()
+                        event.getTimestamp(),
+                        harvestRunId
                 );
             } else if(event.getType() == DataServiceEventType.DATA_SERVICE_REMOVED && hasHigherTimestamp) {
-                resourceService.removeDataService(event.getFdkId().toString(), event.getTimestamp());
+                resourceService.removeDataService(event.getFdkId().toString(), event.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);
@@ -141,15 +151,17 @@ public class KafkaEventCircuitBreakers {
     public void processConceptEvent(ConsumerRecord<String, ConceptEvent> record) {
         try {
             ConceptEvent event = record.value();
+            String harvestRunId = event.getHarvestRunId() != null ? event.getHarvestRunId().toString() : null;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(event.getFdkId().toString(), event.getTimestamp(), CatalogType.CONCEPTS);
             if(event.getType() == ConceptEventType.CONCEPT_REASONED && hasHigherTimestamp) {
                 resourceService.saveConcept(
                         event.getFdkId().toString(),
                         event.getGraph().toString(),
-                        event.getTimestamp()
+                        event.getTimestamp(),
+                        harvestRunId
                 );
             } else if(event.getType() == ConceptEventType.CONCEPT_REMOVED && hasHigherTimestamp) {
-                resourceService.removeConcept(event.getFdkId().toString(), event.getTimestamp());
+                resourceService.removeConcept(event.getFdkId().toString(), event.getTimestamp(), harvestRunId);
             }
         } catch (ClassCastException exception) {
             log.error("Skipping unknown event",  exception);

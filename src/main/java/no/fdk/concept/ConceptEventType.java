@@ -6,8 +6,8 @@
 package no.fdk.concept;
 @org.apache.avro.specific.AvroGenerated
 public enum ConceptEventType implements org.apache.avro.generic.GenericEnumSymbol<ConceptEventType> {
-  CONCEPT_REASONED, CONCEPT_REMOVED, CONCEPT_HARVESTED  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"ConceptEventType\",\"namespace\":\"no.fdk.concept\",\"symbols\":[\"CONCEPT_REASONED\",\"CONCEPT_REMOVED\",\"CONCEPT_HARVESTED\"]}");
+  CONCEPT_HARVESTED, CONCEPT_REASONED, CONCEPT_REMOVED  ;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"ConceptEventType\",\"namespace\":\"no.fdk.concept\",\"symbols\":[\"CONCEPT_HARVESTED\",\"CONCEPT_REASONED\",\"CONCEPT_REMOVED\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   @Override
