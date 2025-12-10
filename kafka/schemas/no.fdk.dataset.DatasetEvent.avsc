@@ -17,11 +17,13 @@
         },
         {
             "name": "harvestRunId", 
-            "type": ["null", "string"]
+            "type": ["null", "string"], 
+            "default": null
         },
         {
             "name": "uri", 
-            "type": ["null", "string"]
+            "type": ["null", "string"], 
+            "default": null
         },
         {
             "name": "fdkId",
