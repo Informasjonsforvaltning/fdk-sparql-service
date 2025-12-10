@@ -1,4 +1,5 @@
 name: Code scanning (CodeQL)
+
 permissions:
   contents: read
   security-events: write
