@@ -25,6 +25,11 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     properties:
@@ -85,6 +90,8 @@ spring:
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
+  flyway:
+    enabled: false
 application:
   graph:
     name: https://test.fellesdatakatalog.digdir.no
