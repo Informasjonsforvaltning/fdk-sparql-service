@@ -25,7 +25,6 @@ public class HarvestEventProducer {
             CatalogType catalogType,
             String fdkId,
             HarvestPhase phase,
-            long timestamp,
             String startTime,
             String endTime,
             boolean success,
@@ -44,7 +43,6 @@ public class HarvestEventProducer {
                     .setRunId(harvestRunId)
                     .setDataType(dataType)
                     .setFdkId(fdkId)
-                    .setTimestamp(timestamp)
                     .setStartTime(startTime)
                     .setEndTime(endTime)
                     .setErrorMessage(success ? null : errorMessage)
@@ -76,5 +74,7 @@ public class HarvestEventProducer {
         };
     }
 }
+
+
 
 
