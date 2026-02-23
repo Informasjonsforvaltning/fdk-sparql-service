@@ -228,7 +228,7 @@ public class IntegrationTest extends AbstractContainerTest {
         event.setType(DatasetEventType.DATASET_REASONED);
         event.setGraph(ResourceReader.readFile("dataset2.ttl"));
         event.setTimestamp(124);
-        kafkaEventConsumers.datasetListener(new ConsumerRecord<String, DatasetEvent>("dataset-events", 0, 0L, "key", event), ack);
+        kafkaEventConsumers.datasetListener(new ConsumerRecord<>("dataset-events", 0, 0L, "key", event), ack);
         updateService.updateFusekiForChangedDatasets();
 
         String response = TestQuery.sendQuery(countQuery("dcat:Dataset"));

@@ -51,8 +51,9 @@ public class HarvestEventProducer {
                     .setAcceptHeader(null)
                     .setResourceUri(null)
                     .setChangedResourcesCount(null)
-                    .setUnchangedResourcesCount(null)
                     .setRemovedResourcesCount(null)
+                    .setRemoveAll(null)
+                    .setForced(null)
                     .build();
 
             kafkaTemplate.send(HARVEST_EVENTS_TOPIC, harvestRunId, event);

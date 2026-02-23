@@ -1,12 +1,6 @@
 package no.fdk.sparqlservice.kafka;
 
 import lombok.RequiredArgsConstructor;
-import no.fdk.concept.ConceptEvent;
-import no.fdk.event.EventEvent;
-import no.fdk.informationmodel.InformationModelEvent;
-import no.fdk.service.ServiceEvent;
-import no.fdk.dataservice.DataServiceEvent;
-import no.fdk.dataset.DatasetEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -27,7 +21,7 @@ public class KafkaEventConsumers {
             containerFactory = "serviceListenerContainerFactory",
             id = "service-event-consumer"
     )
-    public void serviceListener(ConsumerRecord<String, ServiceEvent> record, Acknowledgment ack) {
+    public void serviceListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processServiceEvent(record);
             ack.acknowledge();
@@ -43,7 +37,7 @@ public class KafkaEventConsumers {
             containerFactory = "infoModelListenerContainerFactory",
             id = "information-model-event-consumer"
     )
-    public void infoModelListener(ConsumerRecord<String, InformationModelEvent> record, Acknowledgment ack) {
+    public void infoModelListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processInformationModelEvent(record);
             ack.acknowledge();
@@ -59,7 +53,7 @@ public class KafkaEventConsumers {
             containerFactory = "eventListenerContainerFactory",
             id = "event-event-consumer"
     )
-    public void eventListener(ConsumerRecord<String, EventEvent> record, Acknowledgment ack) {
+    public void eventListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processEventEvent(record);
             ack.acknowledge();
@@ -75,7 +69,7 @@ public class KafkaEventConsumers {
             containerFactory = "datasetListenerContainerFactory",
             id = "dataset-event-consumer"
     )
-    public void datasetListener(ConsumerRecord<String, DatasetEvent> record, Acknowledgment ack) {
+    public void datasetListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processDatasetEvent(record);
             ack.acknowledge();
@@ -91,7 +85,7 @@ public class KafkaEventConsumers {
             containerFactory = "dataServiceListenerContainerFactory",
             id = "data-service-event-consumer"
     )
-    public void dataServiceListener(ConsumerRecord<String, DataServiceEvent> record, Acknowledgment ack) {
+    public void dataServiceListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processDataServiceEvent(record);
             ack.acknowledge();
@@ -107,7 +101,7 @@ public class KafkaEventConsumers {
             containerFactory = "conceptListenerContainerFactory",
             id = "concept-event-consumer"
     )
-    public void conceptListener(ConsumerRecord<String, ConceptEvent> record, Acknowledgment ack) {
+    public void conceptListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
         try {
             kafkaEventCircuitBreakers.processConceptEvent(record);
             ack.acknowledge();
