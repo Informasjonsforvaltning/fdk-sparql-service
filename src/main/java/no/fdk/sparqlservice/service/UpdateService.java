@@ -11,6 +11,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFuseki;
+import org.apache.jena.riot.Lang;
 import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
@@ -40,9 +41,9 @@ public class UpdateService {
     private String graphAsStringForInsert(byte[] ttlGraph) {
         Model model = ModelFactory.createDefaultModel();
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            model.read(new ByteArrayInputStream(ttlGraph), null, "TURTLE");
+            model.read(new ByteArrayInputStream(ttlGraph), null, Lang.TURTLE.getName());
             model.clearNsPrefixMap();
-            model.write(out, "TURTLE");
+            model.write(out, Lang.NTRIPLES.getName());
             out.flush();
             return out.toString(StandardCharsets.UTF_8);
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class UpdateService {
         Model fullModel = ModelFactory.createDefaultModel();
         Model partialModel = ModelFactory.createDefaultModel();
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            fullModel.read(new ByteArrayInputStream(ttlGraph), null, "TURTLE");
+            fullModel.read(new ByteArrayInputStream(ttlGraph), null, Lang.TURTLE.getName());
             fullModel.clearNsPrefixMap();
 
             ResIterator resources = fullModel.listResourcesWithProperty(DCTerms.identifier, fdkId);
@@ -66,7 +67,7 @@ public class UpdateService {
                 resource.listProperties(FOAF.primaryTopic).forEach(stmt -> partialModel.add(stmt.getResource().listProperties()));
             });
 
-            partialModel.write(out, "TURTLE");
+            partialModel.write(out, Lang.NTRIPLES.getName());
             out.flush();
             return out.toString(StandardCharsets.UTF_8);
         } catch (Exception e) {
@@ -111,6 +112,7 @@ public class UpdateService {
             return true;
         } catch (Exception e) {
             log.error("Insert failed", e);
+            log.error("Failing query: {}", updateQuery);
             return false;
         }
     }
@@ -125,6 +127,7 @@ public class UpdateService {
             return true;
         } catch (Exception e) {
             log.error("Delete failed", e);
+            log.error("Failing query: {}", updateQuery);
             return false;
         }
     }

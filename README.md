@@ -30,7 +30,7 @@ purposes.
 
 Ensure you have the following installed:
 
-- Java 17
+- Java 21
 - Maven
 - Docker
 
