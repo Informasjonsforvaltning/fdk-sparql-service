@@ -16,6 +16,9 @@ import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
 import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +26,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -38,44 +40,15 @@ public class UpdateService {
     private final SyncDataService syncDataService;
     private final HarvestEventProducer harvestEventProducer;
 
-    private String graphAsStringForInsert(byte[] ttlGraph) {
+    private Model graphAsModelForInsert(byte[] ttlGraph) {
         Model model = ModelFactory.createDefaultModel();
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+        try {
             model.read(new ByteArrayInputStream(ttlGraph), null, Lang.TURTLE.getName());
-            model.clearNsPrefixMap();
-            model.write(out, Lang.NTRIPLES.getName());
-            out.flush();
-            return out.toString(StandardCharsets.UTF_8);
+            return model;
         } catch (Exception e) {
-            log.error("namespace removal failed, skipping update", e);
-            return "";
-        } finally {
+            log.error("creation of insert graph failed, skipping update", e);
             model.close();
-        }
-    }
-
-    private String graphAsStringForDelete(byte[] ttlGraph, String fdkId) {
-        Model fullModel = ModelFactory.createDefaultModel();
-        Model partialModel = ModelFactory.createDefaultModel();
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            fullModel.read(new ByteArrayInputStream(ttlGraph), null, Lang.TURTLE.getName());
-            fullModel.clearNsPrefixMap();
-
-            ResIterator resources = fullModel.listResourcesWithProperty(DCTerms.identifier, fdkId);
-            resources.forEach(resource -> {
-                partialModel.add(resource.listProperties());
-                resource.listProperties(FOAF.primaryTopic).forEach(stmt -> partialModel.add(stmt.getResource().listProperties()));
-            });
-
-            partialModel.write(out, Lang.NTRIPLES.getName());
-            out.flush();
-            return out.toString(StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            log.error("creation of remove graph failed, skipping update", e);
-            return "";
-        } finally {
-            fullModel.close();
-            partialModel.close();
+            return ModelFactory.createDefaultModel();
         }
     }
 
@@ -102,34 +75,75 @@ public class UpdateService {
         }
     }
 
-    private boolean insertTurtleGraph(String ttlGraph) {
-        String updateQuery = "INSERT DATA { GRAPH <" + graphProperties.getName() + "> { " + ttlGraph + " } }";
-
+    private boolean insertModel(Model model) {
+        if (model == null || model.isEmpty()) {
+            return true;
+        }
         try (RDFConnection conn = fusekiConnection()) {
             conn.begin(ReadWrite.WRITE);
-            conn.update(updateQuery);
+            conn.load(graphProperties.getName(), model);
             conn.commit();
             return true;
         } catch (Exception e) {
             log.error("Insert failed", e);
-            log.error("Failing query: {}", updateQuery);
             return false;
         }
     }
 
-    private boolean removeTurtleGraph(String ttlGraph) {
-        String updateQuery = "DELETE DATA { GRAPH <" + graphProperties.getName() + "> { " + ttlGraph + " } }";
+    private boolean removeByIdentifier(String fdkId) {
+        if (fdkId == null || fdkId.isBlank()) {
+            return true;
+        }
 
-        try (RDFConnection conn = fusekiConnection()) {
-            conn.begin(ReadWrite.WRITE);
-            conn.update(updateQuery);
-            conn.commit();
+        String graphName = graphProperties.getName();
+        String updateEndpoint = graphProperties.getUri() + "/update";
+
+        String updateSparql = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX dcterms: <http://purl.org/dc/terms/> "
+                + "DELETE { "
+                + "  GRAPH <" + graphName + "> { "
+                + "    ?record ?recordPred ?recordObj . "
+                + "    ?topic  ?topicPred  ?topicObj  . "
+                + "  } "
+                + "} "
+                + "WHERE { "
+                + "  GRAPH <" + graphName + "> { "
+                + "    ?record dcterms:identifier ?id . "
+                + "    FILTER(STR(?id) = " + escapeStringLiteral(fdkId) + ") . "
+                + "    ?record ?recordPred ?recordObj . "
+                + "    OPTIONAL { "
+                + "      ?record foaf:primaryTopic ?topic . "
+                + "      ?topic  ?topicPred  ?topicObj  . "
+                + "    } "
+                + "  } "
+                + "}";
+
+        try {
+            UpdateRequest updateRequest = UpdateFactory.create(updateSparql);
+            UpdateExecutionFactory.createRemote(updateRequest, updateEndpoint).execute();
             return true;
         } catch (Exception e) {
-            log.error("Delete failed", e);
-            log.error("Failing query: {}", updateQuery);
+            log.error(
+                    "Delete failed for identifier={} endpoint={}",
+                    fdkId,
+                    updateEndpoint,
+                    e
+            );
             return false;
         }
+    }
+
+    private static String escapeStringLiteral(String value) {
+        if (value == null) {
+            return "''";
+        }
+
+        String escaped = value
+                .replace("\\", "\\\\")
+                .replace("'", "\\'")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
+        return "'" + escaped + "'";
     }
 
     public void updateFusekiForChangedConcepts() {
@@ -147,19 +161,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (concept.isRemoved()) {
-                        String graph = graphAsStringForDelete(concept.getGraph(), concept.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(concept.getId());
                     } else {
-                        String graph = graphAsStringForInsert(concept.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(concept.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
@@ -205,19 +210,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (dataService.isRemoved()) {
-                        String graph = graphAsStringForDelete(dataService.getGraph(), dataService.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(dataService.getId());
                     } else {
-                        String graph = graphAsStringForInsert(dataService.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(dataService.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
@@ -263,19 +259,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (dataset.isRemoved()) {
-                        String graph = graphAsStringForDelete(dataset.getGraph(), dataset.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(dataset.getId());
                     } else {
-                        String graph = graphAsStringForInsert(dataset.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(dataset.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
@@ -321,19 +308,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (event.isRemoved()) {
-                        String graph = graphAsStringForDelete(event.getGraph(), event.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(event.getId());
                     } else {
-                        String graph = graphAsStringForInsert(event.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(event.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
@@ -379,19 +357,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (infoModel.isRemoved()) {
-                        String graph = graphAsStringForDelete(infoModel.getGraph(), infoModel.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(infoModel.getId());
                     } else {
-                        String graph = graphAsStringForInsert(infoModel.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(infoModel.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
@@ -437,19 +406,10 @@ public class UpdateService {
                 String endTime = null;
                 try {
                     if (service.isRemoved()) {
-                        String graph = graphAsStringForDelete(service.getGraph(), service.getId());
-                        if (!graph.isBlank()) {
-                            success = removeTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        success = removeByIdentifier(service.getId());
                     } else {
-                        String graph = graphAsStringForInsert(service.getGraph());
-                        if (!graph.isBlank()) {
-                            success = insertTurtleGraph(graph);
-                        } else {
-                            success = true;
-                        }
+                        Model graph = graphAsModelForInsert(service.getGraph());
+                        success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
                     if (success) {
