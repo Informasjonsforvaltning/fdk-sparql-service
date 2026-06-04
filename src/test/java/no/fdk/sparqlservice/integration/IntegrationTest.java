@@ -49,28 +49,28 @@ public class IntegrationTest extends AbstractContainerTest {
 
     @BeforeEach
     void setup() {
-        resourceService.saveConcept("fdk-0", ResourceReader.readFile("concept0.ttl"), 123, null);
-        resourceService.saveConcept("fdk-1", ResourceReader.readFile("concept1.ttl"), 123, null);
+        resourceService.saveConcept("fdk-0", ResourceReader.readFile("concept0.ttl"), 123, null, "");
+        resourceService.saveConcept("fdk-1", ResourceReader.readFile("concept1.ttl"), 123, null, "");
         resourceService.removeConcept("fdk-2", 10, null);
 
-        resourceService.saveDataService("fdk-0", ResourceReader.readFile("dataservice0.ttl"), 123, null);
-        resourceService.saveDataService("fdk-1", ResourceReader.readFile("dataservice1.ttl"), 123, null);
+        resourceService.saveDataService("fdk-0", ResourceReader.readFile("dataservice0.ttl"), 123, null, "");
+        resourceService.saveDataService("fdk-1", ResourceReader.readFile("dataservice1.ttl"), 123, null, "");
         resourceService.removeDataService("fdk-2", 10, null);
 
-        resourceService.saveDataset("fdk-0", ResourceReader.readFile("dataset0.ttl"), 123, null);
-        resourceService.saveDataset("fdk-1", ResourceReader.readFile("dataset1.ttl"), 123, null);
+        resourceService.saveDataset("fdk-0", ResourceReader.readFile("dataset0.ttl"), 123, null, "");
+        resourceService.saveDataset("fdk-1", ResourceReader.readFile("dataset1.ttl"), 123, null, "");
         resourceService.removeDataset("fdk-2", 10, null);
 
-        resourceService.saveEvent("fdk-0", ResourceReader.readFile("event0.ttl"), 123, null);
-        resourceService.saveEvent("fdk-1", ResourceReader.readFile("event1.ttl"), 123, null);
+        resourceService.saveEvent("fdk-0", ResourceReader.readFile("event0.ttl"), 123, null, "");
+        resourceService.saveEvent("fdk-1", ResourceReader.readFile("event1.ttl"), 123, null, "");
         resourceService.removeEvent("fdk-2", 10, null);
 
-        resourceService.saveInformationModel("fdk-0", ResourceReader.readFile("infomodel0.ttl"), 123, null);
-        resourceService.saveInformationModel("fdk-1", ResourceReader.readFile("infomodel1.ttl"), 123, null);
+        resourceService.saveInformationModel("fdk-0", ResourceReader.readFile("infomodel0.ttl"), 123, null, "");
+        resourceService.saveInformationModel("fdk-1", ResourceReader.readFile("infomodel1.ttl"), 123, null, "");
         resourceService.removeInformationModel("fdk-2", 10, null);
 
-        resourceService.saveService("fdk-0", ResourceReader.readFile("service0.ttl"), 123, null);
-        resourceService.saveService("fdk-1", ResourceReader.readFile("service1.ttl"), 123, null);
+        resourceService.saveService("fdk-0", ResourceReader.readFile("service0.ttl"), 123, null, "");
+        resourceService.saveService("fdk-1", ResourceReader.readFile("service1.ttl"), 123, null, "");
         resourceService.removeService("fdk-2", 10, null);
 
         metadataRepository.deleteAll();
@@ -421,6 +421,17 @@ public class IntegrationTest extends AbstractContainerTest {
         String response = TestQuery.sendQuery(countQuery("cpsv:PublicService"));
         Integer result = getCountFromSelectResponse(response);
         Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void catalogGraphIsAddedToFusekiOnUpdate() throws JsonProcessingException {
+        String catalogUri = "https://datasets.staging.fellesdatakatalog.digdir.no/catalogs/821c273e-c4b0-3807-8d54-f54998747507";
+
+        resourceService.saveDataset("fdk-3", ResourceReader.readFile("dataset0.ttl"), 124, null, ResourceReader.readFile("catalog0.ttl"));
+        updateService.updateFusekiForChangedDatasets();
+
+        String after = TestQuery.sendQuery(countPropertiesOfResource(catalogUri));
+        Assertions.assertEquals(5, getCountFromSelectResponse(after));
     }
 
     @Test

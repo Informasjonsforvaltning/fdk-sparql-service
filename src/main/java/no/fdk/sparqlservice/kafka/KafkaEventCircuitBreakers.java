@@ -68,10 +68,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.SERVICES);
             if (isType(event, "SERVICE_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveService(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveService(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "SERVICE_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeService(fdkId, timestamp, harvestRunId);
             }
@@ -91,10 +92,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.INFORMATION_MODELS);
             if (isType(event, "INFORMATION_MODEL_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveInformationModel(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveInformationModel(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "INFORMATION_MODEL_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeInformationModel(fdkId, timestamp, harvestRunId);
             }
@@ -114,10 +116,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.EVENTS);
             if (isType(event, "EVENT_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveEvent(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveEvent(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "EVENT_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeEvent(fdkId, timestamp, harvestRunId);
             }
@@ -137,10 +140,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.DATASETS);
             if (isType(event, "DATASET_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveDataset(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveDataset(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "DATASET_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeDataset(fdkId, timestamp, harvestRunId);
             }
@@ -160,10 +164,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.DATA_SERVICES);
             if (isType(event, "DATA_SERVICE_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveDataService(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveDataService(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "DATA_SERVICE_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeDataService(fdkId, timestamp, harvestRunId);
             }
@@ -183,10 +188,11 @@ public class KafkaEventCircuitBreakers {
             String fdkId = getRequiredString(event, "fdkId");
             String graph = getRequiredString(event, "graph");
             Long timestamp = getRequiredLong(event, "timestamp");
+            String catalogGraph = getOptionalString(event, "catalogGraph");
             if (fdkId == null || timestamp == null) return;
             boolean hasHigherTimestamp = resourceService.timestampIsHigherThanSaved(fdkId, timestamp, CatalogType.CONCEPTS);
             if (isType(event, "CONCEPT_REASONED") && hasHigherTimestamp && graph != null) {
-                resourceService.saveConcept(fdkId, graph, timestamp, harvestRunId);
+                resourceService.saveConcept(fdkId, graph, timestamp, harvestRunId, catalogGraph);
             } else if (isType(event, "CONCEPT_REMOVED") && hasHigherTimestamp) {
                 resourceService.removeConcept(fdkId, timestamp, harvestRunId);
             }

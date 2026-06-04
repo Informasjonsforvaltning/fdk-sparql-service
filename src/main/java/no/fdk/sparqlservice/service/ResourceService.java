@@ -21,33 +21,32 @@ public class ResourceService {
     private final InformationModelRepository informationModelRepository;
     private final ServiceRepository serviceRepository;
 
+    private static byte[] toBytes(String value) {
+        return value != null ? value.getBytes(StandardCharsets.UTF_8) : new byte[0];
+    }
+
     @Transactional
-    public void saveConcept(String fdkId, String graph, long timestamp, String harvestRunId) {
-        conceptRepository.findById(fdkId).ifPresentOrElse(
-                concept -> {
-                    concept.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    concept.setTimestamp(timestamp);
-                    concept.setRemoved(false);
-                    concept.setHarvestRunId(harvestRunId);
-                    concept.setPendingHarvestEvent(harvestRunId != null);
-                    conceptRepository.save(concept);
-                },
-                () -> conceptRepository.save(new Concept(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveConcept(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        conceptRepository.findById(fdkId).ifPresentOrElse(concept -> {
+            concept.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            concept.setCatalogGraph(toBytes(catalogGraph));
+            concept.setTimestamp(timestamp);
+            concept.setRemoved(false);
+            concept.setHarvestRunId(harvestRunId);
+            concept.setPendingHarvestEvent(harvestRunId != null);
+            conceptRepository.save(concept);
+        }, () -> conceptRepository.save(new Concept(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeConcept(String fdkId, long timestamp, String harvestRunId) {
-        conceptRepository.findById(fdkId).ifPresentOrElse(
-                concept -> {
-                    concept.setTimestamp(timestamp);
-                    concept.setRemoved(true);
-                    concept.setHarvestRunId(harvestRunId);
-                    concept.setPendingHarvestEvent(harvestRunId != null);
-                    conceptRepository.save(concept);
-                },
-                () -> conceptRepository.save(new Concept(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        conceptRepository.findById(fdkId).ifPresentOrElse(concept -> {
+            concept.setTimestamp(timestamp);
+            concept.setRemoved(true);
+            concept.setHarvestRunId(harvestRunId);
+            concept.setPendingHarvestEvent(harvestRunId != null);
+            conceptRepository.save(concept);
+        }, () -> conceptRepository.save(new Concept(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedConcepts(Pageable pageable) {
@@ -59,32 +58,27 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveDataService(String fdkId, String graph, long timestamp, String harvestRunId) {
-        dataServiceRepository.findById(fdkId).ifPresentOrElse(
-                dataService -> {
-                    dataService.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    dataService.setTimestamp(timestamp);
-                    dataService.setRemoved(false);
-                    dataService.setHarvestRunId(harvestRunId);
-                    dataService.setPendingHarvestEvent(harvestRunId != null);
-                    dataServiceRepository.save(dataService);
-                },
-                () -> dataServiceRepository.save(new DataService(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveDataService(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        dataServiceRepository.findById(fdkId).ifPresentOrElse(dataService -> {
+            dataService.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            dataService.setCatalogGraph(toBytes(catalogGraph));
+            dataService.setTimestamp(timestamp);
+            dataService.setRemoved(false);
+            dataService.setHarvestRunId(harvestRunId);
+            dataService.setPendingHarvestEvent(harvestRunId != null);
+            dataServiceRepository.save(dataService);
+        }, () -> dataServiceRepository.save(new DataService(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeDataService(String fdkId, long timestamp, String harvestRunId) {
-        dataServiceRepository.findById(fdkId).ifPresentOrElse(
-                dataService -> {
-                    dataService.setTimestamp(timestamp);
-                    dataService.setRemoved(true);
-                    dataService.setHarvestRunId(harvestRunId);
-                    dataService.setPendingHarvestEvent(harvestRunId != null);
-                    dataServiceRepository.save(dataService);
-                },
-                () -> dataServiceRepository.save(new DataService(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        dataServiceRepository.findById(fdkId).ifPresentOrElse(dataService -> {
+            dataService.setTimestamp(timestamp);
+            dataService.setRemoved(true);
+            dataService.setHarvestRunId(harvestRunId);
+            dataService.setPendingHarvestEvent(harvestRunId != null);
+            dataServiceRepository.save(dataService);
+        }, () -> dataServiceRepository.save(new DataService(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedDataServices(Pageable pageable) {
@@ -96,32 +90,27 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveDataset(String fdkId, String graph, long timestamp, String harvestRunId) {
-        datasetRepository.findById(fdkId).ifPresentOrElse(
-                dataset -> {
-                    dataset.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    dataset.setTimestamp(timestamp);
-                    dataset.setRemoved(false);
-                    dataset.setHarvestRunId(harvestRunId);
-                    dataset.setPendingHarvestEvent(harvestRunId != null);
-                    datasetRepository.save(dataset);
-                },
-                () -> datasetRepository.save(new Dataset(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveDataset(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        datasetRepository.findById(fdkId).ifPresentOrElse(dataset -> {
+            dataset.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            dataset.setCatalogGraph(toBytes(catalogGraph));
+            dataset.setTimestamp(timestamp);
+            dataset.setRemoved(false);
+            dataset.setHarvestRunId(harvestRunId);
+            dataset.setPendingHarvestEvent(harvestRunId != null);
+            datasetRepository.save(dataset);
+        }, () -> datasetRepository.save(new Dataset(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeDataset(String fdkId, long timestamp, String harvestRunId) {
-        datasetRepository.findById(fdkId).ifPresentOrElse(
-                dataset -> {
-                    dataset.setTimestamp(timestamp);
-                    dataset.setRemoved(true);
-                    dataset.setHarvestRunId(harvestRunId);
-                    dataset.setPendingHarvestEvent(harvestRunId != null);
-                    datasetRepository.save(dataset);
-                },
-                () -> datasetRepository.save(new Dataset(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        datasetRepository.findById(fdkId).ifPresentOrElse(dataset -> {
+            dataset.setTimestamp(timestamp);
+            dataset.setRemoved(true);
+            dataset.setHarvestRunId(harvestRunId);
+            dataset.setPendingHarvestEvent(harvestRunId != null);
+            datasetRepository.save(dataset);
+        }, () -> datasetRepository.save(new Dataset(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedDatasets(Pageable pageable) {
@@ -133,32 +122,27 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveEvent(String fdkId, String graph, long timestamp, String harvestRunId) {
-        eventRepository.findById(fdkId).ifPresentOrElse(
-                fdkEvent -> {
-                    fdkEvent.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    fdkEvent.setTimestamp(timestamp);
-                    fdkEvent.setRemoved(false);
-                    fdkEvent.setHarvestRunId(harvestRunId);
-                    fdkEvent.setPendingHarvestEvent(harvestRunId != null);
-                    eventRepository.save(fdkEvent);
-                },
-                () -> eventRepository.save(new Event(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveEvent(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        eventRepository.findById(fdkId).ifPresentOrElse(fdkEvent -> {
+            fdkEvent.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            fdkEvent.setCatalogGraph(toBytes(catalogGraph));
+            fdkEvent.setTimestamp(timestamp);
+            fdkEvent.setRemoved(false);
+            fdkEvent.setHarvestRunId(harvestRunId);
+            fdkEvent.setPendingHarvestEvent(harvestRunId != null);
+            eventRepository.save(fdkEvent);
+        }, () -> eventRepository.save(new Event(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeEvent(String fdkId, long timestamp, String harvestRunId) {
-        eventRepository.findById(fdkId).ifPresentOrElse(
-                fdkEvent -> {
-                    fdkEvent.setTimestamp(timestamp);
-                    fdkEvent.setRemoved(true);
-                    fdkEvent.setHarvestRunId(harvestRunId);
-                    fdkEvent.setPendingHarvestEvent(harvestRunId != null);
-                    eventRepository.save(fdkEvent);
-                },
-                () -> eventRepository.save(new Event(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        eventRepository.findById(fdkId).ifPresentOrElse(fdkEvent -> {
+            fdkEvent.setTimestamp(timestamp);
+            fdkEvent.setRemoved(true);
+            fdkEvent.setHarvestRunId(harvestRunId);
+            fdkEvent.setPendingHarvestEvent(harvestRunId != null);
+            eventRepository.save(fdkEvent);
+        }, () -> eventRepository.save(new Event(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedEvents(Pageable pageable) {
@@ -170,32 +154,27 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveInformationModel(String fdkId, String graph, long timestamp, String harvestRunId) {
-        informationModelRepository.findById(fdkId).ifPresentOrElse(
-                infoModel -> {
-                    infoModel.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    infoModel.setTimestamp(timestamp);
-                    infoModel.setRemoved(false);
-                    infoModel.setHarvestRunId(harvestRunId);
-                    infoModel.setPendingHarvestEvent(harvestRunId != null);
-                    informationModelRepository.save(infoModel);
-                },
-                () -> informationModelRepository.save(new InformationModel(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveInformationModel(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        informationModelRepository.findById(fdkId).ifPresentOrElse(infoModel -> {
+            infoModel.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            infoModel.setCatalogGraph(toBytes(catalogGraph));
+            infoModel.setTimestamp(timestamp);
+            infoModel.setRemoved(false);
+            infoModel.setHarvestRunId(harvestRunId);
+            infoModel.setPendingHarvestEvent(harvestRunId != null);
+            informationModelRepository.save(infoModel);
+        }, () -> informationModelRepository.save(new InformationModel(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeInformationModel(String fdkId, long timestamp, String harvestRunId) {
-        informationModelRepository.findById(fdkId).ifPresentOrElse(
-                infoModel -> {
-                    infoModel.setTimestamp(timestamp);
-                    infoModel.setRemoved(true);
-                    infoModel.setHarvestRunId(harvestRunId);
-                    infoModel.setPendingHarvestEvent(harvestRunId != null);
-                    informationModelRepository.save(infoModel);
-                },
-                () -> informationModelRepository.save(new InformationModel(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        informationModelRepository.findById(fdkId).ifPresentOrElse(infoModel -> {
+            infoModel.setTimestamp(timestamp);
+            infoModel.setRemoved(true);
+            infoModel.setHarvestRunId(harvestRunId);
+            infoModel.setPendingHarvestEvent(harvestRunId != null);
+            informationModelRepository.save(infoModel);
+        }, () -> informationModelRepository.save(new InformationModel(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedInformationModels(Pageable pageable) {
@@ -207,32 +186,27 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveService(String fdkId, String graph, long timestamp, String harvestRunId) {
-        serviceRepository.findById(fdkId).ifPresentOrElse(
-                service -> {
-                    service.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-                    service.setTimestamp(timestamp);
-                    service.setRemoved(false);
-                    service.setHarvestRunId(harvestRunId);
-                    service.setPendingHarvestEvent(harvestRunId != null);
-                    serviceRepository.save(service);
-                },
-                () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, graph.getBytes(StandardCharsets.UTF_8), timestamp, false, harvestRunId, harvestRunId != null))
-        );
+    public void saveService(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
+        serviceRepository.findById(fdkId).ifPresentOrElse(service -> {
+            service.setGraph(graph.getBytes(StandardCharsets.UTF_8));
+            service.setCatalogGraph(toBytes(catalogGraph));
+            service.setTimestamp(timestamp);
+            service.setRemoved(false);
+            service.setHarvestRunId(harvestRunId);
+            service.setPendingHarvestEvent(harvestRunId != null);
+            serviceRepository.save(service);
+        }, () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
     }
 
     @Transactional
     public void removeService(String fdkId, long timestamp, String harvestRunId) {
-        serviceRepository.findById(fdkId).ifPresentOrElse(
-                service -> {
-                    service.setTimestamp(timestamp);
-                    service.setRemoved(true);
-                    service.setHarvestRunId(harvestRunId);
-                    service.setPendingHarvestEvent(harvestRunId != null);
-                    serviceRepository.save(service);
-                },
-                () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null))
-        );
+        serviceRepository.findById(fdkId).ifPresentOrElse(service -> {
+            service.setTimestamp(timestamp);
+            service.setRemoved(true);
+            service.setHarvestRunId(harvestRunId);
+            service.setPendingHarvestEvent(harvestRunId != null);
+            serviceRepository.save(service);
+        }, () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, "".getBytes(StandardCharsets.UTF_8), "".getBytes(StandardCharsets.UTF_8), timestamp, true, harvestRunId, harvestRunId != null)));
     }
 
     public List<String> findNonSyncedServices(Pageable pageable) {
