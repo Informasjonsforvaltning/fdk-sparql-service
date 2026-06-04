@@ -8,13 +8,10 @@ import no.fdk.sparqlservice.model.*;
 import org.apache.jena.query.ReadWrite;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFuseki;
 import org.apache.jena.riot.Lang;
-import org.apache.jena.sparql.vocabulary.FOAF;
 import org.apache.jena.vocabulary.DCAT;
-import org.apache.jena.vocabulary.DCTerms;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
@@ -40,10 +37,13 @@ public class UpdateService {
     private final SyncDataService syncDataService;
     private final HarvestEventProducer harvestEventProducer;
 
-    private Model graphAsModelForInsert(byte[] ttlGraph) {
+    private Model graphAsModelForInsert(byte[] ttlGraph, byte[] ttlCatalog) {
         Model model = ModelFactory.createDefaultModel();
         try {
             model.read(new ByteArrayInputStream(ttlGraph), null, Lang.TURTLE.getName());
+            if (ttlCatalog != null) {
+                model.read(new ByteArrayInputStream(ttlCatalog), null, Lang.TURTLE.getName());
+            }
             return model;
         } catch (Exception e) {
             log.error("creation of insert graph failed, skipping update", e);
@@ -163,7 +163,7 @@ public class UpdateService {
                     if (concept.isRemoved()) {
                         success = removeByIdentifier(concept.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(concept.getGraph());
+                        Model graph = graphAsModelForInsert(concept.getGraph(), concept.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
@@ -212,7 +212,7 @@ public class UpdateService {
                     if (dataService.isRemoved()) {
                         success = removeByIdentifier(dataService.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(dataService.getGraph());
+                        Model graph = graphAsModelForInsert(dataService.getGraph(), dataService.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
@@ -261,7 +261,7 @@ public class UpdateService {
                     if (dataset.isRemoved()) {
                         success = removeByIdentifier(dataset.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(dataset.getGraph());
+                        Model graph = graphAsModelForInsert(dataset.getGraph(), dataset.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
@@ -310,7 +310,7 @@ public class UpdateService {
                     if (event.isRemoved()) {
                         success = removeByIdentifier(event.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(event.getGraph());
+                        Model graph = graphAsModelForInsert(event.getGraph(), event.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
@@ -359,7 +359,7 @@ public class UpdateService {
                     if (infoModel.isRemoved()) {
                         success = removeByIdentifier(infoModel.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(infoModel.getGraph());
+                        Model graph = graphAsModelForInsert(infoModel.getGraph(), infoModel.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();
@@ -408,7 +408,7 @@ public class UpdateService {
                     if (service.isRemoved()) {
                         success = removeByIdentifier(service.getId());
                     } else {
-                        Model graph = graphAsModelForInsert(service.getGraph());
+                        Model graph = graphAsModelForInsert(service.getGraph(), service.getCatalogGraph());
                         success = insertModel(graph);
                     }
                     endTime = Instant.now().toString();

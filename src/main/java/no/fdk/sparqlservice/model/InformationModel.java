@@ -20,6 +20,9 @@ public class InformationModel {
 
     private byte[] graph;
 
+    @Column(name = "catalog_graph")
+    private byte[] catalogGraph;
+
     @Column(name = "timestamp", nullable = false)
     private long timestamp;
 

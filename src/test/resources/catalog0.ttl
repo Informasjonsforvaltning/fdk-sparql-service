@@ -1,0 +1,9 @@
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+
+<https://datasets.staging.fellesdatakatalog.digdir.no/catalogs/821c273e-c4b0-3807-8d54-f54998747507>
+        a               dcat:Catalog ;
+        dct:title       "Biffkatalogen"@nb ;
+        dct:publisher   <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:description "Katalog over verdens beste biffer"@nb ;
+        dcat:dataset    <https://registrering.staging.fellesdatakatalog.digdir.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> .
