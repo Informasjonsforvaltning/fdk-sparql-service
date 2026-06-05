@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 @Data
 @Entity
 @Table(name = "services")
-public class Service {
+public class Service implements CatalogResource {
     @Id
     private String id;
 

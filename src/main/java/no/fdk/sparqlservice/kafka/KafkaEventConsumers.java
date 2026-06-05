@@ -1,6 +1,7 @@
 package no.fdk.sparqlservice.kafka;
 
 import lombok.RequiredArgsConstructor;
+import no.fdk.sparqlservice.model.CatalogType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -22,12 +23,7 @@ public class KafkaEventConsumers {
             id = "service-event-consumer"
     )
     public void serviceListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
-        try {
-            kafkaEventCircuitBreakers.processServiceEvent(record);
-            ack.acknowledge();
-        } catch (Exception exception) {
-            ack.nack(Duration.ZERO);
-        }
+        process(record, ack, CatalogType.SERVICES);
     }
 
     @KafkaListener(
@@ -38,12 +34,7 @@ public class KafkaEventConsumers {
             id = "information-model-event-consumer"
     )
     public void infoModelListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
-        try {
-            kafkaEventCircuitBreakers.processInformationModelEvent(record);
-            ack.acknowledge();
-        } catch (Exception exception) {
-            ack.nack(Duration.ZERO);
-        }
+        process(record, ack, CatalogType.INFORMATION_MODELS);
     }
 
     @KafkaListener(
@@ -54,12 +45,7 @@ public class KafkaEventConsumers {
             id = "event-event-consumer"
     )
     public void eventListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
-        try {
-            kafkaEventCircuitBreakers.processEventEvent(record);
-            ack.acknowledge();
-        } catch (Exception exception) {
-            ack.nack(Duration.ZERO);
-        }
+        process(record, ack, CatalogType.EVENTS);
     }
 
     @KafkaListener(
@@ -70,12 +56,7 @@ public class KafkaEventConsumers {
             id = "dataset-event-consumer"
     )
     public void datasetListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
-        try {
-            kafkaEventCircuitBreakers.processDatasetEvent(record);
-            ack.acknowledge();
-        } catch (Exception exception) {
-            ack.nack(Duration.ZERO);
-        }
+        process(record, ack, CatalogType.DATASETS);
     }
 
     @KafkaListener(
@@ -86,12 +67,7 @@ public class KafkaEventConsumers {
             id = "data-service-event-consumer"
     )
     public void dataServiceListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
-        try {
-            kafkaEventCircuitBreakers.processDataServiceEvent(record);
-            ack.acknowledge();
-        } catch (Exception exception) {
-            ack.nack(Duration.ZERO);
-        }
+        process(record, ack, CatalogType.DATA_SERVICES);
     }
 
     @KafkaListener(
@@ -102,12 +78,15 @@ public class KafkaEventConsumers {
             id = "concept-event-consumer"
     )
     public void conceptListener(ConsumerRecord<String, Object> record, Acknowledgment ack) {
+        process(record, ack, CatalogType.CONCEPTS);
+    }
+
+    private void process(ConsumerRecord<String, Object> record, Acknowledgment ack, CatalogType type) {
         try {
-            kafkaEventCircuitBreakers.processConceptEvent(record);
+            kafkaEventCircuitBreakers.processEvent(type, record);
             ack.acknowledge();
         } catch (Exception exception) {
             ack.nack(Duration.ZERO);
         }
     }
-
 }
