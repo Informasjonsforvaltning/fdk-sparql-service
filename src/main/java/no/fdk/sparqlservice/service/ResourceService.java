@@ -1,8 +1,8 @@
 package no.fdk.sparqlservice.service;
 
 import lombok.RequiredArgsConstructor;
-import no.fdk.sparqlservice.model.*;
-import no.fdk.sparqlservice.repository.*;
+import no.fdk.sparqlservice.model.CatalogResource;
+import no.fdk.sparqlservice.model.CatalogType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +14,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ResourceService {
-    private final ConceptRepository conceptRepository;
-    private final DataServiceRepository dataServiceRepository;
-    private final DatasetRepository datasetRepository;
-    private final EventRepository eventRepository;
-    private final InformationModelRepository informationModelRepository;
-    private final ServiceRepository serviceRepository;
+    private final CatalogTypeRegistry catalogTypeRegistry;
 
     private static final byte[] EMPTY_BYTES = new byte[0];
 
@@ -28,297 +23,125 @@ public class ResourceService {
     }
 
     @Transactional
-    public void saveConcept(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        conceptRepository.findById(fdkId).ifPresentOrElse(concept -> {
-            concept.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            concept.setCatalogGraph(toBytes(catalogGraph));
-            concept.setTimestamp(timestamp);
-            concept.setRemoved(false);
-            concept.setHarvestRunId(harvestRunId);
-            concept.setPendingHarvestEvent(harvestRunId != null);
-            conceptRepository.save(concept);
-        }, () -> conceptRepository.save(new Concept(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
+    public void save(
+            CatalogType type,
+            String fdkId,
+            String graph,
+            long timestamp,
+            String harvestRunId,
+            String catalogGraph
+    ) {
+        saveEntity(
+                catalogTypeRegistry.get(type),
+                fdkId,
+                toBytes(graph),
+                toBytes(catalogGraph),
+                timestamp,
+                harvestRunId
+        );
     }
 
     @Transactional
-    public void removeConcept(String fdkId, long timestamp, String harvestRunId) {
-        conceptRepository.findById(fdkId).ifPresentOrElse(concept -> {
-            concept.setGraph(EMPTY_BYTES);
-            concept.setCatalogGraph(EMPTY_BYTES);
-            concept.setTimestamp(timestamp);
-            concept.setRemoved(true);
-            concept.setHarvestRunId(harvestRunId);
-            concept.setPendingHarvestEvent(harvestRunId != null);
-            conceptRepository.save(concept);
-        }, () -> conceptRepository.save(new Concept(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
+    public void remove(CatalogType type, String fdkId, long timestamp, String harvestRunId) {
+        removeEntity(catalogTypeRegistry.get(type), fdkId, timestamp, harvestRunId);
     }
 
-    public List<String> findNonSyncedConcepts(Pageable pageable) {
-        return conceptRepository.findNonSynchronizedConcepts(pageable);
+    public List<String> findNonSynced(CatalogType type, Pageable pageable) {
+        return catalogTypeRegistry.get(type).findNonSynced(pageable);
     }
 
-    public Optional<Concept> findConceptById(String fdkId) {
-        return conceptRepository.findById(fdkId);
-    }
-
-    @Transactional
-    public void saveDataService(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        dataServiceRepository.findById(fdkId).ifPresentOrElse(dataService -> {
-            dataService.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            dataService.setCatalogGraph(toBytes(catalogGraph));
-            dataService.setTimestamp(timestamp);
-            dataService.setRemoved(false);
-            dataService.setHarvestRunId(harvestRunId);
-            dataService.setPendingHarvestEvent(harvestRunId != null);
-            dataServiceRepository.save(dataService);
-        }, () -> dataServiceRepository.save(new DataService(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
-    }
-
-    @Transactional
-    public void removeDataService(String fdkId, long timestamp, String harvestRunId) {
-        dataServiceRepository.findById(fdkId).ifPresentOrElse(dataService -> {
-            dataService.setGraph(EMPTY_BYTES);
-            dataService.setCatalogGraph(EMPTY_BYTES);
-            dataService.setTimestamp(timestamp);
-            dataService.setRemoved(true);
-            dataService.setHarvestRunId(harvestRunId);
-            dataService.setPendingHarvestEvent(harvestRunId != null);
-            dataServiceRepository.save(dataService);
-        }, () -> dataServiceRepository.save(new DataService(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
-    }
-
-    public List<String> findNonSyncedDataServices(Pageable pageable) {
-        return dataServiceRepository.findNonSynchronizedDataServices(pageable);
-    }
-
-    public Optional<DataService> findDataServiceById(String fdkId) {
-        return dataServiceRepository.findById(fdkId);
-    }
-
-    @Transactional
-    public void saveDataset(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        datasetRepository.findById(fdkId).ifPresentOrElse(dataset -> {
-            dataset.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            dataset.setCatalogGraph(toBytes(catalogGraph));
-            dataset.setTimestamp(timestamp);
-            dataset.setRemoved(false);
-            dataset.setHarvestRunId(harvestRunId);
-            dataset.setPendingHarvestEvent(harvestRunId != null);
-            datasetRepository.save(dataset);
-        }, () -> datasetRepository.save(new Dataset(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
-    }
-
-    @Transactional
-    public void removeDataset(String fdkId, long timestamp, String harvestRunId) {
-        datasetRepository.findById(fdkId).ifPresentOrElse(dataset -> {
-            dataset.setGraph(EMPTY_BYTES);
-            dataset.setCatalogGraph(EMPTY_BYTES);
-            dataset.setTimestamp(timestamp);
-            dataset.setRemoved(true);
-            dataset.setHarvestRunId(harvestRunId);
-            dataset.setPendingHarvestEvent(harvestRunId != null);
-            datasetRepository.save(dataset);
-        }, () -> datasetRepository.save(new Dataset(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
-    }
-
-    public List<String> findNonSyncedDatasets(Pageable pageable) {
-        return datasetRepository.findNonSynchronizedDatasets(pageable);
-    }
-
-    public Optional<Dataset> findDatasetById(String fdkId) {
-        return datasetRepository.findById(fdkId);
-    }
-
-    @Transactional
-    public void saveEvent(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        eventRepository.findById(fdkId).ifPresentOrElse(fdkEvent -> {
-            fdkEvent.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            fdkEvent.setCatalogGraph(toBytes(catalogGraph));
-            fdkEvent.setTimestamp(timestamp);
-            fdkEvent.setRemoved(false);
-            fdkEvent.setHarvestRunId(harvestRunId);
-            fdkEvent.setPendingHarvestEvent(harvestRunId != null);
-            eventRepository.save(fdkEvent);
-        }, () -> eventRepository.save(new Event(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
-    }
-
-    @Transactional
-    public void removeEvent(String fdkId, long timestamp, String harvestRunId) {
-        eventRepository.findById(fdkId).ifPresentOrElse(fdkEvent -> {
-            fdkEvent.setGraph(EMPTY_BYTES);
-            fdkEvent.setCatalogGraph(EMPTY_BYTES);
-            fdkEvent.setTimestamp(timestamp);
-            fdkEvent.setRemoved(true);
-            fdkEvent.setHarvestRunId(harvestRunId);
-            fdkEvent.setPendingHarvestEvent(harvestRunId != null);
-            eventRepository.save(fdkEvent);
-        }, () -> eventRepository.save(new Event(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
-    }
-
-    public List<String> findNonSyncedEvents(Pageable pageable) {
-        return eventRepository.findNonSynchronizedEvents(pageable);
-    }
-
-    public Optional<Event> findEventById(String fdkId) {
-        return eventRepository.findById(fdkId);
-    }
-
-    @Transactional
-    public void saveInformationModel(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        informationModelRepository.findById(fdkId).ifPresentOrElse(infoModel -> {
-            infoModel.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            infoModel.setCatalogGraph(toBytes(catalogGraph));
-            infoModel.setTimestamp(timestamp);
-            infoModel.setRemoved(false);
-            infoModel.setHarvestRunId(harvestRunId);
-            infoModel.setPendingHarvestEvent(harvestRunId != null);
-            informationModelRepository.save(infoModel);
-        }, () -> informationModelRepository.save(new InformationModel(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
-    }
-
-    @Transactional
-    public void removeInformationModel(String fdkId, long timestamp, String harvestRunId) {
-        informationModelRepository.findById(fdkId).ifPresentOrElse(infoModel -> {
-            infoModel.setGraph(EMPTY_BYTES);
-            infoModel.setCatalogGraph(EMPTY_BYTES);
-            infoModel.setTimestamp(timestamp);
-            infoModel.setRemoved(true);
-            infoModel.setHarvestRunId(harvestRunId);
-            infoModel.setPendingHarvestEvent(harvestRunId != null);
-            informationModelRepository.save(infoModel);
-        }, () -> informationModelRepository.save(new InformationModel(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
-    }
-
-    public List<String> findNonSyncedInformationModels(Pageable pageable) {
-        return informationModelRepository.findNonSynchronizedInformationModels(pageable);
-    }
-
-    public Optional<InformationModel> findInformationModelById(String fdkId) {
-        return informationModelRepository.findById(fdkId);
-    }
-
-    @Transactional
-    public void saveService(String fdkId, String graph, long timestamp, String harvestRunId, String catalogGraph) {
-        serviceRepository.findById(fdkId).ifPresentOrElse(service -> {
-            service.setGraph(graph.getBytes(StandardCharsets.UTF_8));
-            service.setCatalogGraph(toBytes(catalogGraph));
-            service.setTimestamp(timestamp);
-            service.setRemoved(false);
-            service.setHarvestRunId(harvestRunId);
-            service.setPendingHarvestEvent(harvestRunId != null);
-            serviceRepository.save(service);
-        }, () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, graph.getBytes(StandardCharsets.UTF_8), toBytes(catalogGraph), timestamp, false, harvestRunId, harvestRunId != null)));
-    }
-
-    @Transactional
-    public void removeService(String fdkId, long timestamp, String harvestRunId) {
-        serviceRepository.findById(fdkId).ifPresentOrElse(service -> {
-            service.setGraph(EMPTY_BYTES);
-            service.setCatalogGraph(EMPTY_BYTES);
-            service.setTimestamp(timestamp);
-            service.setRemoved(true);
-            service.setHarvestRunId(harvestRunId);
-            service.setPendingHarvestEvent(harvestRunId != null);
-            serviceRepository.save(service);
-        }, () -> serviceRepository.save(new no.fdk.sparqlservice.model.Service(fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, harvestRunId != null)));
-    }
-
-    public List<String> findNonSyncedServices(Pageable pageable) {
-        return serviceRepository.findNonSynchronizedServices(pageable);
-    }
-
-    public Optional<no.fdk.sparqlservice.model.Service> findServiceById(String fdkId) {
-        return serviceRepository.findById(fdkId);
+    public Optional<? extends CatalogResource> findById(CatalogType type, String fdkId) {
+        return catalogTypeRegistry.get(type).repository().findById(fdkId);
     }
 
     @Transactional
     public void clearPendingHarvestEvent(String fdkId, CatalogType type) {
-        switch (type) {
-            case CONCEPTS:
-                conceptRepository.findById(fdkId).ifPresent(concept -> {
-                    concept.setPendingHarvestEvent(false);
-                    conceptRepository.save(concept);
-                });
-                break;
-            case DATA_SERVICES:
-                dataServiceRepository.findById(fdkId).ifPresent(dataService -> {
-                    dataService.setPendingHarvestEvent(false);
-                    dataServiceRepository.save(dataService);
-                });
-                break;
-            case DATASETS:
-                datasetRepository.findById(fdkId).ifPresent(dataset -> {
-                    dataset.setPendingHarvestEvent(false);
-                    datasetRepository.save(dataset);
-                });
-                break;
-            case EVENTS:
-                eventRepository.findById(fdkId).ifPresent(event -> {
-                    event.setPendingHarvestEvent(false);
-                    eventRepository.save(event);
-                });
-                break;
-            case INFORMATION_MODELS:
-                informationModelRepository.findById(fdkId).ifPresent(infoModel -> {
-                    infoModel.setPendingHarvestEvent(false);
-                    informationModelRepository.save(infoModel);
-                });
-                break;
-            case SERVICES:
-                serviceRepository.findById(fdkId).ifPresent(service -> {
-                    service.setPendingHarvestEvent(false);
-                    serviceRepository.save(service);
-                });
-                break;
-        }
+        clearPendingHarvestEventEntity(catalogTypeRegistry.get(type), fdkId);
     }
 
     public boolean timestampIsHigherThanSaved(String fdkId, long timestamp, CatalogType type) {
-        Long dbTimestamp = null;
-        switch (type) {
-            case CONCEPTS:
-                Optional<Concept> concept = conceptRepository.findById(fdkId);
-                if (concept.isPresent()) {
-                    dbTimestamp = concept.get().getTimestamp();
-                }
-                break;
-            case DATA_SERVICES:
-                Optional<DataService> dataService = dataServiceRepository.findById(fdkId);
-                if (dataService.isPresent()) {
-                    dbTimestamp = dataService.get().getTimestamp();
-                }
-                break;
-            case DATASETS:
-                Optional<Dataset> dataset = datasetRepository.findById(fdkId);
-                if (dataset.isPresent()) {
-                    dbTimestamp = dataset.get().getTimestamp();
-                }
-                break;
-            case EVENTS:
-                Optional<Event> event = eventRepository.findById(fdkId);
-                if (event.isPresent()) {
-                    dbTimestamp = event.get().getTimestamp();
-                }
-                break;
-            case INFORMATION_MODELS:
-                Optional<InformationModel> informationModel = informationModelRepository.findById(fdkId);
-                if (informationModel.isPresent()) {
-                    dbTimestamp = informationModel.get().getTimestamp();
-                }
-                break;
-            case SERVICES:
-                Optional<no.fdk.sparqlservice.model.Service> service = serviceRepository.findById(fdkId);
-                if (service.isPresent()) {
-                    dbTimestamp = service.get().getTimestamp();
-                }
-                break;
-        }
-
-        if (dbTimestamp == null) {
+        Optional<? extends CatalogResource> existing = findById(type, fdkId);
+        if (existing.isEmpty()) {
             return true;
-        } else {
-            return timestamp > dbTimestamp;
         }
+        return timestamp > existing.get().getTimestamp();
     }
 
+    private <T extends CatalogResource> void saveEntity(
+            CatalogResourceAccessor<T> accessor,
+            String fdkId,
+            byte[] graphBytes,
+            byte[] catalogGraphBytes,
+            long timestamp,
+            String harvestRunId
+    ) {
+        boolean pendingHarvestEvent = harvestRunId != null;
+        accessor.repository().findById(fdkId).ifPresentOrElse(
+                entity -> {
+                    applySaveFields(entity, graphBytes, catalogGraphBytes, timestamp, harvestRunId, pendingHarvestEvent);
+                    accessor.repository().save(entity);
+                },
+                () -> accessor.repository().save(accessor.newEntity(
+                        fdkId, graphBytes, catalogGraphBytes, timestamp, false, harvestRunId, pendingHarvestEvent
+                ))
+        );
+    }
+
+    private <T extends CatalogResource> void removeEntity(
+            CatalogResourceAccessor<T> accessor,
+            String fdkId,
+            long timestamp,
+            String harvestRunId
+    ) {
+        boolean pendingHarvestEvent = harvestRunId != null;
+        accessor.repository().findById(fdkId).ifPresentOrElse(
+                entity -> {
+                    applyRemoveFields(entity, timestamp, harvestRunId, pendingHarvestEvent);
+                    accessor.repository().save(entity);
+                },
+                () -> accessor.repository().save(accessor.newEntity(
+                        fdkId, EMPTY_BYTES, EMPTY_BYTES, timestamp, true, harvestRunId, pendingHarvestEvent
+                ))
+        );
+    }
+
+    private <T extends CatalogResource> void clearPendingHarvestEventEntity(
+            CatalogResourceAccessor<T> accessor,
+            String fdkId
+    ) {
+        accessor.repository().findById(fdkId).ifPresent(entity -> {
+            entity.setPendingHarvestEvent(false);
+            accessor.repository().save(entity);
+        });
+    }
+
+    private static void applySaveFields(
+            CatalogResource entity,
+            byte[] graphBytes,
+            byte[] catalogGraphBytes,
+            long timestamp,
+            String harvestRunId,
+            boolean pendingHarvestEvent
+    ) {
+        entity.setGraph(graphBytes);
+        entity.setCatalogGraph(catalogGraphBytes);
+        entity.setTimestamp(timestamp);
+        entity.setRemoved(false);
+        entity.setHarvestRunId(harvestRunId);
+        entity.setPendingHarvestEvent(pendingHarvestEvent);
+    }
+
+    private static void applyRemoveFields(
+            CatalogResource entity,
+            long timestamp,
+            String harvestRunId,
+            boolean pendingHarvestEvent
+    ) {
+        entity.setGraph(EMPTY_BYTES);
+        entity.setCatalogGraph(EMPTY_BYTES);
+        entity.setTimestamp(timestamp);
+        entity.setRemoved(true);
+        entity.setHarvestRunId(harvestRunId);
+        entity.setPendingHarvestEvent(pendingHarvestEvent);
+    }
 }
