@@ -6,7 +6,7 @@ permissions:
 
 on:
   pull_request:
-    types: [ ready_for_review, opened, reopened, synchronize ]
+    types: [ready_for_review, opened, reopened, synchronize]
     branches:
       - main
   push:
@@ -22,6 +22,6 @@ jobs:
     uses: Informasjonsforvaltning/workflows/.github/workflows/codeql.yaml@main
     with:
       language: java
-      java_version: 21
+      java_version: '21'
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
