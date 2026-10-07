@@ -1,6 +1,9 @@
 FROM eclipse-temurin:21-jre
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && \
+  apt-get upgrade -y --no-install-recommends && \
+  rm -rf /var/lib/apt/lists/*
 RUN mkdir /app
 WORKDIR /app
 RUN addgroup --gid 1001 --system app && \
